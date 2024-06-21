@@ -1,0 +1,1 @@
+{"version":3,"file":"vehicleType.entity.js","sourceRoot":"","sources":["../../src/vehicleTypes/vehicleType.entity.ts"],"names":[],"mappings":"AAAA,OAAO,MAAM,MAAM,aAAa,CAAA;AAEhC,MAAM,OAAO,WAAW;IACpB,YACW,MAAc,EACd,MAAa,EACb,KAAI,MAAM,CAAC,UAAU,EAAE;QAFvB,WAAM,GAAN,MAAM,CAAQ;QACd,WAAM,GAAN,MAAM,CAAO;QACb,OAAE,GAAF,EAAE,CAAqB;IAChC,CAAC;CACN"}

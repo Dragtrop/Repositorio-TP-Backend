@@ -24,62 +24,53 @@ function sanitizeVehicleInput(req:Request,res:Response, next: NextFunction){
  
  
 }
-function findAll(req:Request, res:Response) {
-    res.json({ data: repository.findAll() })
+async function findAll(req: Request, res: Response) {
+    res.json({ data: await repository.findAll() })
 }
 
-
-function findOne(req:Request, res:Response) {
+async function findOne(req: Request, res: Response) {
     const id = req.params.id
-    const vehicle = repository.findOne({id})
+    const vehicle = await repository.findOne({ id })
     if (!vehicle) {
       return res.status(404).send({ message: 'Vehicle not found' })
     }
     res.json({ data: vehicle })
 }
+  
 
 
-function add(req:Request,res:Response) {
+async function add(req: Request, res: Response) {
     const input = req.body.sanitizedInput
-
+  
     const vehicleInput = new Vehicle(
-        input.marca,
-        input.patente,        
+      input.patente,
+      input.modelo,
     )
-
-
-    const vehicle = repository.add(vehicleInput)
-    return res.status(201).send({ message: 'Character created', data: vehicle })
-
+  
+    const vehicle = await repository.add(vehicleInput)
+    return res.status(201).send({ message: 'Vehicle created', data: vehicle })
 }
+  
 
-
-function update(req:Request,res:Response) {
-
-    req.body.sanitizedInput.id = req.params.id
-    const vehicle = repository.update(req.body.sanitizedInput)
-    
-    if(!vehicle){
-        return res.status(404).send({ message: 'Character not found' })
-
+async function update(req: Request, res: Response) {
+    const vehicle = await repository.update(req.params.id,req.body.sanitizedInput)
+  
+    if (!vehicle) {
+      return res.status(404).send({ message: 'Vehicle not found' })
     }
-
-    return res.status(200).send({message:'Character updated succesfuly',data:vehicle})
-    
+  
+  return res.status(200).send({ message: 'Vehicle updated successfully', data: vehicle })
 }
 
 
-
-function remove(req:Request,res:Response)  {
-
+async function remove(req: Request, res: Response) {
     const id = req.params.id
-    const vehicle = repository.delete({ id })
-
-    if (!vehicle){
-        res.status(404).send({message:'Character not found'})
-    }else{
-        res.status(200).send({message:'character deleted successfully'})
+    const vehicle = await repository.delete({ id })
+  
+    if (!vehicle) {
+      res.status(404).send({ message: 'Vehicle not found' })
+    } else {
+      res.status(200).send({ message: 'Vehicle deleted successfully' })
     }
-}
-
+  }
 export{sanitizeVehicleInput,findAll,findOne,add,update,remove}

@@ -1,32 +1,18 @@
-import { VehicleType } from "./vehicleType.entity.js";
-const vehicleTypes = [
-    new VehicleType('Utilitario', '01', 'a02b91bc-3769-4221-beb1-d7a3aeba7dad'),
-];
 export class VehicleTypesRepository {
-    findAll() {
-        return vehicleTypes;
+    async findAll() {
+        throw new Error('not implemented');
     }
     findOne(item) {
-        return vehicleTypes.find((vehicleType) => vehicleType.id === item.id);
+        throw new Error('not implemented');
     }
     add(item) {
-        vehicleTypes.push(item);
-        return item;
+        throw new Error('not implemented');
     }
-    update(item) {
-        const vehicleTypeIdx = vehicleTypes.findIndex((vehicleType) => vehicleType.id === item.id);
-        if (vehicleTypeIdx !== -1) {
-            vehicleTypes[vehicleTypeIdx] = { ...vehicleTypes[vehicleTypeIdx], ...item };
-        }
-        return vehicleTypes[vehicleTypeIdx];
+    async update(id, vehicleInput) {
+        throw new Error('not implemented');
     }
     delete(item) {
-        const vehicleTypeIdx = vehicleTypes.findIndex((vehicleType) => vehicleType.id === item.id);
-        if (vehicleTypeIdx !== -1) {
-            const deletedVehicleType = vehicleTypes[vehicleTypeIdx];
-            vehicleTypes.splice(vehicleTypeIdx, 1);
-            return deletedVehicleType;
-        }
+        throw new Error('not implemented');
     }
 }
 //# sourceMappingURL=vehicleTypes.repository.js.map

@@ -30,13 +30,12 @@ function add(req, res) {
     const vehicleType = repository.add(vehicleTypeInput);
     return res.status(201).send({ message: 'Vehicle type created', data: vehicleType });
 }
-function update(req, res) {
-    req.body.sanitizedInput.id = req.params.id;
-    const vehicleType = repository.update(req.body.sanitizedInput);
-    if (!vehicleType) {
-        return res.status(404).send({ message: 'Vehicle type not found' });
+async function update(req, res) {
+    const vehicle = await repository.update(req.params.id, req.body.sanitizedInput);
+    if (!vehicle) {
+        return res.status(404).send({ message: 'Vehicle not found' });
     }
-    return res.status(200).send({ message: 'Vehicle type updated successfully', data: vehicleType });
+    return res.status(200).send({ message: 'Vehicle updated successfully', data: vehicle });
 }
 function remove(req, res) {
     const id = req.params.id;

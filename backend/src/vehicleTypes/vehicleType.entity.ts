@@ -4,7 +4,7 @@ export class VehicleType{
     constructor(
         public nombre: string,
         public codigo:string,
-        public id= crypto.randomUUID(),
+        public id?: number,
     ){}
 }
 

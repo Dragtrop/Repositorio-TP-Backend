@@ -20,13 +20,13 @@ Content-Type: application/json
 
 
 ### borrar un recurso
-delete http://localhost:3000/api/vehicles/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+delete http://localhost:3000/api/vehicles/5
 
 
 
 ### modficar un recurso
 
-PUT http://localhost:3000/api/vehicles/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+PUT http://localhost:3000/api/vehicles/5
 Content-Type: application/json
 
 
@@ -39,7 +39,7 @@ Content-Type: application/json
 
 ### modficar un recurso
 
-patch http://localhost:3000/api/vehicles/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+patch http://localhost:3000/api/vehicles/2
 Content-Type: application/json
 
 

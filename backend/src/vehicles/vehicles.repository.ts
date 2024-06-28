@@ -13,7 +13,7 @@ export class VehiclesRepository implements Repository<Vehicle>{
 
     public async findOne (item:{id: string }):Promise<Vehicle  | undefined>{
         const id = Number.parseInt(item.id)
-        const [vehicles] = await pool.query<RowDataPacket[]>('select * from vehicles = ? ',[id])
+        const [vehicles] = await pool.query<RowDataPacket[]>('select * from vehicles where id = ? ',[id])
         if(vehicles.length === 0){
             return undefined
         }
@@ -24,13 +24,14 @@ export class VehiclesRepository implements Repository<Vehicle>{
 
     public async add(vehicleInput:Vehicle): Promise<Vehicle  | undefined>{
         const {id, ...vehicleRow} = vehicleInput
-        const [result] = await pool.query<ResultSetHeader>("Insert into vehicles set?", [vehicleRow])
+        const [result] = await pool.query<ResultSetHeader>("Insert into vehicles set ?", [vehicleRow])
         vehicleInput.id = result.insertId
 
         return vehicleInput
     }
 
     public async update (id: string, vehicleInput: Vehicle): Promise<Vehicle  | undefined> {
+       console.log(vehicleInput)
         const vehicleId = Number.parseInt(id)
         const {... vehicleRow} = vehicleInput
         await pool.query('update vehicles set ? where id =?',[vehicleRow, vehicleId] )

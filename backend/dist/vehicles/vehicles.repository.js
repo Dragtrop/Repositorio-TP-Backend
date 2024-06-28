@@ -6,7 +6,7 @@ export class VehiclesRepository {
     }
     async findOne(item) {
         const id = Number.parseInt(item.id);
-        const [vehicles] = await pool.query('select * from vehicles = ? ', [id]);
+        const [vehicles] = await pool.query('select * from vehicles where id = ? ', [id]);
         if (vehicles.length === 0) {
             return undefined;
         }
@@ -15,11 +15,12 @@ export class VehiclesRepository {
     }
     async add(vehicleInput) {
         const { id, ...vehicleRow } = vehicleInput;
-        const [result] = await pool.query("Insert into vehicles set?", [vehicleRow]);
+        const [result] = await pool.query("Insert into vehicles set ?", [vehicleRow]);
         vehicleInput.id = result.insertId;
         return vehicleInput;
     }
     async update(id, vehicleInput) {
+        console.log(vehicleInput);
         const vehicleId = Number.parseInt(id);
         const { ...vehicleRow } = vehicleInput;
         await pool.query('update vehicles set ? where id =?', [vehicleRow, vehicleId]);

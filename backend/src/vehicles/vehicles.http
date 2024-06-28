@@ -26,9 +26,8 @@ delete http://localhost:3000/api/vehicles/5
 
 ### modficar un recurso
 
-PUT http://localhost:3000/api/vehicles/5
+PUT http://localhost:3000/api/vehicles/1
 Content-Type: application/json
-
 
 {
   "patente" : " AG-584-AA ",

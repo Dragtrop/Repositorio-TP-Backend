@@ -31,10 +31,10 @@ export class VehiclesRepository implements Repository<Vehicle>{
     }
 
     public async update (id: string, vehicleInput: Vehicle): Promise<Vehicle  | undefined> {
-       console.log(vehicleInput)
+        console.log(vehicleInput)
         const vehicleId = Number.parseInt(id)
         const {... vehicleRow} = vehicleInput
-        await pool.query('update vehicles set ? where id =?',[vehicleRow, vehicleId] )
+        await pool.query('update vehicles set ? where id = ?',[vehicleRow, vehicleId] )
 
         return await this.findOne({ id })
     }
@@ -45,7 +45,7 @@ export class VehiclesRepository implements Repository<Vehicle>{
         const vehicleId = Number.parseInt(item.id)
         await pool.query('delete from vehicles where id = ?', vehicleId)
 
-        return vehicleToDelete}
+        return vehicleToDelete}        
         catch(error:any){
             throw new Error('No se pudo borrar el vehiculo')
         }

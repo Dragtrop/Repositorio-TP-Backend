@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ListVehiclesComponent } from './components/list-vehicles/list-vehicles.component';
 import { AddEditVehicleComponent } from './components/add-edit-vehicle/add-edit-vehicle.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AddEditVehicleComponent } from './components/add-edit-vehicle/add-edit-
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

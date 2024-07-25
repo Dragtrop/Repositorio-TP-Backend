@@ -13,33 +13,33 @@ function sanitizeVehicleTypeInput(req, res, next) {
     });
     next();
 }
-function findAll(req, res) {
-    res.json({ data: repository.findAll() });
+async function findAll(req, res) {
+    res.json({ data: await repository.findAll() });
 }
-function findOne(req, res) {
+async function findOne(req, res) {
     const id = req.params.id;
-    const vehicleType = repository.findOne({ id });
+    const vehicleType = await repository.findOne({ id });
     if (!vehicleType) {
         return res.status(404).send({ message: 'Vehicle type not found' });
     }
     res.json({ data: vehicleType });
 }
-function add(req, res) {
+async function add(req, res) {
     const input = req.body.sanitizedInput;
     const vehicleTypeInput = new VehicleType(input.nombre, input.codigo);
-    const vehicleType = repository.add(vehicleTypeInput);
+    const vehicleType = await repository.add(vehicleTypeInput);
     return res.status(201).send({ message: 'Vehicle type created', data: vehicleType });
 }
 async function update(req, res) {
-    const vehicle = await repository.update(req.params.id, req.body.sanitizedInput);
-    if (!vehicle) {
+    const vehicleType = await repository.update(req.params.id, req.body.sanitizedInput);
+    if (!vehicleType) {
         return res.status(404).send({ message: 'Vehicle not found' });
     }
-    return res.status(200).send({ message: 'Vehicle updated successfully', data: vehicle });
+    return res.status(200).send({ message: 'Vehicle updated successfully', data: vehicleType });
 }
-function remove(req, res) {
+async function remove(req, res) {
     const id = req.params.id;
-    const vehicleType = repository.delete({ id });
+    const vehicleType = await repository.delete({ id });
     if (!vehicleType) {
         res.status(404).send({ message: 'Vehicle type not found' });
     }

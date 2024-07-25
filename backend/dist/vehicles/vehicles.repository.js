@@ -23,7 +23,7 @@ export class VehiclesRepository {
         console.log(vehicleInput);
         const vehicleId = Number.parseInt(id);
         const { ...vehicleRow } = vehicleInput;
-        await pool.query('update vehicles set ? where id =?', [vehicleRow, vehicleId]);
+        await pool.query('update vehicles set ? where id = ?', [vehicleRow, vehicleId]);
         return await this.findOne({ id });
     }
     async delete(item) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import { Vehicles } from '../interfaces/vehicles';
 
 
@@ -20,7 +20,7 @@ export class VehicleService {
   }
 
   ConsultarVehiculos(): Observable<Vehicles[]>{
-    return this.http.get<Vehicles[]>(`${this.servidor}${this.appivehicles}`);
+    return this.http.get<{data:Vehicles[]}>(`${this.servidor}${this.appivehicles}`).pipe(map(response => response.data));
   }
   
 }

@@ -1,31 +1,40 @@
-import { VehicleType } from "./vehicleType.entity.js";
-const vehicleTypes = [
-    new VehicleType('Utilitario', '01', 'a02b91bc-3769-4221-beb1-d7a3aeba7dad'),
-];
+import { pool } from '../shared/db/conn.mysql.js';
 export class VehicleTypesRepository {
-    findAll() {
-        return vehicleTypes;
+    async findAll() {
+        const [VehicleType] = await pool.query('select * from vehicleTypes');
+        return VehicleType;
     }
-    findOne(item) {
-        return vehicleTypes.find((vehicleType) => vehicleType.id === item.id);
-    }
-    add(item) {
-        vehicleTypes.push(item);
-        return item;
-    }
-    update(item) {
-        const vehicleTypeIdx = vehicleTypes.findIndex((vehicleType) => vehicleType.id === item.id);
-        if (vehicleTypeIdx !== -1) {
-            vehicleTypes[vehicleTypeIdx] = { ...vehicleTypes[vehicleTypeIdx], ...item };
+    async findOne(item) {
+        const id = Number.parseInt(item.id);
+        const [VehicleTypes] = await pool.query('select * from VehicleTypes where id = ? ', [id]);
+        if (VehicleTypes.length === 0) {
+            return undefined;
         }
-        return vehicleTypes[vehicleTypeIdx];
+        const VehicleType = VehicleTypes[0];
+        return VehicleType;
     }
-    delete(item) {
-        const vehicleTypeIdx = vehicleTypes.findIndex((vehicleType) => vehicleType.id === item.id);
-        if (vehicleTypeIdx !== -1) {
-            const deletedVehicleType = vehicleTypes[vehicleTypeIdx];
-            vehicleTypes.splice(vehicleTypeIdx, 1);
-            return deletedVehicleType;
+    async add(vehicleTypesInput) {
+        const { id, ...vehicleTypeRow } = vehicleTypesInput;
+        const [result] = await pool.query("Insert into VehicleTypes set ?", [vehicleTypeRow]);
+        vehicleTypesInput.id = result.insertId;
+        return vehicleTypesInput;
+    }
+    async update(id, vehicleTypesInput) {
+        console.log(vehicleTypesInput);
+        const vehicleTypeId = Number.parseInt(id);
+        const { ...vehicleTypeRow } = vehicleTypesInput;
+        await pool.query('update vehicleTypes set ? where id = ?', [vehicleTypeRow, vehicleTypeId]);
+        return await this.findOne({ id });
+    }
+    async delete(item) {
+        try {
+            const vehicleTypeToDelete = await this.findOne(item);
+            const vehicleTypeId = Number.parseInt(item.id);
+            await pool.query('delete from vehicles where id = ?', vehicleTypeId);
+            return vehicleTypeToDelete;
+        }
+        catch (error) {
+            throw new Error('No se pudo borrar el vehiculo');
         }
     }
 }

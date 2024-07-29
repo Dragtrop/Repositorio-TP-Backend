@@ -1,10 +1,15 @@
 import express from "express";
 import { characterRouter } from "./vehicles/vehicles.routes.js";
 import { characterRouterVehicleTypes } from "./vehicleTypes/vehicleTypes.routes.js";
+<<<<<<< HEAD
 import { locationRouter } from "./location/location.routes.js";
+=======
+import cors from "cors";
+>>>>>>> 43085175e656e160ac0bccecf34c619bfd77413a
 const app = express();
 app.use(express.json());
-app.use('/api/vehicles', characterRouter);
+app.use(cors());
+app.use('/vehicles', characterRouter);
 app.use('/api/vehicleTypes', characterRouterVehicleTypes);
 app.use('/api/locations', locationRouter);
 app.use((_, res) => {

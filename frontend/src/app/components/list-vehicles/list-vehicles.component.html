@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="container">
     <div class="title">
         <h4>Listado de Productos</h4>
@@ -29,3 +30,29 @@
 </div>
 
 
+=======
+<div>
+  <div class="title">
+    <h4>Listado de Productos</h4>
+    <button type="button" class="btn btn-primary">Agregar vehiculo</button>
+    <button type="button" class="btn btn-primary">Modificar vehiculo</button>
+    <button type="button" class="btn btn-primary">Eliminar vehiculo</button>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Patente</th>
+        <th scope="col">Marca</th>
+        <th scope="col">ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listVehicles" >
+        <td>{{ item.patente }}</td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.marca }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+>>>>>>> 43085175e656e160ac0bccecf34c619bfd77413a

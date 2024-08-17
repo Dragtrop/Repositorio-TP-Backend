@@ -2,7 +2,7 @@
 GET http://localhost:3000/api/vehicleTypes
 
 ### obtener un vehicleType
-GET http://localhost:3000/api/vehicleTypes/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+GET http://localhost:3000/api/vehicleTypes/1
 
 ### crear un vehicleType
 POST http://localhost:3000/api/vehicleTypes

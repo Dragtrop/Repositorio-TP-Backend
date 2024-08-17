@@ -1,5 +1,5 @@
 ### obtener todos los vehicles
-get http://localhost:3000/api/vehicles
+get http://localhost:3000/vehicles
 
 
 ### obtener un vehicle
@@ -7,32 +7,34 @@ get http://localhost:3000/api/vehicles
 get http://localhost:3000/api/vehicles/a02b91bc-3769-4221-beb1-d7a3aeba7dad
 
 ### crear un vehicle
-post http://localhost:3000/api/vehicles
+post http://localhost:3000/vehicles
 Content-Type: application/json
 
 {
-  "patente" : " AD-736-RT ",
-
-  "marca" : " Honda " 
+  "id": 5,
+  "patente": " AD-736-RT ",
+  "marca": "Honda"
   
 }  
 
 
 
 ### borrar un recurso
-delete http://localhost:3000/api/vehicles/5
+delete http://localhost:3000/vehicles/7
 
 
 
 ### modficar un recurso
 
-PUT http://localhost:3000/api/vehicles/1
+PUT http://localhost:3000/vehicles/6
 Content-Type: application/json
 
 {
   "patente" : " AG-584-AA ",
 
-  "marca" : " Toyota " 
+  "marca" : " Toyota " ,
+
+  "id" : "5"
   
 }  
 

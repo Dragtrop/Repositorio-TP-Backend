@@ -1,6 +1,6 @@
-import { Request,Response,NextFunction } from "express"
 import { VehiclesRepository } from "./vehicles.repository.js"
 import { Vehicle } from "./vehicles.entity.js"
+import { Request,Response,NextFunction } from "express"
 
 const repository = new VehiclesRepository()
 
@@ -17,13 +17,9 @@ function sanitizeVehicleInput(req:Request,res:Response, next: NextFunction){
          if(req.body.sanitizedInput[key]=== undefined){
             delete req.body.sanitizedInput[key]
          }
-    })
- 
-     
-    next()
- 
- 
-}
+    })   
+    next()}
+    
 async function findAll(req: Request, res: Response) {
     res.json({ data: await repository.findAll() })
 }

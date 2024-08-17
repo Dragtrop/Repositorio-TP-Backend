@@ -1,0 +1,49 @@
+### obtener todos los services
+get http://localhost:3000/api/services
+
+
+### obtener un vehicle
+
+get http://localhost:3000/api/services
+
+### crear un servicie
+post http://localhost:3000/api/services
+Content-Type: application/json
+
+{
+    "nroServicio": 1,
+    "nombre": "Limpieza",
+    "valorServicio": 1500
+}  
+
+
+
+### borrar un recurso
+delete  http://localhost:3000/api/services
+
+
+
+
+### modficar un recurso
+
+PUT http://localhost:3000/services
+Content-Type: application/json
+
+{
+  "patente" : " AG-584-AA ",
+
+  "marca" : " Toyota " ,
+
+  "id" : "5"
+  
+}  
+
+### modficar un recurso
+
+patch http://localhost:3000/api/services
+Content-Type: application/json
+
+
+{
+  
+}  

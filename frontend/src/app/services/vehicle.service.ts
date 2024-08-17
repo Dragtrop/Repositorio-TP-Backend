@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class VehicleService {
-
-  constructor() { }
-}
-=======
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {map, Observable} from "rxjs";
@@ -35,4 +24,3 @@ export class VehicleService {
   }
   
 }
->>>>>>> 43085175e656e160ac0bccecf34c619bfd77413a

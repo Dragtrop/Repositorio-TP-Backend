@@ -1,5 +1,16 @@
-.title{
-    margin-top: 5px;
-    display: flex;
-    justify-content: space-between;
+table {
+    width: 100%;
+  }
+
+
+
+.btnedit, .btndelete{
+    cursor:pointer;
+}
+.addbt{
+
+  display: table-cell;
+  max-width: 100px;
+  margin: 8px 8px 8px 8;
+  left :75%
 }

@@ -15,7 +15,7 @@ export class VehicleService {
 
   constructor(private http :HttpClient) { 
     this.servidor = "http://localhost:3000/"
-    this.appivehicles = "vehicles"
+    this.appivehicles = "vehicles/"
 
   }
 
@@ -23,4 +23,20 @@ export class VehicleService {
     return this.http.get<{data:Vehicles[]}>(`${this.servidor}${this.appivehicles}`).pipe(map(response => response.data));
   }
   
+  deletevehicle(id:number): Observable<void>{
+    return this.http.delete<void>(`${this.servidor}${this.appivehicles}${id}`);
+
+  }
+
+  addvehicle(vehicle:Vehicles):Observable<void>{
+    return this.http.post<void>(`${this.servidor}${this.appivehicles}`,vehicle);
+  }
+
+  getVehicle(id: number): Observable<Vehicles> {
+    return this.http.get<{ data: Vehicles }>(`${this.servidor}${this.appivehicles}${id}`)
+      .pipe(map(response => response.data));
+  }
+  editVehicle(id:number,vehicle:Vehicles):Observable<void>{
+    return this.http.put<void>(`${this.servidor}${this.appivehicles}${id}`,vehicle);
+  }
 }

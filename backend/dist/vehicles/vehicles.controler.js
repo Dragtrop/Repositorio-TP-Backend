@@ -3,8 +3,8 @@ import { Vehicle } from "./vehicles.entity.js";
 const repository = new VehiclesRepository();
 function sanitizeVehicleInput(req, res, next) {
     req.body.sanitizedInput = {
-        marca: req.body.marca,
         patente: req.body.patente,
+        marca: req.body.marca,
     };
     Object.keys(req.body.sanitizedInput).forEach(key => {
         if (req.body.sanitizedInput[key] === undefined) {
@@ -26,7 +26,7 @@ async function findOne(req, res) {
 }
 async function add(req, res) {
     const input = req.body.sanitizedInput;
-    const vehicleInput = new Vehicle(input.patente, input.modelo);
+    const vehicleInput = new Vehicle(input.patente, input.marca);
     const vehicle = await repository.add(vehicleInput);
     return res.status(201).send({ message: 'Vehicle created', data: vehicle });
 }

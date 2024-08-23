@@ -7,6 +7,23 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ListVehiclesComponent } from './components/list-vehicles/list-vehicles.component';
 import { AddEditVehicleComponent } from './components/add-edit-vehicle/add-edit-vehicle.component';
 import {HttpClientModule} from "@angular/common/http";
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {ReactiveFormsModule} from '@angular/forms'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
@@ -16,9 +33,25 @@ import {HttpClientModule} from "@angular/common/http";
     AddEditVehicleComponent
   ],
   imports: [
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatSlideToggleModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

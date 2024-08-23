@@ -11,16 +11,16 @@ post http://localhost:3000/vehicles
 Content-Type: application/json
 
 {
-  "id": 5,
-  "patente": " AD-736-RT ",
-  "marca": "Honda"
-  
+  "patente": "AA-236-ZT",
+
+  "marca": "Fiat"
+
 }  
 
 
 
 ### borrar un recurso
-delete http://localhost:3000/vehicles/7
+delete http://localhost:3000/vehicles/9
 
 
 

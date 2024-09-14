@@ -23,9 +23,11 @@ export class ServicesRepository implements Repository<Service>{
     }
 
     public async add(serviceInput:Service): Promise<Service  | undefined>{
-        const {id, ...serviceRow} = serviceInput
+        const {id,nroServicio, ...serviceRow} = serviceInput
         const [result] = await pool.query<ResultSetHeader>("Insert into services set ?", [serviceRow])
         serviceInput.id = result.insertId
+        serviceInput.nroServicio = result.insertId
+        await pool.query('UPDATE services SET nroServicio = ? WHERE id = ?', [serviceInput.nroServicio,  serviceInput.id]);
 
         return serviceInput
     }

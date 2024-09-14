@@ -28,6 +28,10 @@ export class GarageRepository implements Repository<Garage>{
         const {id, ...garageRow} = garageInput
         const [result] = await pool.query<ResultSetHeader>("Insert into garages set ?", [garageRow])
         garageInput.id = result.insertId
+        garageInput.nroGarage = result.insertId
+
+        await pool.query('UPDATE garages SET nroGarage = ? WHERE id = ?', [garageInput.nroGarage,  garageInput.id]);
+
 
         return garageInput
     }

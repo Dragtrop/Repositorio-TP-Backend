@@ -13,9 +13,9 @@ app.use(express.json())
 app.use('/vehicles',characterRouter)
 app.use('/api/vehicleTypes',characterRouterVehicleTypes)
 app.use('/api/locations',locationRouter)
-app.use('/api/garages', GarageRouter)
-app.use('/api/users',UserRouter)
-app.use('/api/services',serviceRouter)
+app.use('/garages', GarageRouter)
+app.use('/users',UserRouter)
+app.use('/services',serviceRouter)
 
 app.use((_,res) =>{
    return res.status(404).send({message:'Resource not found'})

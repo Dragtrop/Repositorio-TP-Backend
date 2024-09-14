@@ -15,8 +15,7 @@ Content-Type: application/json
 
 {
 
-   "nroCliente": 1,
-    "nombre":"string",
+    "nombre":"snag",
     "apellido":"Cualquiera",
     "telefono": 1234567890,
     "mail":"fulanitoCual@msn.com",

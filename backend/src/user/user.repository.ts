@@ -25,10 +25,12 @@ export class UserRepository implements Repository<User>{
     }
 
     public async add(userInput:User): Promise<User  | undefined>{
-        const {id, ...userRow} = userInput
+        const {id,nroCliente, ...userRow} = userInput
         const [result] = await pool.query<ResultSetHeader>("Insert into users set ?", [userRow])
         userInput.id = result.insertId
+        userInput.nroCliente = userInput.id 
 
+        await pool.query('UPDATE users SET nroCliente = ? WHERE id = ?', [userInput.nroCliente, userInput.id]);
         return userInput
     }
 

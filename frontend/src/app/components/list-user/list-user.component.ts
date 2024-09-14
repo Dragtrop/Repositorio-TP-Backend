@@ -1,27 +1,28 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Vehicles } from '../../interfaces/vehicles';
-import {VehicleService} from "../../services/vehicle.service"
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { AddEditVehicleComponent } from '../add-edit-vehicle/add-edit-vehicle.component';
+import { AddEditUserComponent } from '../add-edit-user/add-edit-user.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'src/app/interfaces/user.js';
+import { UserService } from 'src/app/services/user.service';
 
+const listUsers: User[] = [];
 
-const listVehicles: Vehicles[] = [];
 
 @Component({
-  selector: 'app-list-vehicles',
-  templateUrl:'./list-vehicles.component.html',
-  styleUrls: ['./list-vehicles.component.scss']
+  selector: 'app-list-user',
+  templateUrl: './list-user.component.html',
+  styleUrls: ['./list-user.component.scss']
 })
 
-export class ListVehiclesComponent implements OnInit,AfterViewInit{
+
+export class ListUserComponent implements OnInit,AfterViewInit{
 
 
-  displayedColumns: string[] = ['Patente', 'Marca', 'id','acciones'];
-  dataSource: MatTableDataSource<Vehicles>;
+  displayedColumns: string[] = ['nroCliente', 'nombre', 'apellido','telefono','mail','Rol','id','acciones'];
+  dataSource: MatTableDataSource<User>;
   loading:boolean = false;
 
 
@@ -29,9 +30,9 @@ export class ListVehiclesComponent implements OnInit,AfterViewInit{
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor (public dialog: MatDialog,private _vehicleService: VehicleService,
+  constructor (public dialog: MatDialog,private _userService: UserService,
     private _snackBar : MatSnackBar  ){
-    this.dataSource = new MatTableDataSource(listVehicles);
+    this.dataSource = new MatTableDataSource(listUsers);
 
   } 
   
@@ -43,44 +44,44 @@ export class ListVehiclesComponent implements OnInit,AfterViewInit{
   }
 
   ngOnInit(): void {
-    this.ConsultarVehiculos();
+    this.ConsultarUsuarios();
   }
   
 
-  addeditvehicle(id?:number){
-    const dialogRef = this.dialog.open(AddEditVehicleComponent, {
+  addedituser(id?:number){
+    const dialogRef = this.dialog.open(AddEditUserComponent, {
       width: '550px',
       disableClose:true,
       data:{id:id}
     });
     dialogRef.afterClosed().subscribe(result =>{
       if(result){
-        this.ConsultarVehiculos()};
+        this.ConsultarUsuarios()};
     })
 
   }
 
-  ConsultarVehiculos(){
+  ConsultarUsuarios(){
     this.loading =true;
     
-    this._vehicleService.ConsultarVehiculos().subscribe(element => {
+    this._userService.ConsultarUsuarios().subscribe(element => {
       this.loading = false;
       console.log(element)
       this.dataSource.data=element
     })
   }
 
-  deletevehicle(id:number){
+  deleteuser(id:number){
     this.loading = true;
-    this._vehicleService.deletevehicle(id).subscribe(() =>{
+    this._userService.deleteuser(id).subscribe(() =>{
       this.loading = false;
-      this.ConsultarVehiculos();
+      this.ConsultarUsuarios();
       this.deletecomplete();
     }
     )
   }
   deletecomplete(){
-    this._snackBar.open("Vehiculo eliminado con exito", "",{
+    this._snackBar.open("Usuario eliminado con exito", "",{
       duration:2000
     });
   }

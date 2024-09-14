@@ -19,6 +19,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { ListUserComponent } from './components/list-user/list-user.component';
+import { AddEditUserComponent } from './components/add-edit-user/add-edit-user.component';
+import { ListGarageComponent } from './components/list-garage/list-garage.component';
+import { AddEditGarageComponent } from './components/add-edit-garage/add-edit-garage.component';
+import { AddEditServicesComponent } from './components/add-edit-services/add-edit-services.component';
+import { ListServicesComponent } from './components/list-services/list-services.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 //COMPONENTS
@@ -35,6 +42,13 @@ import { ListLocationsComponent } from './components/list-location/list-location
     AppComponent,
     NavbarComponent,
     ListVehiclesComponent,
+    AddEditVehicleComponent,
+    ListUserComponent,
+    AddEditUserComponent,
+    ListGarageComponent,
+    AddEditGarageComponent,
+    AddEditServicesComponent,
+    ListServicesComponent
     AddEditVehicleComponent,
     ListVehicleTypesComponent,
     AddEditVehicleTypeComponent,

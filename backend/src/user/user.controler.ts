@@ -15,7 +15,7 @@ function sanitizeUserInput(req:Request,res:Response, next: NextFunction){
       apellido: req.body.apellido,
       telefono: req.body.telefono,
       mail:req.body.mail,
-      rol:req.body.rol
+      Rol:req.body.Rol
     
     }  
      

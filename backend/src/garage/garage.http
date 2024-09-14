@@ -14,10 +14,10 @@ post http://localhost:3000/api/garages
 Content-Type: application/json
 
 {
-  "nroGarage": "1",
+
   "direccion":"Pichinchoo 337",
   "cantLugares":"25",
-  "valorCocheraxH " :"2500"
+  "valorCocheraxH" :"2500"
 }  
 
 

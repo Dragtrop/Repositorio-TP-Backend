@@ -20,16 +20,15 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
+//COMPONENTS
 import { ListUserComponent } from './components/list-user/list-user.component';
 import { AddEditUserComponent } from './components/add-edit-user/add-edit-user.component';
 import { ListGarageComponent } from './components/list-garage/list-garage.component';
 import { AddEditGarageComponent } from './components/add-edit-garage/add-edit-garage.component';
 import { AddEditServicesComponent } from './components/add-edit-services/add-edit-services.component';
 import { ListServicesComponent } from './components/list-services/list-services.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
-//COMPONENTS
-
 import { ListVehiclesComponent } from './components/list-vehicles/list-vehicles.component';
 import { AddEditVehicleComponent } from './components/add-edit-vehicle/add-edit-vehicle.component';
 import { AddEditVehicleTypeComponent } from './components/add-edit-vehicleType/add-edit-vehicleType.component';
@@ -48,8 +47,7 @@ import { ListLocationsComponent } from './components/list-location/list-location
     ListGarageComponent,
     AddEditGarageComponent,
     AddEditServicesComponent,
-    ListServicesComponent
-    AddEditVehicleComponent,
+    ListServicesComponent,
     ListVehicleTypesComponent,
     AddEditVehicleTypeComponent,
     ListLocationsComponent,

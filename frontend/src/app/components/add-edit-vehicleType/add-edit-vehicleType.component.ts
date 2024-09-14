@@ -22,7 +22,7 @@ export class AddEditVehicleTypeComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.form = this.fb.group({
         nombre: ['', Validators.required],
-        codigo: ['', Validators.required],
+        codigo: ['',],
         id: ['']
       });
       this.id = data.id;

@@ -1,5 +1,5 @@
 ### obtener todos los vehicleTypes
-GET http://localhost:3000/api/vehicleTypes
+GET http://localhost:3000/vehicleTypes
 
 ### obtener un vehicleType
 GET http://localhost:3000/api/vehicleTypes/1
@@ -14,7 +14,7 @@ Content-Type: application/json
 }
 
 ### borrar un recurso
-DELETE http://localhost:3000/api/vehicleTypes/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+DELETE http://localhost:3000/vehicleTypes/1
 
 ### modificar un recurso (PUT)
 PUT http://localhost:3000/api/vehicleTypes/a02b91bc-3769-4221-beb1-d7a3aeba7dad

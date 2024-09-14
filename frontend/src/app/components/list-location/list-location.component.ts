@@ -18,7 +18,7 @@ const listLocations: Location[] = [];
 
 export class ListLocationsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['nombre', 'codigoPostal', 'id'];
+  displayedColumns: string[] = ['nombre', 'codigoPostal', 'id','acciones'];
   dataSource: MatTableDataSource<Location>;
   loading: boolean = false;
 
@@ -42,7 +42,7 @@ export class ListLocationsComponent implements OnInit, AfterViewInit {
     this.consultarLocations();
   }
 
-  addeditLocation(id?: number) {
+  addeditlocation(id?: number) {
     const dialogRef = this.dialog.open(AddEditLocationComponent, {
       width: '550px',
       disableClose: true,
@@ -63,9 +63,9 @@ export class ListLocationsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  deleteLocation(id: number) {
+  deletelocation(id: number) {
     this.loading = true;
-    this._locationService.deleteLocation(id).subscribe(() => {
+    this._locationService.deletelocation(id).subscribe(() => {
       this.loading = false;
       this.consultarLocations();
       this.deleteComplete();

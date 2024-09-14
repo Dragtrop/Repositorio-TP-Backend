@@ -25,10 +25,12 @@ export class VehicleTypesRepository implements Repository<VehicleType>{
 
 
    public async add(vehicleTypesInput:VehicleType): Promise<VehicleType  | undefined>{
-      const {id, ...vehicleTypeRow} = vehicleTypesInput
+      const {id,codigo, ...vehicleTypeRow} = vehicleTypesInput
       const [result] = await pool.query<ResultSetHeader>("Insert into VehicleTypes set ?", [vehicleTypeRow])
       vehicleTypesInput.id = result.insertId
-      
+      vehicleTypesInput.codigo = vehicleTypesInput.id 
+
+      await pool.query('UPDATE VehicleTypes SET codigo = ? WHERE id = ?', [vehicleTypesInput.codigo, vehicleTypesInput.id]);
       return vehicleTypesInput
 
    }
@@ -46,7 +48,7 @@ export class VehicleTypesRepository implements Repository<VehicleType>{
       try{
          const vehicleTypeToDelete = await this.findOne(item)
          const vehicleTypeId = Number.parseInt(item.id)
-         await pool.query('delete from vehicles where id = ?', vehicleTypeId)
+         await pool.query('delete from vehicleTypes where id = ?', vehicleTypeId)
  
          return vehicleTypeToDelete}
          catch(error:any){

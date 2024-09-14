@@ -13,7 +13,7 @@ export class VehicleTypeService {
 
   constructor(private http: HttpClient) {
     this.servidor = "http://localhost:3000/";
-    this.apiVehicleTypes = "vehicle-types/"; 
+    this.apiVehicleTypes = "vehicleTypes/"; 
   }
 
   ConsultarVehicleTypes(): Observable<VehicleType[]> {

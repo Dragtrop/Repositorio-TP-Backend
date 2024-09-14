@@ -6,13 +6,13 @@ import { GarageRouter } from "./garage/garage.routes.js";
 import cors from "cors";
 import { UserRouter } from "./user/user.routes.js";
 import { serviceRouter } from "./service/service.routes.js";
-
+import { Express } from "express";
 const app = express();
 app.use(cors());
 app.use(express.json())
 app.use('/vehicles',characterRouter)
-app.use('/api/vehicleTypes',characterRouterVehicleTypes)
-app.use('/api/locations',locationRouter)
+app.use('/vehicleTypes',characterRouterVehicleTypes)
+app.use('/locations',locationRouter)
 app.use('/garages', GarageRouter)
 app.use('/users',UserRouter)
 app.use('/services',serviceRouter)

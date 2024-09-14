@@ -28,12 +28,12 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
       </ng-container>
+
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
         <td mat-cell *matCellDef="let element"> 
           <mat-icon (click)="addeditgarage(element.id)" class="btnedit">edit_note</mat-icon>  
           <mat-icon (click)="deletegarage(element.id)" class="btndelete">delete</mat-icon>  
-  
         </td>
       </ng-container>
     

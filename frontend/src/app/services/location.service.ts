@@ -12,7 +12,7 @@ export class LocationService {
   private apiLocations: string;
 
   constructor(private http: HttpClient) {
-    this.servidor = "http://localhost:3000/";
+    this.servidor = "http://localhost:3000/api/";
     this.apiLocations = "locations/";
   }
 
@@ -20,7 +20,7 @@ export class LocationService {
     return this.http.get<{ data: Location[] }>(`${this.servidor}${this.apiLocations}`).pipe(map(response => response.data));
   }
 
-  deleteLocation(id: number): Observable<void> {
+  deletelocation(id: number): Observable<void> {
     return this.http.delete<void>(`${this.servidor}${this.apiLocations}${id}`);
   }
 

@@ -9,6 +9,8 @@ export class User{
         public telefono:number,
         public mail:string,
         public Rol:string,
+        public password:string,
+        public usuario:string,
         public id?: number,
     ){}
 }

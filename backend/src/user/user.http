@@ -19,7 +19,10 @@ Content-Type: application/json
     "apellido":"Cualquiera",
     "telefono": 1234567890,
     "mail":"fulanitoCual@msn.com",
-    "Rol":"Cliente"
+    "Rol":"Cliente",
+    "password":"alalala",
+    "usuario":"snag"
+
     
 }  
 

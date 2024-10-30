@@ -79,6 +79,8 @@ export class AddEditUserComponent {
       telefono:this.form.value.telefono,
       mail:this.form.value.mail,
       Rol:this.form.value.Rol,
+      usuario:this.form.value.usuario,
+      password:this.form.value.password,
       id:this.form.value.id
 
     }

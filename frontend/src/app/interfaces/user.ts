@@ -5,5 +5,7 @@ export interface User{
     telefono:number,
     mail:string,
     Rol:string,
+    password:string,
+    usuario:string,
     id: number,
 }

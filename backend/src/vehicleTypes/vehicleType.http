@@ -1,5 +1,5 @@
 ### obtener todos los vehicleTypes
-GET http://localhost:3000/vehicleTypes
+GET http://localhost:3000/api/vehicleTypes
 
 ### obtener un vehicleType
 GET http://localhost:3000/api/vehicleTypes/1
@@ -9,8 +9,8 @@ POST http://localhost:3000/api/vehicleTypes
 Content-Type: application/json
 
 {
-  "nombre": "pickup",
-  "codigo": "02"
+  "nombre": "pickup"
+
 }
 
 ### borrar un recurso

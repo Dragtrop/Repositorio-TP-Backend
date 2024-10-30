@@ -23,6 +23,11 @@ export class UserRepository implements Repository<User>{
         return user
 
     }
+    async findByUsuario(usuario: string): Promise<User | null> {
+        const [rows]: any = await pool.query('SELECT * FROM users WHERE usuario = ?', [usuario]);
+        return rows.length > 0 ? rows[0] : null;
+    }
+
 
     public async add(userInput:User): Promise<User  | undefined>{
         const {id,nroCliente, ...userRow} = userInput

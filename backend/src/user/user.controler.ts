@@ -1,9 +1,9 @@
 import { UserRepository } from "./user.repository.js"
 import { User } from "./user.entity.js"
 import { Request,Response,NextFunction } from "express"
+import { UsuarioService } from "./user.service.js"
 
-
-
+const usuarioService = new UsuarioService();
 const repository = new UserRepository()
 
 
@@ -15,7 +15,9 @@ function sanitizeUserInput(req:Request,res:Response, next: NextFunction){
       apellido: req.body.apellido,
       telefono: req.body.telefono,
       mail:req.body.mail,
-      Rol:req.body.Rol
+      Rol:req.body.Rol,
+      password:req.body.password,
+      usuario:req.body.usuario,
     
     }  
      
@@ -26,10 +28,26 @@ function sanitizeUserInput(req:Request,res:Response, next: NextFunction){
          }
     })   
     next()}
-    
+
+
+async function login(req: Request, res: Response) {
+  const { usuario, password } = req.body;
+      const token = await usuarioService.login(usuario, password);
+
+      if (token) {
+          res.json({ token });
+      } else {
+          res.status(401).json({ message: 'Credenciales incorrectas' });
+      }
+}
+ 
+
+
 async function findAll(req: Request, res: Response) {
     res.json({ data: await repository.findAll() })
 }
+
+
 
 async function findOne(req: Request, res: Response) {
     const id = req.params.id
@@ -52,6 +70,8 @@ async function add(req: Request, res: Response) {
         input.telefono,
         input.mail,
         input.Rol,
+        input.usuario,
+        input.password,
     )
   
     const user = await repository.add(userInput)
@@ -80,4 +100,4 @@ async function remove(req: Request, res: Response) {
       res.status(200).send({ message: 'User deleted successfully' })
     }
   }
-export{sanitizeUserInput,findAll,findOne,add,update,remove}
+export{sanitizeUserInput,findAll,findOne,add,update,remove,login}

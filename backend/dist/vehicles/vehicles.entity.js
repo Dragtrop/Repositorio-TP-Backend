@@ -1,7 +1,8 @@
 export class Vehicle {
-    constructor(patente, marca, id) {
+    constructor(patente, marca, codtipv, id) {
         this.patente = patente;
         this.marca = marca;
+        this.codtipv = codtipv;
         this.id = id;
     }
 }

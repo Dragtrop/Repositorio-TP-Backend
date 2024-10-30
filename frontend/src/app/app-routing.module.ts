@@ -6,15 +6,17 @@ import { ListUserComponent } from './components/list-user/list-user.component';
 import { ListGarageComponent } from './components/list-garage/list-garage.component';
 import { ListServicesComponent } from './components/list-services/list-services.component';
 import { ListLocationsComponent } from './components/list-location/list-location.component';
-
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 const routes: Routes = [
-  {path:"",component: ListVehiclesComponent },
-  {path:"",component: ListVehicleTypesComponent },
-  {path:"",component: ListLocationsComponent },  
-  {path:"",component:ListVehiclesComponent},
-  {path:"",component:ListUserComponent},
-  {path:"",component:ListGarageComponent},
-  {path:"",component:ListServicesComponent}
+  {path:"vehiculos",component: ListVehiclesComponent },
+  {path:"tipovehiculos",component: ListVehicleTypesComponent },
+  {path:"localizaciones",component: ListLocationsComponent },  
+  {path:"usuarios",component:ListUserComponent},
+  {path:"garages",component:ListGarageComponent},
+  {path:"servicios",component:ListServicesComponent},
+  {path:"login",component:LoginComponent},
+  {path:"register",component:RegisterComponent}
 
 ];
 

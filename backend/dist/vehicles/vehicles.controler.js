@@ -5,6 +5,7 @@ function sanitizeVehicleInput(req, res, next) {
     req.body.sanitizedInput = {
         patente: req.body.patente,
         marca: req.body.marca,
+        codtipv: req.body.codtipv,
     };
     Object.keys(req.body.sanitizedInput).forEach(key => {
         if (req.body.sanitizedInput[key] === undefined) {
@@ -26,7 +27,7 @@ async function findOne(req, res) {
 }
 async function add(req, res) {
     const input = req.body.sanitizedInput;
-    const vehicleInput = new Vehicle(input.patente, input.marca);
+    const vehicleInput = new Vehicle(input.patente, input.marca, input.codtipv);
     const vehicle = await repository.add(vehicleInput);
     return res.status(201).send({ message: 'Vehicle created', data: vehicle });
 }

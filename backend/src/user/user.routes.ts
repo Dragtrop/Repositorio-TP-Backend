@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { sanitizeUserInput,findAll,findOne,add,update,remove } from "./user.controler.js";
+import { sanitizeUserInput,findAll,findOne,add,update,remove,login } from "./user.controler.js";
+
 
 
 
@@ -18,3 +19,4 @@ UserRouter.patch('/:id',sanitizeUserInput,update)
 
 UserRouter.delete('/:id',remove)
 
+UserRouter.post('/login',login);

@@ -10,6 +10,7 @@ function sanitizeVehicleInput(req:Request,res:Response, next: NextFunction){
     req.body.sanitizedInput = {
       patente: req.body.patente,
       marca: req.body.marca,
+      codtipv:req.body.codtipv,
 
     }  
      
@@ -42,6 +43,7 @@ async function add(req: Request, res: Response) {
     const vehicleInput = new Vehicle(
       input.patente,
       input.marca,
+      input.codtipv,
     )
   
     const vehicle = await repository.add(vehicleInput)

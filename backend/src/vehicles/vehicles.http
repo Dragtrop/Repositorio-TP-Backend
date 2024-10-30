@@ -7,13 +7,14 @@ get http://localhost:3000/vehicles
 get http://localhost:3000/api/vehicles/a02b91bc-3769-4221-beb1-d7a3aeba7dad
 
 ### crear un vehicle
-post http://localhost:3000/vehicles
+post http://localhost:3000/api/vehicles
 Content-Type: application/json
 
 {
   "patente": "AA-236-ZT",
 
-  "marca": "Fiat"
+  "marca": "Fiat",
+  "codtipv": 1
 
 }  
 

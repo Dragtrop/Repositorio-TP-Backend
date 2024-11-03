@@ -14,7 +14,7 @@ app.use('/api/vehicles',characterRouter)
 app.use('/api/vehicleTypes',characterRouterVehicleTypes)
 app.use('/api/locations',locationRouter)
 app.use('/api/garages', GarageRouter)
-app.use('/api/users',UserRouter)
+app.use('/api/login',UserRouter)
 app.use('/api/services',serviceRouter)
 
 app.use((_,res) =>{

@@ -16,8 +16,31 @@ const routes: Routes = [
   {path:"garages",component:ListGarageComponent},
   {path:"servicios",component:ListServicesComponent},
   {path:"login",component:LoginComponent},
-  {path:"register",component:RegisterComponent}
+  {path:"register",component:RegisterComponent},
+  {
+    path: 'principal',
+    loadComponent: () => import('./shared/component/layout/layout.component'),
+    children: [
+        {
+            path: 'dashboard',
+            loadComponent: () => import('./principal/dashboard/dashboard.component')
+        },
+        {
+            path: 'profile',
+            loadComponent: () => import('./principal/profile/profile.component')
+        },
+        {
+            path: 'principal',
+            redirectTo: 'dashboard',
+            pathMatch: 'full'
+        }
 
+    ]
+},
+{
+    path: '**',
+    redirectTo: 'register'
+}
 ];
 
 @NgModule({

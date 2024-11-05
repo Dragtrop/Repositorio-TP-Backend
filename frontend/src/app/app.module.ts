@@ -20,8 +20,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
-
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 //COMPONENTS
 import { ListUserComponent } from './components/list-user/list-user.component';
 import { AddEditUserComponent } from './components/add-edit-user/add-edit-user.component';
@@ -54,6 +54,8 @@ import { ListLocationsComponent } from './components/list-location/list-location
     AddEditLocationComponent,
   ],
   imports: [
+    FormsModule,
+    CommonModule,
     MatProgressSpinnerModule,
     MatInputModule,
     MatSnackBarModule,

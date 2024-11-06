@@ -2,8 +2,6 @@ import { Router } from "express";
 import { sanitizeGarageInput,findAll,findOne,add,update,remove } from "./garage.controler.js";
 
 
-
-
 export const GarageRouter = Router()
 
 GarageRouter.get('/',findAll)

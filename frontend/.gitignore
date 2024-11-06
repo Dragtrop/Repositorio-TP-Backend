@@ -30,6 +30,7 @@ yarn-error.log
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+package-lock.json
 
 # Local history for vscode
 .history/
@@ -57,4 +58,4 @@ connect.lock
 libpeerconnection.log
 testem.log
 typings
-
+tsconfig.json

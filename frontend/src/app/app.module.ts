@@ -35,6 +35,7 @@ import { AddEditVehicleTypeComponent } from './components/add-edit-vehicleType/a
 import { ListVehicleTypesComponent } from './components/list-vehicleType/list-vehicleType.component';
 import { AddEditLocationComponent } from './components/add-edit-location/add-edit-location.component';
 import { ListLocationsComponent } from './components/list-location/list-location.component';
+import { DashboardComponent } from './principal/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ListLocationsComponent } from './components/list-location/list-location
     AddEditVehicleTypeComponent,
     ListLocationsComponent,
     AddEditLocationComponent,
+    DashboardComponent,
   ],
   imports: [
     FormsModule,

@@ -1,0 +1,61 @@
+### obtener todos los user
+get http://localhost:3000/api/users
+
+
+
+
+### obtener un user
+ 
+
+get http://localhost:3000/api/users
+
+### crear un user
+post http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+
+    "nombre":"snag",
+    "apellido":"Cualquiera",
+    "telefono": 1234567890,
+    "mail":"fulanitoCual@msn.com",
+    "Rol":"Cliente",
+    "password":"alalala",
+    "usuario":"snag"
+
+    
+}  
+
+
+
+### borrar un recurso
+delete http://localhost:3000/api/users
+
+
+
+### modficar un recurso
+
+PUT http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "patente" : " AG-584-AA ",
+
+  "marca" : " Toyota " ,
+
+  "id" : "5"
+  
+}  
+
+### modficar un recurso
+
+patch http://localhost:3000/api/users
+Content-Type: application/json
+
+
+{
+  "patente" : " AG-584-AB ",
+
+  "marca" : " Toyota " 
+  
+}  

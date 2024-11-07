@@ -1,0 +1,53 @@
+### obtener todos los vehicles
+get http://localhost:3000/vehicles
+
+
+### obtener un vehicle
+
+get http://localhost:3000/api/vehicles/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+
+### crear un vehicle
+post http://localhost:3000/api/vehicles
+Content-Type: application/json
+
+{
+  "patente": "AA-236-ZT",
+
+  "marca": "Fiat",
+  "codtipv": 1
+
+}  
+
+
+
+### borrar un recurso
+delete http://localhost:3000/vehicles/9
+
+
+
+### modficar un recurso
+
+PUT http://localhost:3000/vehicles/6
+Content-Type: application/json
+
+{
+  "patente" : " AG-584-AA ",
+
+  "marca" : " Toyota " ,
+
+  "id" : "5"
+  
+}  
+
+### modficar un recurso
+
+patch http://localhost:3000/api/vehicles/2
+Content-Type: application/json
+
+
+{
+  "patente" : " AG-584-AB ",
+
+  "marca" : " Toyota " 
+  
+}  

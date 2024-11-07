@@ -1,8 +1,8 @@
-import crypto from 'node:crypto';
 export class Vehicle {
-    constructor(marca, patente, id = crypto.randomUUID()) {
-        this.marca = marca;
+    constructor(patente, marca, codtipv, id) {
         this.patente = patente;
+        this.marca = marca;
+        this.codtipv = codtipv;
         this.id = id;
     }
 }

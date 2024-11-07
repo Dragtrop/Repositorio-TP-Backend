@@ -1,0 +1,35 @@
+### obtener todos los vehicleTypes
+GET http://localhost:3000/api/vehicleTypes
+
+### obtener un vehicleType
+GET http://localhost:3000/api/vehicleTypes/1
+
+### crear un vehicleType
+POST http://localhost:3000/api/vehicleTypes
+Content-Type: application/json
+
+{
+  "nombre": "pickup"
+
+}
+
+### borrar un recurso
+DELETE http://localhost:3000/vehicleTypes/1
+
+### modificar un recurso (PUT)
+PUT http://localhost:3000/api/vehicleTypes/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+Content-Type: application/json
+
+{
+  "nombre": "furgoneta",
+  "codigo": "03"
+}
+
+### modificar un recurso (PATCH)
+PATCH http://localhost:3000/api/vehicleTypes/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+Content-Type: application/json
+
+{
+  "nombre": "descapotable",
+  "codigo": "04"
+}

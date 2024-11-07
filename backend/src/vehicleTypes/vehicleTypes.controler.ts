@@ -19,20 +19,20 @@ function sanitizeVehicleTypeInput(req: Request, res: Response, next: NextFunctio
     next();
 }
 
-function findAll(req: Request, res: Response) {
-    res.json({ data: repository.findAll() });
+async function findAll(req: Request, res: Response) {
+    res.json({ data: await repository.findAll() })
 }
 
-function findOne(req: Request, res: Response) {
+async function findOne(req: Request, res: Response) {
     const id = req.params.id;
-    const vehicleType = repository.findOne({ id });
+    const vehicleType = await repository.findOne({ id });
     if (!vehicleType) {
         return res.status(404).send({ message: 'Vehicle type not found' });
     }
     res.json({ data: vehicleType });
 }
 
-function add(req: Request, res: Response) {
+async function add(req: Request, res: Response) {
     const input = req.body.sanitizedInput;
 
     const vehicleTypeInput = new VehicleType(
@@ -40,24 +40,23 @@ function add(req: Request, res: Response) {
         input.codigo
     );
 
-    const vehicleType = repository.add(vehicleTypeInput);
+    const vehicleType = await repository.add(vehicleTypeInput);
     return res.status(201).send({ message: 'Vehicle type created', data: vehicleType });
 }
 
-function update(req: Request, res: Response) {
-    req.body.sanitizedInput.id = req.params.id;
-    const vehicleType = repository.update(req.body.sanitizedInput);
-
+async function update(req: Request, res: Response) {
+    const vehicleType = await repository.update(req.params.id,req.body.sanitizedInput)
+  
     if (!vehicleType) {
-        return res.status(404).send({ message: 'Vehicle type not found' });
+      return res.status(404).send({ message: 'Vehicle not found' })
     }
-
-    return res.status(200).send({ message: 'Vehicle type updated successfully', data: vehicleType });
+  
+  return res.status(200).send({ message: 'Vehicle updated successfully', data: vehicleType })
 }
 
-function remove(req: Request, res: Response) {
+async function remove(req: Request, res: Response) {
     const id = req.params.id;
-    const vehicleType = repository.delete({ id });
+    const vehicleType = await repository.delete({ id });
 
     if (!vehicleType) {
         res.status(404).send({ message: 'Vehicle type not found' });

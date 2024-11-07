@@ -1,46 +1,58 @@
-import { publicDecrypt } from "crypto";
 import { Repository } from "../shared/repository.js";
 import { VehicleType } from "./vehicleType.entity.js";
+import { pool } from '../shared/db/conn.mysql.js';
+import { ResultSetHeader, RowDataPacket } from "mysql2";
+import { characterRouterVehicleTypes } from "./vehicleTypes.routes.js";
 
-const vehicleTypes = [
-    new VehicleType(
-      'Utilitario',
-      '01',
-      'a02b91bc-3769-4221-beb1-d7a3aeba7dad'
-    ),
-]
 
 export class VehicleTypesRepository implements Repository<VehicleType>{
 
-    public findAll(): VehicleType[] | undefined {
-        return vehicleTypes;
-    }
+    public async findAll(): Promise< VehicleType [] | undefined>{
+      const [VehicleType] = await pool.query('select * from vehicleTypes')
+      return VehicleType as VehicleType[]
 
-    public findOne(item: { id: string; }): VehicleType | undefined {
-        return vehicleTypes.find((vehicleType) => vehicleType.id === item.id);
-    }
+   }
 
-    public add(item: VehicleType): VehicleType | undefined {
-        vehicleTypes.push(item);
-        return item;
-    }
+   public async findOne (item:{id: string }):Promise<VehicleType  | undefined>{
+      const id = Number.parseInt(item.id)
+      const [VehicleTypes] = await pool.query<RowDataPacket[]>('select * from VehicleTypes where id = ? ',[id])
+      if(VehicleTypes.length === 0){
+         return undefined
+      }
+      const VehicleType = VehicleTypes[0] as VehicleType
+      return VehicleType
+   }
 
-    public update(item: VehicleType): VehicleType | undefined {
-        const vehicleTypeIdx = vehicleTypes.findIndex((vehicleType) => vehicleType.id === item.id);
 
-        if (vehicleTypeIdx !== -1) {
-            vehicleTypes[vehicleTypeIdx] = { ...vehicleTypes[vehicleTypeIdx], ...item };
-        }  
-        return vehicleTypes[vehicleTypeIdx];
-    }
+   public async add(vehicleTypesInput:VehicleType): Promise<VehicleType  | undefined>{
+      const {id,codigo, ...vehicleTypeRow} = vehicleTypesInput
+      const [result] = await pool.query<ResultSetHeader>("Insert into VehicleTypes set ?", [vehicleTypeRow])
+      vehicleTypesInput.id = result.insertId
+      vehicleTypesInput.codigo = vehicleTypesInput.id 
 
-    public delete(item: { id: string }): VehicleType | undefined {
-        const vehicleTypeIdx = vehicleTypes.findIndex((vehicleType) => vehicleType.id === item.id);
+      await pool.query('UPDATE VehicleTypes SET codigo = ? WHERE id = ?', [vehicleTypesInput.codigo, vehicleTypesInput.id]);
+      return vehicleTypesInput
 
-        if (vehicleTypeIdx !== -1) {      
-            const deletedVehicleType = vehicleTypes[vehicleTypeIdx];
-            vehicleTypes.splice(vehicleTypeIdx, 1);
-            return deletedVehicleType;
-        }
-    }
+   }
+
+   public async update (id: string, vehicleTypesInput: VehicleType): Promise<VehicleType  | undefined> {
+      console.log(vehicleTypesInput)
+      const vehicleTypeId = Number.parseInt(id)
+      const {... vehicleTypeRow} = vehicleTypesInput
+      await pool.query('update vehicleTypes set ? where id = ?',[vehicleTypeRow, vehicleTypeId] )
+
+      return await this.findOne({ id })
+
+   }
+   public async delete (item: {id:string}):Promise<VehicleType  | undefined>{
+      try{
+         const vehicleTypeToDelete = await this.findOne(item)
+         const vehicleTypeId = Number.parseInt(item.id)
+         await pool.query('delete from vehicleTypes where id = ?', vehicleTypeId)
+ 
+         return vehicleTypeToDelete}
+         catch(error:any){
+             throw new Error('No se pudo borrar el vehiculo')
+         }
+   }
 }

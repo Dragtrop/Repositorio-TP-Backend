@@ -1,31 +1,40 @@
-import { Vehicle } from "./vehicles.entity.js";
-const vehicles = [
-    new Vehicle('Ford', 'AA-158-FD', 'a02b91bc-3769-4221-beb1-d7a3aeba7dad'),
-];
+import { pool } from '../shared/db/conn.mysql.js';
 export class VehiclesRepository {
-    findAll() {
+    async findAll() {
+        const [vehicles] = await pool.query('select * from vehicles');
         return vehicles;
     }
-    findOne(item) {
-        return vehicles.find((vehicle) => vehicle.id === item.id);
-    }
-    add(item) {
-        vehicles.push(item);
-        return item;
-    }
-    update(item) {
-        const vehicleIdx = vehicles.findIndex((vehicle) => vehicle.id === item.id);
-        if (vehicleIdx !== -1) {
-            vehicles[vehicleIdx] = { ...vehicles[vehicleIdx], ...item };
+    async findOne(item) {
+        const id = Number.parseInt(item.id);
+        const [vehicles] = await pool.query('select * from vehicles where id = ? ', [id]);
+        if (vehicles.length === 0) {
+            return undefined;
         }
-        return vehicles[vehicleIdx];
+        const vehicle = vehicles[0];
+        return vehicle;
     }
-    delete(item) {
-        const vehicleIdx = vehicles.findIndex((vehicle) => vehicle.id === item.id);
-        if (vehicleIdx !== -1) {
-            const deletedVehicles = vehicles[vehicleIdx];
-            vehicles.splice(vehicleIdx, 1);
-            return deletedVehicles;
+    async add(vehicleInput) {
+        const { id, ...vehicleRow } = vehicleInput;
+        const [result] = await pool.query("Insert into vehicles set ?", [vehicleRow]);
+        vehicleInput.id = result.insertId;
+        return vehicleInput;
+    }
+    async update(id, vehicleInput) {
+        console.log(vehicleInput);
+        const vehicleId = Number.parseInt(id);
+        const { ...vehicleRow } = vehicleInput;
+        await pool.query('update vehicles set ? where id = ?', [vehicleRow, vehicleId]);
+        return await this.findOne({ id });
+    }
+    async delete(item) {
+        try {
+            const vehicleToDelete = await this.findOne(item);
+            const vehicleId = Number.parseInt(item.id);
+            await pool.query('delete from vehicles where id = ?', vehicleId);
+            return vehicleToDelete;
+        }
+        catch (error) {
+            throw new Error('No se pudo borrar el vehiculo');
         }
     }
 }

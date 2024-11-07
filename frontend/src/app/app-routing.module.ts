@@ -8,6 +8,8 @@ import { ListServicesComponent } from './components/list-services/list-services.
 import { ListLocationsComponent } from './components/list-location/list-location.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { DashboardComponent } from './principal/dashboard/dashboard.component';
+
 const routes: Routes = [
   {path:"vehiculos",component: ListVehiclesComponent },
   {path:"tipovehiculos",component: ListVehicleTypesComponent },
@@ -16,8 +18,25 @@ const routes: Routes = [
   {path:"garages",component:ListGarageComponent},
   {path:"servicios",component:ListServicesComponent},
   {path:"login",component:LoginComponent},
-  {path:"register",component:RegisterComponent}
-
+  {path:"register",component:RegisterComponent},
+  {path: 'principal',
+    loadComponent: () => import('./shared/component/layout/layout.component'),
+    children: [
+        {path: 'dashboard',component:DashboardComponent},
+        {path: 'profile',
+            loadComponent: () => import('./principal/profile/profile.component')
+        },
+        {
+            path: 'principal',
+            redirectTo: 'dashboard',
+            pathMatch: 'full'
+        }
+    ]
+},
+{
+    path: '**',
+    redirectTo: 'register'
+}
 ];
 
 @NgModule({

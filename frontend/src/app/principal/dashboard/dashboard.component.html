@@ -1,0 +1,9 @@
+<div class="garage-container" *ngIf="garages.length">
+  <div class="garage-box" *ngFor="let garage of garages">
+   <!--<img [src]="garage.imagen" alt="Imagen de la garage" class="garage-imagen" /> tenemos que agregar imagen a la garage--> 
+    <h3 class="garage-name">{{ garage.direccion }}</h3>
+    <p class="garage-price">{{ garage.valorCocheraxH | currency }}</p>
+    <button class="btn-alquilar" (click)="alquilarGarage(garage)">Alquilar</button>
+  </div>
+</div>
+<div *ngIf="!garages.length">No hay garages disponibles en este momento.</div>

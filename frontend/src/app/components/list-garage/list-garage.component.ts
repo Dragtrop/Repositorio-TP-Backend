@@ -89,12 +89,4 @@ export class ListGarageComponent implements OnInit,AfterViewInit{
     });
   }
 
-
-
-
-
-
-
-
-
 }

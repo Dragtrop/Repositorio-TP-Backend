@@ -57,4 +57,8 @@ export class GarageRepository implements Repository<Garage>{
         }
     }
 
+    public async updateCantLugares(id: number, cantLugares: number): Promise<void> {
+        await pool.query('UPDATE garages SET cantLugares = ? WHERE id = ?', [cantLugares, id]);
+    }
+
 }

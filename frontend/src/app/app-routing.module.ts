@@ -9,6 +9,7 @@ import { ListLocationsComponent } from './components/list-location/list-location
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './principal/dashboard/dashboard.component';
+import { ProfileComponent } from './principal/profile/profile.component';
 
 const routes: Routes = [
   {path:"vehiculos",component: ListVehiclesComponent },
@@ -23,9 +24,7 @@ const routes: Routes = [
     loadComponent: () => import('./shared/component/layout/layout.component'),
     children: [
         {path: 'dashboard',component:DashboardComponent},
-        {path: 'profile',
-            loadComponent: () => import('./principal/profile/profile.component')
-        },
+        {path: 'profile',component:ProfileComponent},
         {
             path: 'principal',
             redirectTo: 'dashboard',

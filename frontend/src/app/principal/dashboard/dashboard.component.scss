@@ -48,4 +48,13 @@
       background-color: #0056b3;
     }
   }
+  .garage-lugares {
+    font-size: 1em;
+    color: #4CAF50;
+    
+    &.low {
+      color: #ff0000; // si quedan menos de 5 lugares se pone en rojo garage.cantLugares
+    }
+  }
+  
 }

@@ -77,3 +77,15 @@ async function remove(req: Request, res: Response) {
     }
   }
 export{sanitizeGarageInput,findAll,findOne,add,update,remove}
+
+export async function updateCantLugares(req: Request, res: Response) {
+  const { id } = req.params;
+  const { cantLugares } = req.body;
+
+  try {
+      await repository.updateCantLugares(Number(id), cantLugares);
+      res.status(200).json({ message: "Cantidad de lugares actualizada exitosamente." });
+  } catch (error) {
+      res.status(500).json({ error: "Error al actualizar la cantidad de lugares." });
+  }
+}

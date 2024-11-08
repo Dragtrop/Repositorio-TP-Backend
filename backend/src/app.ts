@@ -1,12 +1,12 @@
+import { Express } from "express";
 import express from "express";
+import cors from "cors";
 import { characterRouter } from "./vehicles/vehicles.routes.js";
 import { characterRouterVehicleTypes } from "./vehicleTypes/vehicleTypes.routes.js";
 import { locationRouter } from "./location/location.routes.js";
 import { GarageRouter } from "./garage/garage.routes.js";
-import cors from "cors";
 import { UserRouter } from "./user/user.routes.js";
 import { serviceRouter } from "./service/service.routes.js";
-import { Express } from "express";
 import { AlquilerRouter } from "./alquiler/alquiler.routes.js";
 
 const app = express();

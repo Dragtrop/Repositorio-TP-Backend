@@ -1,4 +1,4 @@
-import { AlquilerRepository } from './alquiler.repository';
+import { AlquilerRepository } from './alquiler.repository.js';
 import { Request, Response } from 'express';
 
 const alquilerRepo = new AlquilerRepository();

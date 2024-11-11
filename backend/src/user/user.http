@@ -1,12 +1,8 @@
 ### obtener todos los user
 get http://localhost:3000/api/users
 
-
-
-
 ### obtener un user
  
-
 get http://localhost:3000/api/users
 
 ### crear un user
@@ -25,8 +21,6 @@ Content-Type: application/json
 
     
 }  
-
-
 
 ### borrar un recurso
 delete http://localhost:3000/api/users

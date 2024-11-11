@@ -6,11 +6,16 @@ import { AlquilerRouter } from "./alquiler.routes.js";
 
 export class AlquilerRepository implements Repository<Alquiler> {
 
-    public async registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: string, vehiculoId: number): Promise<void> {
-        await pool.query('INSERT INTO alquileres (garageId, usuarioId, duracionHoras, servicios, vehiculoId) VALUES (?, ?, ?, ?, ?)',
+        public async registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: string, vehiculoId: number): Promise<void> {
+          await pool.query('INSERT INTO alquileres (garageId, usuarioId, duracionHoras, servicios, vehiculoId) VALUES (?, ?, ?, ?, ?)',
             [garageId, usuarioId, duracionHoras, servicios, vehiculoId]
-        );
-    }
+          );
+        }
+      
+        /*public async consultarAlquileres(usuarioId: number): Promise<Alquiler[]> {
+          const [result]: [RowDataPacket[], any] = await pool.query('SELECT * FROM alquileres WHERE usuarioId = ?', [usuarioId]);
+          return result;
+        }*/
 
     public async findAll(): Promise<Alquiler[] | undefined> {
         const [alquileres] = await pool.query('SELECT * FROM alquileres');

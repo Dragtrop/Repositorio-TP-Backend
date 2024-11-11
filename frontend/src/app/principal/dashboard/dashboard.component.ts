@@ -2,17 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { GaragesService } from '../../services/garages.service';
 import { Garages } from '../../interfaces/garages.js';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrls: ['./dashboard.component.scss']
 })
 
 export class DashboardComponent implements OnInit {
   garages: Garages[] = [];
 
-  constructor(private garagesService: GaragesService) {}
+  constructor(
+    private garagesService: GaragesService, 
+    private router: Router
+  ) {}
 
   //muestra garages
 
@@ -26,17 +30,6 @@ export class DashboardComponent implements OnInit {
   // logica de alquiler
 
   alquilarGarage(garage: Garages): void {
-    const confirmacion = confirm("¿Alquilar garage?");
-    if (confirmacion) {
-        if (garage.cantLugares > 0) {
-            garage.cantLugares -= 1;
-            this.garagesService.updateCantLugares(garage.id, garage.cantLugares).subscribe({
-                next: () => console.log("Cantidad de lugares actualizada en la base de datos"),
-                error: (err) => console.error("Error al actualizar en la base de datos", err)
-            });
-        } else {
-            alert("No hay lugares disponibles en este garage.");
-        }
-    }
-}
+    this.router.navigate(['/detalle-alquiler'], { state: { garage: garage } });
+  }
 }

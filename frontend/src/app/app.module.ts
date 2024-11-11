@@ -37,7 +37,8 @@ import { AddEditLocationComponent } from './components/add-edit-location/add-edi
 import { ListLocationsComponent } from './components/list-location/list-location.component';
 import { DashboardComponent } from './principal/dashboard/dashboard.component';
 import { ProfileComponent } from './principal/profile/profile.component';
-import { AlquileresComponent } from './principal/alquileres/alquileres.component.js';
+import { AlquileresComponent } from './principal/alquileres/alquileres.component';
+import { DetalleAlquilerComponent } from './principal/detalle-alquiler/detalleAlquiler.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { AlquileresComponent } from './principal/alquileres/alquileres.component
     DashboardComponent,
     ProfileComponent,
     AlquileresComponent,
+    DetalleAlquilerComponent,
   ],
   imports: [
     FormsModule,

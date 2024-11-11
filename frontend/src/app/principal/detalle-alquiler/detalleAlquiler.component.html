@@ -1,0 +1,12 @@
+<div *ngIf="garage">
+  <h3>Detalles del alquiler</h3>
+  <p>Dirección: {{ garage.direccion }}</p>
+  <p>Precio por hora: {{ garage.valorCocheraxH | currency }}</p>
+
+  <label for="duracion">Duración del alquiler (horas):</label>
+  <input type="number" id="duracion" [(ngModel)]="duracionHoras" min="1" (input)="calcularTotal()" />
+
+  <p>Total: {{ total | currency }}</p>
+
+  <button (click)="registrarAlquiler()">Confirmar Alquiler</button>
+</div>

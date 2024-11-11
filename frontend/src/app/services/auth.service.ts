@@ -12,45 +12,48 @@ import { jwtDecode } from 'jwt-decode'
 export class AuthService {
   
   private servidor :string;
-  private appiusers: string;
+  private tokenkey:string;
 
   constructor(private httpClient:HttpClient,private router:Router){ 
-    this.servidor = "http://localhost:3000/api/login"
-    this.appiusers = "login/"
-    
+    this.servidor = "http://localhost:3000/api/login/login"
+    this.tokenkey = "authtoken"
+
   }
 
   login(usuario:string,password:string): Observable<any>{
     return this.httpClient.post<any>(this.servidor,{usuario,password}).pipe(
       tap (response =>{
         if(response.token){
+          this.setToken(response.token);
           console.log(response.token);
         }
       })
     )
   }
   private setToken(token:string):void{
-    localStorage.setItem(this.appiusers,token);
+    localStorage.setItem(this.tokenkey,token);
   }
 
   private getToken():string | null{
-    return localStorage.getItem(this.appiusers);
+    return localStorage.getItem(this.tokenkey);
   }
+
   isAuthenticated(): boolean{
     const token  = this.getToken();
     if(!token){
       return false;
     }
     const payload = JSON.parse(atob(token.split(".")[1]));
-    const exp = payload.exp = 1000;
+    const exp = payload.exp * 1000;
     return Date.now() < exp;
 
   }
 
-logout(): void{
-  localStorage.removeItem(this.appiusers);
+  logout(): void{
+  console.log("Logout ejecutado");
+  localStorage.removeItem(this.tokenkey);
   this.router.navigate(['/login'])
-}
+  }
 
 getCurrentUser(): User | null {
   const token = this.getToken();

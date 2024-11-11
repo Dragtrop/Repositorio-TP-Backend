@@ -14,7 +14,8 @@ function sanitizeGarageInput(req:Request,res:Response, next: NextFunction){
       direccion: req.body.direccion,
       cantLugares: req.body.cantLugares,
       valorCocheraxH: req.body.valorCocheraxH,
-    
+      idservicios:req.body.idservicios,
+      imagen: req.body.imagen,
     }  
      
      Object.keys(req.body.sanitizedInput).forEach(key=>{
@@ -48,6 +49,8 @@ async function add(req: Request, res: Response) {
       input.direccion,
       input.cantLugares,
       input.valorCocheraxH,
+      input.idservicios,
+      input.imagen,
     )
   
     const garage = await repository.add(garageInput)

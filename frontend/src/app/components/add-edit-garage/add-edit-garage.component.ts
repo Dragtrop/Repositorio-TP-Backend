@@ -31,6 +31,8 @@ export class AddEditGarageComponent {
         direccion:['',Validators.required], 
         cantLugares:['',Validators.required], 
         valorCocheraxH:['',Validators.required], 
+        idservicios:[''],
+        imagen:[''],
         id:['']
       })
       this.id=data.id;
@@ -66,6 +68,8 @@ export class AddEditGarageComponent {
         direccion:data.direccion,
         cantLugares:data.cantLugares,
         valorCocheraxH:data.valorCocheraxH,
+        idservicios:data.idservicios,
+        imagen:data.imagen,
         id:data.id
 
       })  
@@ -83,6 +87,8 @@ export class AddEditGarageComponent {
       direccion:this.form.value.direccion,
       cantLugares:this.form.value.cantLugares,
       valorCocheraxH:this.form.value.valorCocheraxH,
+      idservicios:this.form.value.idservicios,
+      imagen:this.form.value.imagen,
       id:this.form.value.id
 
     }

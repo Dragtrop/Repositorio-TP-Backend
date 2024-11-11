@@ -22,7 +22,7 @@ export class LoginComponent {
 
   login():void{
     this.authService.login(this.usuario,this.password).subscribe({
-      next:()=> this.router.navigate(["/vehiculos"]),
+      next:()=> this.router.navigate(["/principal/dashboard"]),
       error:(err)=> console.error('Login failed',err)
     })
   }

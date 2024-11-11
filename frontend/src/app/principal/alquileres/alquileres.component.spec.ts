@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlquileresComponent } from './alquileres.component';
 
@@ -22,6 +23,8 @@ describe('AlquileresComponent', () => {
   });
 });
 =======
+=======
+>>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AlquileresComponent } from './alquileres.component';
@@ -45,4 +48,7 @@ describe('AlquileresComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+<<<<<<< HEAD
+>>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
+=======
 >>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796

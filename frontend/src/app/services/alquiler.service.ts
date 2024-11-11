@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -30,6 +31,8 @@ export class AlquilerService {
 }
 
 =======
+=======
+>>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -60,5 +63,8 @@ registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, se
     });
 }
 
+<<<<<<< HEAD
+>>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
+=======
 >>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
 }

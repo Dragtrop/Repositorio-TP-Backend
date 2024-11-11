@@ -15,14 +15,20 @@ Content-Type: application/json
 
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "direccion":"Virasoro 145",
   "cantLugares":"40",
   "valorCocheraxH" :"2000"
 =======
+=======
+>>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
   "direccion":"Pichinchoo 337",
   "cantLugares":"25",
   "valorCocheraxH" :"2500",
   "imagen": "Buffer"
+<<<<<<< HEAD
+>>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
+=======
 >>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
 }  
 

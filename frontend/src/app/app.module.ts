@@ -38,10 +38,8 @@ import { ListLocationsComponent } from './components/list-location/list-location
 import { DashboardComponent } from './principal/dashboard/dashboard.component';
 import { ProfileComponent } from './principal/profile/profile.component';
 import { AlquileresComponent } from './principal/alquileres/alquileres.component';
-<<<<<<< HEAD
+
 import { DetalleAlquilerComponent } from './principal/detalle-alquiler/detalleAlquiler.component';
-=======
->>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
 
 @NgModule({
   declarations: [

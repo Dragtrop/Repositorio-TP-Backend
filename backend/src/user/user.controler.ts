@@ -1,46 +1,46 @@
 import { UserRepository } from "./user.repository.js"
 import { User } from "./user.entity.js"
 import { Request,Response,NextFunction } from "express"
-import { UsuarioService } from "./user.service.js"
+import jwt from 'jsonwebtoken';
 
-const usuarioService = new UsuarioService();
+
+
 const repository = new UserRepository()
+function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
+  // Verificamos si los datos requeridos están presentes
+  const requiredFields = [
+      'nombre', 'apellido', 'telefono', 'mail', 'Rol', 'password', 'usuario', 'idve'
+  ];
 
+  for (let field of requiredFields) {
+      if (!req.body[field]) {
+          return res.status(400).json({ message: `Falta el campo requerido: ${field}` });
+      }
+  }
 
-function sanitizeUserInput(req:Request,res:Response, next: NextFunction){
-    
-    req.body.sanitizedInput = {
+  // Sanitizamos la entrada
+  req.body.sanitizedInput = {
       nroCliente: req.body.nroCliente,
       nombre: req.body.nombre,
       apellido: req.body.apellido,
       telefono: req.body.telefono,
-      mail:req.body.mail,
-      Rol:req.body.Rol,
-      password:req.body.password,
-      usuario:req.body.usuario,
-    
-    }  
-     
-     Object.keys(req.body.sanitizedInput).forEach(key=>{
- 
-         if(req.body.sanitizedInput[key]=== undefined){
-            delete req.body.sanitizedInput[key]
-         }
-    })   
-    next()}
+      mail: req.body.mail,
+      Rol: req.body.Rol,
+      password: req.body.password,
+      usuario: req.body.usuario,
+      idve: req.body.idve,
+  };
 
-
-async function login(req: Request, res: Response) {
-  const { usuario, password } = req.body;
-      const token = await usuarioService.login(usuario, password);
-
-      if (token) {
-          res.json({ token });
-      } else {
-          res.status(401).json({ message: 'Credenciales incorrectas' });
+  // Limpiamos campos con valores undefined
+  Object.keys(req.body.sanitizedInput).forEach(key => {
+      if (req.body.sanitizedInput[key] === undefined) {
+          delete req.body.sanitizedInput[key];
       }
+  });
+
+  next();
 }
- 
+
 
 
 async function findAll(req: Request, res: Response) {
@@ -72,6 +72,7 @@ async function add(req: Request, res: Response) {
         input.Rol,
         input.usuario,
         input.password,
+        input.idve,
     )
   
     const user = await repository.add(userInput)
@@ -99,5 +100,71 @@ async function remove(req: Request, res: Response) {
     } else {
       res.status(200).send({ message: 'User deleted successfully' })
     }
+}
+
+
+  async function create(req: Request, res: Response) {
+    const input = req.body.sanitizedInput;
+
+    if (!input || !input.nombre || !input.apellido || !input.telefono || !input.mail || !input.Rol || !input.usuario || !input.password || !input.idve) {
+      return res.status(400).json({ message: "Faltan datos requeridos para crear el usuario" });
   }
-export{sanitizeUserInput,findAll,findOne,add,update,remove,login}
+    const userInput = new User(
+        input.nroCliente,
+        input.nombre,
+        input.apellido,
+        input.telefono,
+        input.mail,
+        input.Rol,
+        input.password,
+        input.usuario,
+        input.idve
+    )
+
+    try {
+
+      const createdUser = await repository.create(userInput)
+
+      if (!createdUser) {
+        return res.status(500).json({ message: "No se pudo crear el usuario" })
+    }
+
+       
+        res.status(201).json({ message: "Usuario creado exitosamente", id: createdUser.id })
+
+    } catch (error) {
+        console.error("Error al crear el usuario:", error)
+    }
+  }
+  
+    async function login(req: Request, res: Response) {
+      const {usuario,password}= req.body
+      if (!usuario || !password) {
+        return res.status(400).json({ message: "Faltan datos requeridos: usuario y contraseña." });
+      }
+    try {
+      const user = await repository.login({ usuario, password });
+
+      if (!user) {
+          return res.status(401).json({ message: "Usuario o contraseña incorrectos." });
+      }
+
+      const token = jwt.sign(
+        { id: user.id, usuario: user.usuario },
+        "this-is-an-aweasome-secret-key",
+        { expiresIn: "1h" }
+      );
+  
+
+      return res.status(200).json({ message: "Inicio de sesión exitoso", data: user,token });
+     } catch (error: any) {
+      console.error("Error al iniciar sesión:", error.message);
+      return res.status(500).json({ message: "Error interno del servidor" });
+      }     
+
+
+    }
+
+
+
+export{sanitizeUserInput,findAll,findOne,add,update,remove,create,login}

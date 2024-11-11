@@ -1,11 +1,13 @@
 import { Router } from "express";
-import { sanitizeUserInput,findAll,findOne,add,update,remove,login } from "./user.controler.js";
+import { sanitizeUserInput,findAll,findOne,add,update,remove,create,login } from "./user.controler.js";
 
 
 
 
 
 export const UserRouter = Router()
+
+
 
 UserRouter.get('/',findAll)
 
@@ -20,3 +22,9 @@ UserRouter.patch('/:id',sanitizeUserInput,update)
 UserRouter.delete('/:id',remove)
 
 UserRouter.post('/login',login);
+
+UserRouter.post('/register',sanitizeUserInput,create);
+
+UserRouter.post('/logout',);
+
+UserRouter.post('/protected',);

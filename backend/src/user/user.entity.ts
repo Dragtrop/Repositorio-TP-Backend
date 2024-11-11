@@ -11,6 +11,7 @@ export class User{
         public Rol:string,
         public password:string,
         public usuario:string,
+        public idve:number,
         public id?: number,
     ){}
 }

@@ -3,13 +3,23 @@ import express from "express";
 import cors from "cors";
 import { characterRouter } from "./vehicles/vehicles.routes.js";
 import { characterRouterVehicleTypes } from "./vehicleTypes/vehicleTypes.routes.js";
-import { locationRouter } from "./location/location.routes.js";
 import { GarageRouter } from "./garage/garage.routes.js";
 import { UserRouter } from "./user/user.routes.js";
 import { serviceRouter } from "./service/service.routes.js";
 import { AlquilerRouter } from "./alquiler/alquiler.routes.js";
 
 const app = express();
+<<<<<<< HEAD
+=======
+app.use(cors());
+app.use(express.json())
+app.use('/api/vehicles',characterRouter)
+app.use('/api/vehicleTypes',characterRouterVehicleTypes)
+app.use('/api/alquiler',AlquilerRouter)
+app.use('/api/garages', GarageRouter)
+app.use('/api/login',UserRouter)
+app.use('/api/services',serviceRouter)
+>>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
 
 // Configuración de CORS para permitir solicitudes desde localhost:4200
 app.use(cors({

@@ -3,5 +3,7 @@ export interface Garages{
     direccion:string,
     cantLugares: number,
     valorCocheraxH: number,
+    idservicios:number,
+    imagen:BufferSource,
     id: number,
 }

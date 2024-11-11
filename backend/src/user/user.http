@@ -1,12 +1,12 @@
 ### obtener todos los user
-get http://localhost:3000/api/users
+get http://localhost:3000/api/login
 
 ### obtener un user
  
 get http://localhost:3000/api/users
 
 ### crear un user
-post http://localhost:3000/api/users
+post http://localhost:3000/api/login/register
 Content-Type: application/json
 
 {
@@ -29,16 +29,15 @@ delete http://localhost:3000/api/users
 
 ### modficar un recurso
 
-PUT http://localhost:3000/api/users
+PUT http://localhost:3000/api/login/2
 Content-Type: application/json
 
 {
-  "patente" : " AG-584-AA ",
 
-  "marca" : " Toyota " ,
+      "id": 2,
+      "password": "$2y$10$V1Ie2XVs/DVIl3mwtOroGOPDMhd90PY4I/5yXkYvTN/BmcDijjO.e"
 
-  "id" : "5"
-  
+
 }  
 
 ### modficar un recurso

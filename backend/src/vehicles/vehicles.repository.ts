@@ -1,4 +1,4 @@
-import { Repository } from "../shared/repository";
+import { Repository } from "../shared/repository.js";
 import { Vehicle } from "./vehicles.entity.js";
 import { pool } from '../shared/db/conn.mysql.js';
 import { ResultSetHeader, RowDataPacket } from "mysql2";

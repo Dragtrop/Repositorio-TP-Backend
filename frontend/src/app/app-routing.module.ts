@@ -10,6 +10,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './principal/dashboard/dashboard.component';
 import { ProfileComponent } from './principal/profile/profile.component';
+import { AuthGuard } from './app/guards/auth.guard';
+import { AuthenticatedGuard } from './app/guards/authenticated.guard';
 
 const routes: Routes = [
   {path:"vehiculos",component: ListVehiclesComponent },
@@ -18,17 +20,21 @@ const routes: Routes = [
   {path:"usuarios",component:ListUserComponent},
   {path:"garages",component:ListGarageComponent},
   {path:"servicios",component:ListServicesComponent},
-  {path:"login",component:LoginComponent},
+  {path:"login",component:LoginComponent,canActivate:[AuthenticatedGuard]},
   {path:"register",component:RegisterComponent},
   {path: 'principal',
     loadComponent: () => import('./shared/component/layout/layout.component'),
     children: [
-        {path: 'dashboard',component:DashboardComponent},
-        {path: 'profile',component:ProfileComponent},
+        {path: 'dashboard',component:DashboardComponent,
+          canActivate:[AuthGuard]
+        },
+        {path: 'profile',component:ProfileComponent,
+          canActivate:[AuthGuard]
+        },
         {
             path: 'principal',
             redirectTo: 'dashboard',
-            pathMatch: 'full'
+            pathMatch: 'full',
         }
     ]
 },

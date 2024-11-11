@@ -3,10 +3,65 @@ import { User } from "./user.entity.js";
 import { pool } from '../shared/db/conn.mysql.js';
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { UserRouter } from "./user.routes.js";
-
+import bcrypt from "bcrypt";
 
 
 export class UserRepository implements Repository<User>{
+
+    public async login(userInput: { usuario: string; password: string }): Promise<Omit<User, 'password'> | undefined> {
+        
+        try{
+            const [rows] = await pool.query<RowDataPacket[]>(
+                "SELECT * FROM users WHERE usuario = ?",
+                [userInput.usuario])
+
+                if (rows.length === 0) {
+                throw new Error("Usuario no existe");
+                }
+
+                const user = rows[0] as User;
+                const isValid = bcrypt.compareSync(userInput.password, user.password);
+                if (!isValid) {
+                    throw new Error("Contraseña incorrecta");
+                }
+
+                const { password, ...publicUser } = user;      
+
+                return publicUser
+                }  
+                catch (error) {
+                    console.error("Error en el login del repositorio:", error);
+                    throw error;
+                 }
+               
+    }
+
+    public async create(userInput:User): Promise<User  | undefined>{
+
+        const password = userInput.password; 
+        const hashpassword = bcrypt.hashSync(password,10)
+        userInput.password = hashpassword; 
+
+        const [rows] = await pool.query<[RowDataPacket[], ResultSetHeader]>(
+        "SELECT * FROM users WHERE usuario = ?",
+        [userInput.usuario]
+        );
+
+        console.log(`Usuario ingresado: '${userInput.usuario}'`);
+
+        if (rows.length > 0) {
+            throw new Error("Usuario ya existe");
+        }
+        const {id,nroCliente, ...userRow} = userInput
+        const [result] = await pool.query<ResultSetHeader>("Insert into users set ?", [userRow])
+        userInput.id = result.insertId
+        userInput.nroCliente = userInput.id 
+
+        await pool.query('UPDATE users SET nroCliente = ? WHERE id = ?', [userInput.nroCliente, userInput.id]);
+        return userInput
+
+    }
+    
 
     public async findAll(): Promise<User [] | undefined>{
        const [users] = await pool.query('select * from users')

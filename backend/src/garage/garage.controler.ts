@@ -14,7 +14,8 @@ function sanitizeGarageInput(req:Request,res:Response, next: NextFunction){
       direccion: req.body.direccion,
       cantLugares: req.body.cantLugares,
       valorCocheraxH: req.body.valorCocheraxH,
-    
+      idservicios:req.body.idservicios,
+      imagen: req.body.imagen,
     }  
      
      Object.keys(req.body.sanitizedInput).forEach(key=>{
@@ -48,6 +49,8 @@ async function add(req: Request, res: Response) {
       input.direccion,
       input.cantLugares,
       input.valorCocheraxH,
+      input.idservicios,
+      input.imagen,
     )
   
     const garage = await repository.add(garageInput)
@@ -77,15 +80,3 @@ async function remove(req: Request, res: Response) {
     }
   }
 export{sanitizeGarageInput,findAll,findOne,add,update,remove}
-
-export async function updateCantLugares(req: Request, res: Response) {
-  const { id } = req.params;
-  const { cantLugares } = req.body;
-
-  try {
-      await repository.updateCantLugares(Number(id), cantLugares);
-      res.status(200).json({ message: "Cantidad de lugares actualizada exitosamente." });
-  } catch (error) {
-      res.status(500).json({ error: "Error al actualizar la cantidad de lugares." });
-  }
-}

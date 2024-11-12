@@ -60,8 +60,8 @@ getCurrentUser(): User | null {
   const token = this.getToken();
   if (token) {
     try {
-      const payload = jwtDecode<any>(token); // Decodifica el token JWT
-      console.log('Token decodificado:', payload); // Muestra el token decodificado
+      const payload = jwtDecode<any>(token);
+      console.log('Token decodificado:', payload);
 
       return { 
         id: payload.id || 0,

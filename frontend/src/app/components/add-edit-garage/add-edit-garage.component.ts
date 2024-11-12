@@ -27,7 +27,7 @@ export class AddEditGarageComponent {
     private fb:FormBuilder, private _userService:GaragesService ,private _snackBar : MatSnackBar ,
      @Inject(MAT_DIALOG_DATA) public data:any){
       this.form = this.fb.group({
-        nroCochera:[''],
+        nroGarage:[''],
         direccion:['',Validators.required], 
         cantLugares:['',Validators.required], 
         valorCocheraxH:['',Validators.required], 
@@ -55,7 +55,7 @@ export class AddEditGarageComponent {
     this.dialogRef.close(false);
   }
     /*
-      nroCochera:number,
+      nroGarage:number,
     direccion:string,
     cantLugar:number,
     valorcoch:number,
@@ -64,7 +64,7 @@ export class AddEditGarageComponent {
   getGarage(id:number){
     this._userService.getgarage(id).subscribe(data =>{
       this.form.patchValue({
-        nroCochera:data.nroCochera,
+        nroGarage:data.nroGarage,
         direccion:data.direccion,
         cantLugares:data.cantLugares,
         valorCocheraxH:data.valorCocheraxH,
@@ -83,7 +83,7 @@ export class AddEditGarageComponent {
 
     const user: Garages = {
 
-      nroCochera:this.form.value.nroCochera,
+      nroGarage:this.form.value.nroGarage,
       direccion:this.form.value.direccion,
       cantLugares:this.form.value.cantLugares,
       valorCocheraxH:this.form.value.valorCocheraxH,

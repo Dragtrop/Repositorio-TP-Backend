@@ -14,7 +14,8 @@ export class AlquilerRepository implements Repository<Alquiler> {
           [garageId, usuarioId, duracionHoras, servicios, vehiculoId, fechaAlquiler]
         );
       }
-    public async consultarAlquileres(usuarioId: string): Promise<any> {
+      
+    public async consultarAlquileres(usuarioId: number): Promise<any> {
         try {
         const [alquileres] = await pool.query('SELECT * FROM alquileres WHERE usuarioId = ?',
               [usuarioId]);

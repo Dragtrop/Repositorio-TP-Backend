@@ -8,9 +8,9 @@
     <button class="addbt" (click)="addeditgarage()" mat-stroked-button>Agregar</button>
   
     <table matSort  mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <ng-container matColumnDef="nroCochera">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> nroCochera </th>
-        <td mat-cell *matCellDef="let element"> {{element.nroCochera}} </td>
+      <ng-container matColumnDef="nroGarage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> nroGarage </th>
+        <td mat-cell *matCellDef="let element"> {{element.nroGarage}} </td>
       </ng-container>
       <ng-container matColumnDef="direccion">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> direccion </th>

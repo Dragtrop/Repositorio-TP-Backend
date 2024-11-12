@@ -64,9 +64,9 @@ export class DetalleAlquilerComponent implements OnInit {
         duracionHoras: this.duracionHoras,
         vehiculoId: this.vehiculoId
       });
-
-      let servicios = 1
-
+  
+      let servicios = 1;
+  
       this.alquilerService
         .registrarAlquiler(
           this.garage.id,
@@ -77,19 +77,29 @@ export class DetalleAlquilerComponent implements OnInit {
         )
         .subscribe({
           next: () => {
-            alert('Alquiler registrado con éxito');
-            this.router.navigate(['/principal/dashboard']);
+            if (this.garage) {
+              const nuevaCantLugares = this.garage.cantLugares - 1;
+  
+              this.garagesService.update(this.garage.id, nuevaCantLugares).subscribe({
+                next: () => {
+                  this.garage!.cantLugares = nuevaCantLugares;
+                  this.router.navigate(['/principal/dashboard']);
+                },
+                error: (err) => console.error('Error al actualizar la cantidad de lugares:', err)
+              });
+            }
           },
           error: (err) => console.error('Error al registrar alquiler:', err)
         });
     } else {
-      
-    console.error('Datos faltantes:', {
-      garage: this.garage,
-      usuarioId: this.usuarioId,
-      vehiculoId: this.vehiculoId
-    });
-    alert('Faltan datos necesarios para registrar el alquiler. Asegúrese de tener un vehículo asignado.');
+      console.error('Datos faltantes:', {
+        garage: this.garage,
+        usuarioId: this.usuarioId,
+        vehiculoId: this.vehiculoId
+      });
+      alert('Faltan datos necesarios para registrar el alquiler. Asegúrese de tener un vehículo asignado.');
     }
   }
+  
+  
 }

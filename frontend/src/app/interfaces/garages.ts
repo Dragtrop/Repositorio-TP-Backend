@@ -1,5 +1,5 @@
 export interface Garages{
-    nroCochera:number,
+    nroGarage:number,
     direccion:string,
     cantLugares: number,
     valorCocheraxH: number,

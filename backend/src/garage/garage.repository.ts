@@ -37,7 +37,6 @@ export class GarageRepository implements Repository<Garage>{
     }
 
     public async update (id: string, garageInput: Garage): Promise<Garage  | undefined> {
-        console.log(garageInput)
         const garageId = Number.parseInt(id)
         const {... garageRow} = garageInput
         await pool.query('update garages set ? where id = ?',[garageRow, garageId] )

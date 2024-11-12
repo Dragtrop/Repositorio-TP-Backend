@@ -15,14 +15,9 @@ Content-Type: application/json
 
 {
 
-  "direccion":"Virasoro 145",
-  "cantLugares":"40",
-  "valorCocheraxH" :"2000",
-
-  "direccion":"Pichinchoo 337",
-  "cantLugares":"25",
-  "valorCocheraxH" :"2500",
-  "imagen": "Buffer"
+  "direccion":"Neochea 145",
+  "cantLugares":"4",
+  "valorCocheraxH" :"1000",
 
 }  
 

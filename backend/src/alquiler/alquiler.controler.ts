@@ -18,7 +18,11 @@ export async function registrarAlquiler(req: Request, res: Response) {
 
 // consulta alquileres
 export async function consultarAlquileres(req: Request, res: Response) {
-  const usuarioId = req.params.usuarioId;
+  const usuarioId = parseInt(req.params.usuarioId, 10);
+
+  if (isNaN(usuarioId)) {
+    return res.status(400).json({ error: 'El usuarioId no es un número válido' });
+  }
 
   try {
     const alquileres = await alquilerRepo.consultarAlquileres(usuarioId);

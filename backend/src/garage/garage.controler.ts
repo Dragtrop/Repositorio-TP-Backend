@@ -79,4 +79,6 @@ async function remove(req: Request, res: Response) {
       res.status(200).send({ message: 'Garage deleted successfully' })
     }
   }
+
+  
 export{sanitizeGarageInput,findAll,findOne,add,update,remove}

@@ -33,7 +33,7 @@ export class AlquilerService {
   }
 
   obtenerAlquileresPorUsuario(userId: number): Observable<Alquiler[]> {
-    return this.httpClient.get<Alquiler[]>(`${this.servidor}alquileres?usuarioId=${userId}`);
+    return this.httpClient.get<Alquiler[]>(`${this.servidor}alquileres/${userId}`);
   }
 
   obtenerGaragePorId(id: number): Observable<Garages> {
@@ -41,6 +41,7 @@ export class AlquilerService {
   }
 
   verificarDisponibilidad(garageId: number, fechaAlquiler: string): Observable<boolean> {
+
     return this.httpClient.get<boolean>(`${this.servidor}disponibilidad?garageId=${garageId}&fecha=${fechaAlquiler}`);
   }
 }

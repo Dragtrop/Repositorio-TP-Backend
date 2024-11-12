@@ -152,7 +152,11 @@ async function remove(req: Request, res: Response) {
           { 
             id: user.id, 
             usuario: user.usuario, 
-            idve: user.idve 
+            idve: user.idve,
+            nombre: user.nombre,
+            apellido: user.apellido,
+            telefono: user.telefono,
+            mail: user.mail
           },
           "this-is-an-awesome-secret-key",
           { expiresIn: "1h" }

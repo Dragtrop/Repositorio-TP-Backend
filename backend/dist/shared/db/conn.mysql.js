@@ -2,7 +2,7 @@ import mysql from "mysql2/promise";
 export const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_HOST || 'root',
-    password: process.env.DB_HOST || 'elrayo',
+    password: process.env.DB_HOST || 'mysqltrabajo',
     database: process.env.DB_HOST || 'cocheras',
     waitForConnections: true,
     connectionLimit: 10,

@@ -40,8 +40,8 @@ export class GaragesService {
     return this.http.put<void>(`${this.servidor}${this.appiusers}${id}`,garage);
   }
 
-  updateCantLugares(id: number, cantLugares: number): Observable<void> {
-    return this.http.put<void>(`${this.servidor}${this.appiusers}${id}/cantLugares`, { cantLugares });
+  update(id: number, cantLugares: number): Observable<void> {
+    return this.http.put<void>(`${this.servidor}${this.appiusers}${id}`, { cantLugares });
 }
 
 }

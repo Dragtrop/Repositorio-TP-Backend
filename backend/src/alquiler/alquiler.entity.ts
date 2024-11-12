@@ -3,9 +3,9 @@ import crypto from 'node:crypto'
 export interface Alquiler {
     id: number;
     garageId: number;
-    userId: number;
+    usuarioId: number;
     fechaAlquiler: string;
     duracionHoras: number;
-    servicios: string;
+    servicios: number;
     vehiculoId: number;
 }

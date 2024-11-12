@@ -27,4 +27,3 @@ UserRouter.post('/register',sanitizeUserInput,create);
 
 UserRouter.post('/logout',);
 
-UserRouter.post('/protected',);

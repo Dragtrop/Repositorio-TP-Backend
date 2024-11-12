@@ -12,6 +12,7 @@ import { DashboardComponent } from './principal/dashboard/dashboard.component';
 import { ProfileComponent } from './principal/profile/profile.component';
 import { AuthGuard } from './app/guards/auth.guard';
 import { AuthenticatedGuard } from './app/guards/authenticated.guard';
+import { DetalleAlquilerComponent } from './principal/detalle-alquiler/detalleAlquiler.component';
 
 const routes: Routes = [
   {path:"vehiculos",component: ListVehiclesComponent },
@@ -22,6 +23,9 @@ const routes: Routes = [
   {path:"servicios",component:ListServicesComponent},
   {path:"login",component:LoginComponent,canActivate:[AuthenticatedGuard]},
   {path:"register",component:RegisterComponent},
+  { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   {path: 'principal',
     loadComponent: () => import('./shared/component/layout/layout.component'),
     children: [

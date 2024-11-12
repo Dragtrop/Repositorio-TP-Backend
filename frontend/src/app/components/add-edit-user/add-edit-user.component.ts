@@ -81,6 +81,7 @@ export class AddEditUserComponent {
       Rol:this.form.value.Rol,
       usuario:this.form.value.usuario,
       password:this.form.value.password,
+      idve:this.form.value.idve,
       id:this.form.value.id
 
     }

@@ -148,12 +148,15 @@ async function remove(req: Request, res: Response) {
       if (!user) {
           return res.status(401).json({ message: "Usuario o contraseña incorrectos." });
       }
-
-      const token = jwt.sign(
-        { id: user.id, usuario: user.usuario },
-        "this-is-an-aweasome-secret-key",
-        { expiresIn: "1h" }
-      );
+        const token = jwt.sign(
+          { 
+            id: user.id, 
+            usuario: user.usuario, 
+            idve: user.idve 
+          },
+          "this-is-an-awesome-secret-key",
+          { expiresIn: "1h" }
+        );
   
 
       return res.status(200).json({ message: "Inicio de sesión exitoso", data: user,token });

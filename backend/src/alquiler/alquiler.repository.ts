@@ -6,15 +6,14 @@ import { AlquilerRouter } from "./alquiler.routes.js";
 
 export class AlquilerRepository implements Repository<Alquiler> {
 
-    public async registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: number | null, vehiculoId: number): Promise<void> {
+    public async registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: number | null, vehiculoId: number,total:number): Promise<void> {
         
         const fechaAlquiler = new Date().toISOString().slice(0, 19).replace("T", " ");
         await pool.query(
-          'INSERT INTO alquileres (garageId, usuarioId, duracionHoras, servicios, vehiculoId, fechaAlquiler) VALUES (?, ?, ?, ?, ?, ?)',
-          [garageId, usuarioId, duracionHoras, servicios, vehiculoId, fechaAlquiler]
+          'INSERT INTO alquileres (garageId, usuarioId, duracionHoras, servicios, vehiculoId, fechaAlquiler,total) VALUES (? ,? , ?, ?, ?, ?, ?)',
+          [garageId, usuarioId, duracionHoras, servicios, vehiculoId, fechaAlquiler,total]
         );
       }
-      
     public async consultarAlquileres(usuarioId: number): Promise<any> {
         try {
         const [alquileres] = await pool.query('SELECT * FROM alquileres WHERE usuarioId = ?',

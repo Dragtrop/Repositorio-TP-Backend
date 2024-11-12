@@ -25,7 +25,7 @@ export class GarageRepository implements Repository<Garage>{
     }
 
     public async add(garageInput:Garage): Promise<Garage  | undefined>{
-        const {id, ...garageRow} = garageInput
+        const {id,nroGarage, ...garageRow} = garageInput
         const [result] = await pool.query<ResultSetHeader>("Insert into garages set ?", [garageRow])
         garageInput.id = result.insertId
         garageInput.nroGarage = result.insertId

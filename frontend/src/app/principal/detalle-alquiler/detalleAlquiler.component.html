@@ -9,6 +9,7 @@
     
     <label for="duracion">Duración del alquiler (horas):</label>
     <input type="number" id="duracion" [(ngModel)]="duracionHoras" min="1" (input)="calcularTotal()" />
+    <p class="alquiler-horas">Duración: {{ formatDuracionHoras(duracionHoras) }}</p>
     
     <p class="total-price">Total: {{ total | currency }}</p>
     

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { sanitizeUserInput,findAll,findOne,add,update,remove,create,login } from "./user.controler.js";
+import { sanitizeUserInput,findAll,findOne,add,update,remove,create,login ,findVehiclesByUser,addVehicleToUser} from "./user.controler.js";
 
 
 
@@ -27,3 +27,6 @@ UserRouter.post('/register',sanitizeUserInput,create);
 
 UserRouter.post('/logout',);
 
+UserRouter.get("/:usuarioId/vehiculos", findVehiclesByUser);
+
+UserRouter.post("/addVehicleToUser", addVehicleToUser);

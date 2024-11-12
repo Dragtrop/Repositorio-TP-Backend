@@ -23,6 +23,7 @@ export class AddEditVehicleComponent {
       this.form = this.fb.group({
         patente:['',Validators.required, ],
         marca:['',Validators.required], 
+        codtipv:['',],
         id: ['']
 
       })
@@ -51,6 +52,7 @@ export class AddEditVehicleComponent {
       this.form.patchValue({
         patente:data.patente,
         marca:data.marca,
+        codtipv:data.codtipv,
         id:data.id
 
       })  
@@ -65,6 +67,7 @@ export class AddEditVehicleComponent {
     const vehicle: Vehicles = {
       patente: this.form.value.patente,
       marca: this.form.value.marca,
+      codtipv: this.form.value.codtipv,
       id: this.form.value.id,
 
     }

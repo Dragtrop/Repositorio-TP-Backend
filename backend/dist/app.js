@@ -7,11 +7,7 @@ import { UserRouter } from "./user/user.routes.js";
 import { serviceRouter } from "./service/service.routes.js";
 import { AlquilerRouter } from "./alquiler/alquiler.routes.js";
 const app = express();
-app.use(cors({
-    origin: 'http://localhost:4200',
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type, Authorization'
-}));
+app.use(cors());
 app.use(cors());
 app.use(express.json());
 app.use('/api/vehicles', characterRouter);

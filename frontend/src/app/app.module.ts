@@ -39,9 +39,10 @@ import { DashboardComponent } from './principal/dashboard/dashboard.component';
 import { ProfileComponent } from './principal/profile/profile.component';
 import { AlquilerComponent } from './principal/alquileres/alquileres.component';
 import { DetalleAlquilerComponent } from './principal/detalle-alquiler/detalleAlquiler.component';
-
+import { DetallevehiculoComponent } from './principal/detallevehiculo/detallevehiculo.component';
 @NgModule({
   declarations: [
+    
     AppComponent,
     NavbarComponent,
     ListVehiclesComponent,
@@ -62,6 +63,7 @@ import { DetalleAlquilerComponent } from './principal/detalle-alquiler/detalleAl
     DetalleAlquilerComponent,
   ],
   imports: [
+    DetallevehiculoComponent,
     FormsModule,
     CommonModule,
     MatProgressSpinnerModule,

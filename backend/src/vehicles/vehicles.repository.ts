@@ -51,4 +51,37 @@ export class VehiclesRepository implements Repository<Vehicle>{
         }
     }
 
+    public async addausuario(vehicle: Vehicle): Promise<Vehicle> {
+        const { patente, marca, codtipv } = vehicle;
+        const [result] = await pool.query<ResultSetHeader>("INSERT INTO vehicles (patente, marca, codtipv) VALUES (?, ?, ?)", [patente, marca, codtipv]);
+        
+        if (result && result.insertId) {
+            vehicle.id = result.insertId; 
+        } else {
+            throw new Error("Error al insertar el vehículo en la base de datos.");
+        }
+    
+        return vehicle;
+
+
+
+    
+}
+
+public async obtenerVehiculosConGarage(usuarioId: number): Promise<any> {
+    try {
+        const [vehiculos] = await pool.query(
+            `SELECT v.id, v.patente, v.marca, v.codtipv, g.direccion as garageDireccion
+             FROM vehicles v
+             JOIN garages g ON v.garageId = g.id
+             WHERE v.usuarioId = ?`, [usuarioId]
+        );
+        return vehiculos;
+    } catch (error) {
+        console.error('Error al obtener los vehículos:', error);
+        throw new Error('Error al obtener los vehículos');
+    }
+}
+
+
 }

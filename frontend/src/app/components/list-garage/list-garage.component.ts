@@ -24,7 +24,7 @@ export class ListGarageComponent implements OnInit,AfterViewInit{
     id: number,
   */
 
-  displayedColumns: string[] = ['nroCochera', 'direccion', 'cantLugares','valorCocheraxH','idservicio','imagen','id','acciones'];
+  displayedColumns: string[] = ['nroGarage', 'direccion', 'cantLugares','valorCocheraxH','idservicios','imagen','id','acciones'];
   dataSource: MatTableDataSource<Garages>;
   loading:boolean = false;
 

@@ -7,7 +7,6 @@ import jwt from 'jsonwebtoken';
 
 const repository = new UserRepository()
 function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
-  // Verificamos si los datos requeridos están presentes
   const requiredFields = [
       'nombre', 'apellido', 'telefono', 'mail', 'Rol', 'password', 'usuario', 'idve'
   ];
@@ -18,7 +17,6 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
       }
   }
 
-  // Sanitizamos la entrada
   req.body.sanitizedInput = {
       nroCliente: req.body.nroCliente,
       nombre: req.body.nombre,
@@ -31,7 +29,6 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
       idve: req.body.idve,
   };
 
-  // Limpiamos campos con valores undefined
   Object.keys(req.body.sanitizedInput).forEach(key => {
       if (req.body.sanitizedInput[key] === undefined) {
           delete req.body.sanitizedInput[key];
@@ -155,8 +152,9 @@ async function remove(req: Request, res: Response) {
             idve: user.idve,
             nombre: user.nombre,
             apellido: user.apellido,
-            telefono: user.telefono,
-            mail: user.mail
+            mail: user.mail,
+            telefono: user.telefono
+
           },
           "this-is-an-awesome-secret-key",
           { expiresIn: "1h" }
@@ -170,8 +168,34 @@ async function remove(req: Request, res: Response) {
       }     
 
 
+}
+async function findVehiclesByUser(req: Request, res: Response) {
+  const usuarioId = req.params.usuarioId;
+  const vehicles = await repository.findVehiclesByUser(Number(usuarioId));
+
+  if (vehicles.length === 0) {
+    return res.status(404).send({ message: 'No vehicles found for the user' });
+  }
+
+  res.json({ data: vehicles });
+}
+
+async function addVehicleToUser(req: Request, res: Response) {
+  try {
+    const { usuarioId, vehiculoId } = req.body;
+
+    if (!usuarioId || !vehiculoId) {
+      return res.status(400).json({ message: "usuarioId y vehiculoId son requeridos" });
     }
 
+    await repository.addVehicleToUser(usuarioId, vehiculoId);
+
+    res.status(201).json({ message: "Vehículo asignado al usuario exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al asignar el vehículo al usuario" });
+  }
+}
 
 
-export{sanitizeUserInput,findAll,findOne,add,update,remove,create,login}
+export{sanitizeUserInput,findAll,findOne,add,update,remove,create,login,findVehiclesByUser,addVehicleToUser}

@@ -13,7 +13,12 @@
       <mat-label>Marca</mat-label>
       <input matInput formControlName="marca" placeholder="Ingrese Marca"/>
     </mat-form-field>
-  </mat-dialog-content>
+
+   <mat-form-field appearance="fill">
+    <mat-label>Cod.Tiv.Vehiculo</mat-label>
+    <input matInput formControlName="codtipv" placeholder="Ingrese codtipv"/>
+   </mat-form-field>
+</mat-dialog-content>
 
   <mat-dialog-actions align="end">
     <button type="button" (click)="Cancelar()" mat-button>Cancelar</button>

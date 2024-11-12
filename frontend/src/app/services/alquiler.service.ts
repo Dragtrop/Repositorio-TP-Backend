@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Alquiler } from '../interfaces/alquiler';
-import { Router } from '@angular/router';
 import { Garages } from '../interfaces/garages';
 
 @Injectable({
@@ -10,30 +9,38 @@ import { Garages } from '../interfaces/garages';
 })
 export class AlquilerService {
 
-  private servidor :string;
-  private appiusers: string;
+  private servidor: string;
 
-  constructor(private httpClient:HttpClient,private router:Router){ 
-    this.servidor = "http://localhost:3000/api/"
-    this.appiusers = "alquileres/alquileres"
-    
-}
+  constructor(private httpClient: HttpClient) {
+    this.servidor = 'http://localhost:3000/api/';
+  }
 
-registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: number, vehiculoId: number): Observable<any> {
-  return this.httpClient.post(`${this.servidor}alquileres`, {  
-    garageId,
-    usuarioId,
-    duracionHoras,
-    servicios,
-    vehiculoId
-  });
-}
+  // Registrar un nuevo alquiler
+  registrarAlquiler(
+    garageId: number, 
+    usuarioId: number, 
+    duracionHoras: number, 
+    servicios: number, 
+    vehiculoId: number
+  ): Observable<any> {
+    return this.httpClient.post(`${this.servidor}alquileres`, {
+      garageId,
+      usuarioId,
+      duracionHoras,
+      servicios,
+      vehiculoId
+    });
+  }
 
   obtenerAlquileresPorUsuario(userId: number): Observable<Alquiler[]> {
-    return this.httpClient.get<Alquiler[]>(`${this.servidor}?userId=${userId}`);
-}
+    return this.httpClient.get<Alquiler[]>(`${this.servidor}alquileres?usuarioId=${userId}`);
+  }
 
-obtenerGaragePorId(id: number): Observable<Garages> {
-  return this.httpClient.get<Garages>(`${this.servidor}/garages/${id}`);
-}
+  obtenerGaragePorId(id: number): Observable<Garages> {
+    return this.httpClient.get<Garages>(`${this.servidor}garages/${id}`);
+  }
+
+  verificarDisponibilidad(garageId: number, fechaAlquiler: string): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${this.servidor}disponibilidad?garageId=${garageId}&fecha=${fechaAlquiler}`);
+  }
 }

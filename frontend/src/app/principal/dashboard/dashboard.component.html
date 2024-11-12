@@ -11,14 +11,18 @@
   </select>
 </div>
 
-
-<div class="garage-container" *ngIf="garages.length">
-  <div class="garage-box" *ngFor="let garage of garages">
-    <!-- Imagen opcional -->
+<div class="garage-container" *ngIf="garagesDisponibles.length">
+  <div class="garage-box" *ngFor="let garage of garagesDisponibles">
+    <!-- falta la imágen -->
     <h3 class="garage-name">{{ garage.direccion }}</h3>
     <p class="garage-price">{{ garage.valorCocheraxH | currency }}</p>
-    <p [ngClass]="{'low': garage.cantLugares < 5}" class="garage-lugares">Lugares disponibles: {{ garage.cantLugares }}</p>
+    <p [ngClass]="{'low': garage.cantLugares < 5}" class="garage-lugares">
+      Lugares disponibles: {{ garage.cantLugares }}
+    </p>
     <button class="btn-alquilar" (click)="alquilarGarage(garage)">Alquilar</button>
   </div>
 </div>
-<div *ngIf="!garages.length">No hay garages disponibles en este momento.</div>
+
+<div *ngIf="!garagesDisponibles.length">
+  No hay garages disponibles en este momento.
+</div>

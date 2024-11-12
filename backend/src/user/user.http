@@ -1,11 +1,5 @@
 ### obtener todos los user
 get http://localhost:3000/api/login
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 66a25c48cb71c9c2c3e6762375b40b5870af4796
 
 ### obtener un user
  
@@ -22,9 +16,9 @@ Content-Type: application/json
     "telefono": 1234567890,
     "mail":"fulanitoCual@msn.com",
     "Rol":"Cliente",
-    "password":"alalala",
-    "usuario":"snag"
-
+    "password":"1441",
+    "usuario":"hola",
+    "idve":1
     
 }  
 

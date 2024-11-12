@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { registrarAlquiler } from './alquiler.controler.js';
+import { registrarAlquiler, consultarAlquileres } from './alquiler.controler.js';
 
 export const AlquilerRouter = Router();
 
-AlquilerRouter.post('/alquileres', registrarAlquiler);
-//AlquilerRouter.get('/alquileres/:usuarioId', consultarAlquileres);
+AlquilerRouter.post('/alquileres', registrarAlquiler)
+AlquilerRouter.get('/alquileres/:usuarioId', consultarAlquileres);

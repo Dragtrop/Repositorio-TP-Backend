@@ -56,5 +56,28 @@
       color: #ff0000; // si quedan menos de 5 lugares se pone en rojo garage.cantLugares
     }
   }
+
+.filter-container {
+  margin-bottom: 15px;
+}
+
+.select-filter {
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.select-filter:focus,
+.select-filter:hover {
+  background-color: #e0e0e0;
+  border-color: #999;
+}
+
   
 }

@@ -1,0 +1,55 @@
+.garage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.alquiler-card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  padding: 20px;
+  margin: 10px 0;
+  text-align: left;
+  transition: transform 0.2s;
+}
+
+.alquiler-card:hover {
+  transform: scale(1.05);
+}
+
+.alquiler-direccion,
+.alquiler-horas,
+.alquiler-total,
+.alquiler-fecha {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.alquiler-total {
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+.no-alquileres,
+.no-usuario {
+  font-size: 1.1em;
+  color: #666;
+  margin-top: 20px;
+}
+
+.no-alquileres {
+  color: #ff0000;
+}
+
+.no-usuario {
+  color: #ff8c00;
+}

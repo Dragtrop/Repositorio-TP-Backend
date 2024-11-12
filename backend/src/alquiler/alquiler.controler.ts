@@ -16,7 +16,7 @@ export async function registrarAlquiler(req: Request, res: Response) {
 }
 
 // consulta alquileres
-/*export async function consultarAlquileres(req: Request, res: Response) {
+export async function consultarAlquileres(req: Request, res: Response) {
   const usuarioId = req.params.usuarioId;
 
   try {
@@ -25,5 +25,5 @@ export async function registrarAlquiler(req: Request, res: Response) {
   } catch (error) {
     res.status(500).json({ error: 'Error al consultar los alquileres' });
   }
-} */
+}
 

@@ -27,9 +27,40 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // logica de alquiler
+  //lógica para ordenar garages
+
+  ordenarGarages(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const criterio = selectElement.value;
+  
+    switch (criterio) {
+      case 'valorAsc':
+        this.garages.sort((a, b) => a.valorCocheraxH - b.valorCocheraxH);
+        break;
+      case 'valorDesc':
+        this.garages.sort((a, b) => b.valorCocheraxH - a.valorCocheraxH);
+        break;
+      case 'direccionAsc':
+        this.garages.sort((a, b) => a.direccion.localeCompare(b.direccion));
+        break;
+      case 'direccionDesc':
+        this.garages.sort((a, b) => b.direccion.localeCompare(a.direccion));
+        break;
+      case 'cantLugaresAsc':
+        this.garages.sort((a, b) => a.cantLugares - b.cantLugares);
+        break;
+      case 'cantLugaresDesc':
+        this.garages.sort((a, b) => b.cantLugares - a.cantLugares);
+        break;
+      default:
+        break;
+    }
+  }
+  
+
+  // lógica de alquiler 
 
   alquilarGarage(garage: Garages): void {
-    this.router.navigate(['/detalle-alquiler'], { state: { garage: garage } });
+    this.router.navigate(['/detalle-alquiler', garage.id], { state: { garage: garage } });
   }
 }

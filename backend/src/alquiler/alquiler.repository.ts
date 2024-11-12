@@ -12,10 +12,17 @@ export class AlquilerRepository implements Repository<Alquiler> {
           );
         }
       
-        /*public async consultarAlquileres(usuarioId: number): Promise<Alquiler[]> {
-          const [result]: [RowDataPacket[], any] = await pool.query('SELECT * FROM alquileres WHERE usuarioId = ?', [usuarioId]);
-          return result;
-        }*/
+        public async consultarAlquileres(usuarioId: string): Promise<any> {
+            try {
+            const [alquileres] = await pool.query('SELECT * FROM alquileres WHERE usuarioId = ?',
+                  [usuarioId]);
+                return alquileres;
+            }
+                catch (error) {
+                console.error('Error al consultar los alquileres:', error);
+                throw new Error('Error al consultar los alquileres');
+                }
+        }
 
     public async findAll(): Promise<Alquiler[] | undefined> {
         const [alquileres] = await pool.query('SELECT * FROM alquileres');

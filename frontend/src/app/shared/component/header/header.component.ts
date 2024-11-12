@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   setSectionTitle(url: string): void {
-    if (url.includes('Dashboard')) {
+    if (url.includes('dashboard')) {
       this.sectionTitle = 'DASHBOARD';
     } else if (url.includes('profile')) {
       this.sectionTitle = 'PROFILE';

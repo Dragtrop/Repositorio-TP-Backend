@@ -1,7 +1,12 @@
-<div class="sidebar-profile" *ngIf="user">
-    <h3>Profile</h3>
-    <p><strong>Nombre:</strong> {{ user.nombre }}</p>
-    <p><strong>Apellido:</strong> {{ user.apellido }}</p>
-    <p><strong>Telefono:</strong> {{ user.telefono }}</p>
-    <p><strong>Email:</strong> {{ user.mail }}</p>
-  </div>
+<div *ngIf="errorMessage" class="error-message">
+  <p>{{ errorMessage }}</p>
+</div>
+
+<div *ngIf="user">
+  <h3>Perfil de Usuario</h3>
+  <p><strong>Nombre:</strong> {{ user.nombre }}</p>
+  <p><strong>Apellido:</strong> {{ user.apellido }}</p>
+  <p><strong>Teléfono:</strong> {{ user.telefono }}</p>
+  <p><strong>Email:</strong> {{ user.mail }}</p>
+</div>
+

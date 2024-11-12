@@ -1,17 +1,33 @@
-.sidebar-profile {
-    padding: 1em;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    margin-bottom: 1em;
-  
-    h3 {
-      font-size: 1.2em;
-      margin-bottom: 0.5em;
-    }
-  
-    p {
-      font-size: 0.9em;
-      margin: 0.2em 0;
-    }
-  }
+.profile-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.profile-title {
+  font-size: 1.4em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile-info {
+  font-size: 1.1em;
+  color: #555;
+}
+
+.profile-info p {
+  margin: 5px 0;
+}
+
+.profile-info strong {
+  color: #007bff;
+}
+
+.error-message {
+    color: #ff8c00;
+}
+
   

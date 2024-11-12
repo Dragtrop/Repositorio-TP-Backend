@@ -26,13 +26,14 @@ const routes: Routes = [
   {path:"register",component:RegisterComponent},
   { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
       { path: 'dashboard', component: DashboardComponent },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: '/principal/dashboard', pathMatch: 'full' },
   {path: 'principal',
     loadComponent: () => import('./shared/component/layout/layout.component'),
     children: [
       { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'alquiler', component: AlquilerComponent },
+      { path: 'profile', component: ProfileComponent },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ]
   },

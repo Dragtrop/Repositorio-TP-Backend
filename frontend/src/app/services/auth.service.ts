@@ -13,6 +13,7 @@ export class AuthService {
   
   private servidor :string;
   private tokenkey:string;
+  
 
   constructor(private httpClient:HttpClient,private router:Router){ 
     this.servidor = "http://localhost:3000/api/login/login"
@@ -60,6 +61,8 @@ getCurrentUser(): User | null {
   if (token) {
     try {
       const payload = jwtDecode<any>(token); // Decodifica el token JWT
+      console.log('Token decodificado:', payload); // Muestra el token decodificado
+
       return { 
         id: payload.id || 0,
         nombre: payload.nombre || '',
@@ -68,8 +71,9 @@ getCurrentUser(): User | null {
         nroCliente: payload.nroCliente || 0,
         telefono: payload.telefono || 0,
         Rol: payload.Rol || '',
-        password: '', // Nunca devolver la contraseña en un perfil de usuario
-        usuario: payload.usuario || ''
+        password: '',
+        usuario: payload.usuario || '',
+        idve: payload.idve || ""
       };
     } catch (error) {
       console.error("Token inválido:", error);

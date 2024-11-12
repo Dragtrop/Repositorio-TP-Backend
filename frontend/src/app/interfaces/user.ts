@@ -7,5 +7,6 @@ export interface User{
     Rol:string,
     password:string,
     usuario:string,
+    idve:number,
     id: number,
 }

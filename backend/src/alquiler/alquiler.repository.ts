@@ -6,23 +6,25 @@ import { AlquilerRouter } from "./alquiler.routes.js";
 
 export class AlquilerRepository implements Repository<Alquiler> {
 
-        public async registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: string, vehiculoId: number): Promise<void> {
-          await pool.query('INSERT INTO alquileres (garageId, usuarioId, duracionHoras, servicios, vehiculoId) VALUES (?, ?, ?, ?, ?)',
-            [garageId, usuarioId, duracionHoras, servicios, vehiculoId]
-          );
+    public async registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: number | null, vehiculoId: number): Promise<void> {
+        
+        const fechaAlquiler = new Date().toISOString().slice(0, 19).replace("T", " ");
+        await pool.query(
+          'INSERT INTO alquileres (garageId, usuarioId, duracionHoras, servicios, vehiculoId, fechaAlquiler) VALUES (?, ?, ?, ?, ?, ?)',
+          [garageId, usuarioId, duracionHoras, servicios, vehiculoId, fechaAlquiler]
+        );
+      }
+    public async consultarAlquileres(usuarioId: string): Promise<any> {
+        try {
+        const [alquileres] = await pool.query('SELECT * FROM alquileres WHERE usuarioId = ?',
+              [usuarioId]);
+            return alquileres;
         }
-      
-        public async consultarAlquileres(usuarioId: string): Promise<any> {
-            try {
-            const [alquileres] = await pool.query('SELECT * FROM alquileres WHERE usuarioId = ?',
-                  [usuarioId]);
-                return alquileres;
+            catch (error) {
+            console.error('Error al consultar los alquileres:', error);
+            throw new Error('Error al consultar los alquileres');
             }
-                catch (error) {
-                console.error('Error al consultar los alquileres:', error);
-                throw new Error('Error al consultar los alquileres');
-                }
-        }
+    }
 
     public async findAll(): Promise<Alquiler[] | undefined> {
         const [alquileres] = await pool.query('SELECT * FROM alquileres');

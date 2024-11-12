@@ -24,8 +24,10 @@ const routes: Routes = [
   {path:"servicios",component:ListServicesComponent},
   {path:"login",component:LoginComponent},
   {path:"register",component:RegisterComponent},
-  {
-    path: 'principal',
+  { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  {path: 'principal',
     loadComponent: () => import('./shared/component/layout/layout.component'),
     children: [
       { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },

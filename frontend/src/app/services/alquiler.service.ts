@@ -15,18 +15,18 @@ export class AlquilerService {
 
   constructor(private httpClient:HttpClient,private router:Router){ 
     this.servidor = "http://localhost:3000/api/"
-    this.appiusers = "alquiler/"
+    this.appiusers = "alquileres/alquileres"
     
-  }
+}
 
-  registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: string[], vehiculoId: number): Observable<any> {
-    return this.httpClient.post(`${this.servidor}alquileres`, {
-      garageId,
-      usuarioId,
-      duracionHoras,
-      servicios: servicios.join(','),
-      vehiculoId
-    });
+registrarAlquiler(garageId: number, usuarioId: number, duracionHoras: number, servicios: number, vehiculoId: number): Observable<any> {
+  return this.httpClient.post(`${this.servidor}alquileres`, {  
+    garageId,
+    usuarioId,
+    duracionHoras,
+    servicios,
+    vehiculoId
+  });
 }
 
   obtenerAlquileresPorUsuario(userId: number): Observable<Alquiler[]> {

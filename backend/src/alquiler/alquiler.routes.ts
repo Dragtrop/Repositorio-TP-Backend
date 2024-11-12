@@ -3,5 +3,5 @@ import { registrarAlquiler, consultarAlquileres } from './alquiler.controler.js'
 
 export const AlquilerRouter = Router();
 
-AlquilerRouter.post('/alquileres', registrarAlquiler)
+AlquilerRouter.post('/', registrarAlquiler);
 AlquilerRouter.get('/alquileres/:usuarioId', consultarAlquileres);

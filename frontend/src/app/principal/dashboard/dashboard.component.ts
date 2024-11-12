@@ -20,11 +20,14 @@ export class DashboardComponent implements OnInit {
 
   //muestra garages
 
+
   ngOnInit(): void {
+    
     this.garagesService.ConsultarGarage().subscribe({
       next: (garages) => this.garages = garages,
       error: (err) => console.error('Error al cargar las cocheras:', err)
     });
+    
   }
 
   //lógica para ordenar garages
@@ -61,6 +64,7 @@ export class DashboardComponent implements OnInit {
   // lógica de alquiler 
 
   alquilarGarage(garage: Garages): void {
-    this.router.navigate(['/detalle-alquiler', garage.id], { state: { garage: garage } });
-  }
+    console.log('Redirigiendo al detalle de alquiler:', garage.id);
+    this.router.navigate(['/detalle-alquiler', garage.id]); 
+   }
 }

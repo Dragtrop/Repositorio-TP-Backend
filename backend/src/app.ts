@@ -16,13 +16,14 @@ app.use(cors({
   allowedHeaders: 'Content-Type, Authorization'
 }));
 
-app.use(express.json());
-app.use('/api/vehicles', characterRouter);
-app.use('/api/vehicleTypes', characterRouterVehicleTypes);
-app.use('/api/garages', GarageRouter);
-app.use('/api/login', UserRouter);
-app.use('/api/services', serviceRouter);
-app.use('/api/alquileres', AlquilerRouter);
+app.use(cors());
+app.use(express.json())
+app.use('/api/vehicles',characterRouter)
+app.use('/api/vehicleTypes',characterRouterVehicleTypes)
+app.use('/api/alquileres',AlquilerRouter)
+app.use('/api/garages', GarageRouter)
+app.use('/api/login',UserRouter)
+app.use('/api/services',serviceRouter)
 
 app.use((_, res) => {
   return res.status(404).send({ message: 'Resource not found' });
@@ -31,4 +32,3 @@ app.use((_, res) => {
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000/");
 });
-

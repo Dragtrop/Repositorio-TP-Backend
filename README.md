@@ -4,6 +4,12 @@ This is a full-stack web application that allows users to **browse available gar
 
 ---
 
+## **⚠ Project Status: Work in Progress**
+
+This project is currently under development and is not yet complete. Some features may be incomplete or subject to change. Contributions and feedback are welcome as we continue building this application!
+
+---
+
 ## Features
 
 - **View Available Garages**: Users can explore a list of garages with real-time availability.

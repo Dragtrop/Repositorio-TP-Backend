@@ -38,4 +38,15 @@ export class AlquilerComponent implements OnInit {
       });
     });
   }
+
+  formatDuracionHoras(duracionHoras: number): string {
+    const horas = Math.floor(duracionHoras); 
+    const minutos = Math.floor((duracionHoras - horas) * 60);  
+    const segundos = Math.round(((duracionHoras - horas) * 60 - minutos) * 60);  
+    return `${this.padTime(horas)}:${this.padTime(minutos)}:${this.padTime(segundos)}`;
+  }
+
+  padTime(time: number): string {
+    return time < 10 ? `0${time}` : `${time}`;
+  }
 }

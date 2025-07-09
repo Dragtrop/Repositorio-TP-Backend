@@ -21,14 +21,16 @@ export class AlquilerService {
     usuarioId: number, 
     duracionHoras: number, 
     servicios: number, 
-    vehiculoId: number
+    vehiculoId: number,
+    total:number
   ): Observable<any> {
     return this.httpClient.post(`${this.servidor}alquileres`, {
       garageId,
       usuarioId,
       duracionHoras,
       servicios,
-      vehiculoId
+      vehiculoId,
+      total
     });
   }
 

@@ -1,0 +1,17 @@
+<div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+  
+  <div *ngIf="vehiculo">
+    <h3>Vehiculo del Usuario</h3>
+    <p><strong>Patente:</strong> {{ vehiculo?.patente }}</p>
+    <p><strong>Marca:</strong> {{ vehiculo?.marca }}</p>
+
+    <div *ngIf="vehiculotipo">
+      <h4>Tipo de Vehículo</h4>
+      <p><strong>Codigo:</strong> {{ vehiculotipo?.codigo }}</p>
+      <p><strong>Descripción:</strong> {{ vehiculotipo?.nombre }}</p>
+    </div>
+</div>
+  
+  

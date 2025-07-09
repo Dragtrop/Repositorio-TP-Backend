@@ -4,7 +4,7 @@ import { pool } from '../shared/db/conn.mysql.js';
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { UserRouter } from "./user.routes.js";
 import bcrypt from "bcrypt";
-
+import { Vehicle } from "../vehicles/vehicles.entity.js";
 
 export class UserRepository implements Repository<User>{
 
@@ -68,16 +68,7 @@ export class UserRepository implements Repository<User>{
         return users as User[]
     }
 
-    public async findOne (item:{id: string }):Promise<User  | undefined>{
-        const id = Number.parseInt(item.id)
-        const [users] = await pool.query<RowDataPacket[]>('select * from users where id = ? ',[id])
-        if(users.length === 0){
-            return undefined
-        }
-        const user = users[0] as User
-        return user
 
-    }
     async findByUsuario(usuario: string): Promise<User | null> {
         const [rows]: any = await pool.query('SELECT * FROM users WHERE usuario = ?', [usuario]);
         return rows.length > 0 ? rows[0] : null;
@@ -114,5 +105,29 @@ export class UserRepository implements Repository<User>{
             throw new Error('No se pudo borrar el user')
         }
     }
+
+    public async findOne (item:{id: string }):Promise<User  | undefined>{
+        const id = Number.parseInt(item.id)
+        const [users] = await pool.query<RowDataPacket[]>('select * from users where id = ? ',[id])
+        if(users.length === 0){
+            return undefined
+        }
+        const user = users[0] as User
+        return user
+
+    }
+      public async addVehicleToUser(userId: number, vehicleId: number): Promise<void> {
+        await pool.query("UPDATE users SET idve = ? WHERE id = ?", [vehicleId, userId]);
+      }
+
+      public async findVehiclesByUser(userId: number): Promise<Vehicle[]> {
+        const [rows] = await pool.query<RowDataPacket[]>(
+          "SELECT * FROM vehicles WHERE idve = ?",
+          [userId]
+        );
+    
+
+        return rows.map(row => row as Vehicle); 
+      }     
 
 }

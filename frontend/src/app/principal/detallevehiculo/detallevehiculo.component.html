@@ -1,0 +1,62 @@
+<div class="vehicle-form-container">
+  <h2>Agregar un Vehículo</h2>
+  
+  <form [formGroup]="addVehicleForm" (ngSubmit)="onSubmit()">
+    
+    <!-- Campo de Patente -->
+    <div class="form-group">
+      <label for="patente">Patente</label>
+      <input
+        id="patente"
+        formControlName="patente"
+        type="text"
+        class="form-control"
+        placeholder="Ingrese la patente"
+        [ngClass]="{ 'is-invalid': addVehicleForm.get('patente')?.invalid && addVehicleForm.get('patente')?.touched }"
+      />
+      <div *ngIf="addVehicleForm.get('patente')?.invalid && addVehicleForm.get('patente')?.touched" class="invalid-feedback">
+        Patente es requerida.
+      </div>
+    </div>
+
+    <!-- Campo de Marca -->
+    <div class="form-group">
+      <label for="marca">Marca</label>
+      <input
+        id="marca"
+        formControlName="marca"
+        type="text"
+        class="form-control"
+        placeholder="Ingrese la marca"
+        [ngClass]="{ 'is-invalid': addVehicleForm.get('marca')?.invalid && addVehicleForm.get('marca')?.touched }"
+      />
+      <div *ngIf="addVehicleForm.get('marca')?.invalid && addVehicleForm.get('marca')?.touched" class="invalid-feedback">
+        Marca es requerida.
+      </div>
+    </div>
+
+    <!-- Campo de Código de Tipo de Vehículo -->
+    <div class="form-group">
+      <label for="codtipv">Tipo de Vehículo</label>
+      <input
+        id="codtipv"
+        formControlName="codtipv"
+        type="text"
+        class="form-control"
+        placeholder="Ingrese el tipo de vehículo"
+        [ngClass]="{ 'is-invalid': addVehicleForm.get('codtipv')?.invalid && addVehicleForm.get('codtipv')?.touched }"
+      />
+      <div *ngIf="addVehicleForm.get('codtipv')?.invalid && addVehicleForm.get('codtipv')?.touched" class="invalid-feedback">
+        Tipo de vehículo es requerido.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="addVehicleForm.invalid">
+      Agregar Vehículo
+    </button>
+  </form>
+
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+</div>

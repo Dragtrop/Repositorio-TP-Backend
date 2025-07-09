@@ -20,7 +20,7 @@ const listVehicles: Vehicles[] = [];
 export class ListVehiclesComponent implements OnInit,AfterViewInit{
 
 
-  displayedColumns: string[] = ['Patente', 'Marca', 'id','acciones'];
+  displayedColumns: string[] = ['Patente', 'Marca','codtipv' ,'id','acciones'];
   dataSource: MatTableDataSource<Vehicles>;
   loading:boolean = false;
 

@@ -12,10 +12,13 @@ import { DashboardComponent } from './principal/dashboard/dashboard.component';
 import { ProfileComponent } from './principal/profile/profile.component';
 import { AuthGuard } from './app/guards/auth.guard';
 import { AuthenticatedGuard } from './app/guards/authenticated.guard';
-import { DetalleAlquilerComponent } from './principal/detalle-alquiler/detalleAlquiler.component';
 import { AlquilerComponent } from './principal/alquileres/alquileres.component';
+import { DetallevehiculoComponent } from './principal/detallevehiculo/detallevehiculo.component';
+import { VehiculoComponent } from './principal/vehiculo/vehiculo.component';
+import { DetalleAlquilerComponent } from './principal/detalle-alquiler/detalleAlquiler.component';
 
 const routes: Routes = [
+
   {path:"vehiculos",component: ListVehiclesComponent },
   {path:"tipovehiculos",component: ListVehicleTypesComponent },
   {path:"localizaciones",component: ListLocationsComponent },  
@@ -32,11 +35,15 @@ const routes: Routes = [
       { path: 'alquiler', component: AlquilerComponent },
       { path: 'profile', component: ProfileComponent },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+      { path: 'detalle-vehiculo', component: DetallevehiculoComponent,canActivate:[AuthGuard] },
+      { path: 'vehiculo', component: VehiculoComponent },
+
+
     ]
   },
   {
-    path: '**',
-    redirectTo: 'register'
+    path: 'login',
+    redirectTo: 'login'
   }
 ]
 @NgModule({

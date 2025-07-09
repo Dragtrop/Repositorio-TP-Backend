@@ -8,4 +8,5 @@ export interface Alquiler {
     duracionHoras: number;
     servicios: number;
     vehiculoId: number;
+    total:number;
 }

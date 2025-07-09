@@ -12,7 +12,7 @@ export class VehicleTypeService {
   private apiVehicleTypes: string;
 
   constructor(private http: HttpClient) {
-    this.servidor = "http://localhost:3000/";
+    this.servidor = "http://localhost:3000/api/";
     this.apiVehicleTypes = "vehicleTypes/"; 
   }
 

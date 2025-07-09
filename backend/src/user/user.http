@@ -11,21 +11,19 @@ Content-Type: application/json
 
 {
 
-    "nombre":"snag",
-    "apellido":"Cualquiera",
+    "nombre":"brian",
+    "apellido":"Ortigosa",
     "telefono": 1234567890,
     "mail":"fulanitoCual@msn.com",
     "Rol":"Cliente",
     "password":"1441",
-    "usuario":"hola",
+    "usuario":"Gato",
     "idve":1
     
 }  
 
 ### borrar un recurso
 delete http://localhost:3000/api/users
-
-
 
 ### modficar un recurso
 

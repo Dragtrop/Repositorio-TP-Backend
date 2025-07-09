@@ -1,6 +1,6 @@
 <div class="filter-container">
   <label for="filter">Ordenar por:</label>
-  <select id="filter" class="select-filter" (change)="ordenarGarages($event)">
+  <select id="filter" class="select-filter" (change)="ordenarGarages($event)"> <!-- pasa el evento que selecciona el usaurio y le da el valor-->
     <option value="">Seleccionar</option>
     <option value="valorAsc">Valor (menor a mayor)</option>
     <option value="valorDesc">Valor (mayor a menor)</option>
@@ -11,18 +11,18 @@
   </select>
 </div>
 
-<div class="garage-container" *ngIf="garagesDisponibles.length">
-  <div class="garage-box" *ngFor="let garage of garagesDisponibles">
+<div class="garage-container" *ngIf="garagesDisponibles.length"> <!--muestra el contenido solo si la longitud no es cero-->
+  <div class="garage-box" *ngFor="let garage of garagesDisponibles"> <!-- recorre cada elemento del arreglo-->
     <!-- falta la imágen -->
     <h3 class="garage-name">{{ garage.direccion }}</h3>
     <p class="garage-price">{{ garage.valorCocheraxH | currency }}</p>
-    <p [ngClass]="{'low': garage.cantLugares < 5}" class="garage-lugares">
+    <p [ngClass]="{'low': garage.cantLugares < 5}" class="garage-lugares"> <!--applica el css low cuando es <5-->
       Lugares disponibles: {{ garage.cantLugares }}
     </p>
     <button class="btn-alquilar" (click)="alquilarGarage(garage)">Alquilar</button>
   </div>
 </div>
 
-<div *ngIf="!garagesDisponibles.length">
+<div *ngIf="!garagesDisponibles.length"> <!-- se muestra si está vacío-->
   No hay garages disponibles en este momento.
 </div>

@@ -27,7 +27,6 @@ export class AlquilerComponent implements OnInit {
     }
   }
   
-
   obtenerAlquileres(userId: number): void {
     this.alquilerService.obtenerAlquileresPorUsuario(userId).subscribe((alquileres) => {
       this.alquileres = alquileres;

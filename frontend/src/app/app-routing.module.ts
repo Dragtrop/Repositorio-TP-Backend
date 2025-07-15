@@ -27,20 +27,21 @@ const routes: Routes = [
   {path:"servicios",component:ListServicesComponent},
   {path:"login",component:LoginComponent},
   {path:"register",component:RegisterComponent},
-  {path: 'principal',
-    loadComponent: () => import('./shared/component/layout/layout.component'),
-    children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
-      { path: 'alquiler', component: AlquilerComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-      { path: 'detalle-vehiculo', component: DetallevehiculoComponent,canActivate:[AuthGuard] },
-      { path: 'vehiculo', component: VehiculoComponent },
-
-
-    ]
-  },
+  { 
+  path: 'principal',
+  loadComponent: () =>
+    import('./shared/component/layout/layout.component')
+      .then(m => m.LayoutComponent),
+  children: [
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
+    { path: 'alquiler', component: AlquilerComponent },
+    { path: 'profile', component: ProfileComponent },
+    { path: '', redirectTo: '/principal/dashboard', pathMatch: 'full' },
+    { path: 'detalle-vehiculo', component: DetallevehiculoComponent, canActivate: [AuthGuard] },
+    { path: 'vehiculo', component: VehiculoComponent },
+  ]
+},
   {
     path: 'login',
     redirectTo: 'login'

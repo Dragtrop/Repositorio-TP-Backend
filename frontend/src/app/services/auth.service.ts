@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { User } from '../interfaces/user.js';
-import { UserService } from './user.service.js';
+import { User } from '../interfaces/user';
+import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode'
 
@@ -31,6 +31,13 @@ export class AuthService {
       })
     )
   }
+
+  register(userData: any): Observable<any> {
+  return this.httpClient.post<any>(
+    "http://localhost:3000/api/login/register",
+    userData
+  );
+}
   private setToken(token:string):void{
     localStorage.setItem(this.tokenkey,token);
   }
@@ -58,28 +65,32 @@ export class AuthService {
 
 getCurrentUser(): User | null {
   const token = this.getToken();
+
   if (token) {
     try {
       const payload = jwtDecode<any>(token);
       console.log('Token decodificado:', payload);
 
-      return { 
-        id: payload.id || 0,
-        nombre: payload.nombre || '',
-        apellido: payload.apellido || '',
-        mail: payload.mail || '',
-        nroCliente: payload.nroCliente || 0,
-        telefono: payload.telefono || 0,
-        Rol: payload.Rol || '',
+      return {
+        id: payload.id ?? 0,
+        nombre: payload.nombre ?? '',
+        apellido: payload.apellido ?? '',
+        mail: payload.mail ?? '',
+        nroCliente: payload.nroCliente ?? 0,
+        telefono: payload.telefono ?? 0,
+        Rol: payload.Rol ?? '',
         password: '',
-        usuario: payload.usuario || '',
-        idve: payload.idve || ""
+        usuario: payload.usuario ?? '',
+        idve: payload.idve ?? null,
+        activo: payload.activo ?? 1
       };
+
     } catch (error) {
       console.error("Token inválido:", error);
       return null;
     }
   }
+
   return null;
 }
 

@@ -8,33 +8,35 @@ import { Vehicle } from "../vehicles/vehicles.entity.js";
 
 export class UserRepository implements Repository<User>{
 
-    public async login(userInput: { usuario: string; password: string }): Promise<Omit<User, 'password'> | undefined> {
+public async login(userInput: { usuario: string; password: string }): Promise<User | undefined> {
         
-        try{
-            const [rows] = await pool.query<RowDataPacket[]>(
-                "SELECT * FROM users WHERE usuario = ?",
-                [userInput.usuario])
+    try {
+        const [rows] = await pool.query<RowDataPacket[]>(
+            "SELECT * FROM users WHERE usuario = ?",
+            [userInput.usuario]
+        );
 
-                if (rows.length === 0) {
-                throw new Error("Usuario no existe");
-                }
+        if (rows.length === 0) {
+            return undefined;
+        }
 
-                const user = rows[0] as User;
-                const isValid = bcrypt.compareSync(userInput.password, user.password);
-                if (!isValid) {
-                    throw new Error("Contraseña incorrecta");
-                }
+        const user = rows[0] as User;
 
-                const { password, ...publicUser } = user;      
+        const isValid = bcrypt.compareSync(userInput.password, user.password);
 
-                return publicUser
-                }  
-                catch (error) {
-                    console.error("Error en el login del repositorio:", error);
-                    throw error;
-                 }
-               
+        if (!isValid) {
+            return undefined;
+        }
+
+        return user;
+
+    } catch (error) {
+        console.error("Error en el login del repositorio:", error);
+        throw error;
     }
+}
+
+
 
     public async create(userInput:User): Promise<User  | undefined>{
 
@@ -85,26 +87,59 @@ export class UserRepository implements Repository<User>{
         return userInput
     }
 
-    public async update (id: string, userInput: User): Promise<User  | undefined> {
-        console.log(userInput)
-        const userId = Number.parseInt(id)
-        const {... userRow} = userInput
-        await pool.query('update users set ? where id = ?',[userRow, userId] )
+    public async update(id: string, userInput: Partial<User>): Promise<User | undefined> {
 
-        return await this.findOne({ id })
-    }
+    const userId = Number.parseInt(id);
+
+    const allowedFields: any = {};
+
+    if (userInput.nombre !== undefined) allowedFields.nombre = userInput.nombre;
+    if (userInput.apellido !== undefined) allowedFields.apellido = userInput.apellido;
+    if (userInput.telefono !== undefined) allowedFields.telefono = userInput.telefono;
+    if (userInput.mail !== undefined) allowedFields.mail = userInput.mail;
+    if (userInput.usuario !== undefined) allowedFields.usuario = userInput.usuario;
+    if (userInput.password !== undefined) allowedFields.password = userInput.password;
+
+    await pool.query(
+        "UPDATE users SET ? WHERE id = ?",
+        [allowedFields, userId]
+    );
+
+    return await this.findOne({ id });
+}
 
     public async delete (item: {id:string}):Promise<User  | undefined>{
-        try{
         const userToDelete = await this.findOne(item)
-        const userId = Number.parseInt(item.id)
-        await pool.query('delete from users where id = ?', userId)
+        if(!userToDelete) {
+            return undefined;
+        }
 
-        return userToDelete}        
-        catch(error:any){
-            throw new Error('No se pudo borrar el user')
+        const userId = Number.parseInt(item.id);
+
+        try {
+            const [result] = await pool.query<ResultSetHeader>(
+                'UPDATE users SET activo = 0 WHERE id = ?',
+                [userId]
+            );
+            // devolver el usuario antiguo (antes de la baja) para el controlador
+            return userToDelete;
+        } catch (error:any) {
+            console.error("Error real al desactivar usuario:", error);
+            throw error;
         }
     }
+
+    public async activate (id: string): Promise<User | undefined> {
+        const userId = Number.parseInt(id);
+        try {
+            await pool.query<ResultSetHeader>('UPDATE users SET activo = 1 WHERE id = ?', [userId]);
+            return await this.findOne({ id });
+        } catch (error:any) {
+            console.error("Error al activar usuario:", error);
+            throw error;
+        }
+    }
+
 
     public async findOne (item:{id: string }):Promise<User  | undefined>{
         const id = Number.parseInt(item.id)

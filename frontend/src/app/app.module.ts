@@ -19,11 +19,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 //COMPONENTS
-import { ListUserComponent } from './components/list-user/list-user.component';
+import { ListUserComponent } from './principal/usuarios/list-user/list-user.component';
 import { AddEditUserComponent } from './components/add-edit-user/add-edit-user.component';
 import { ListGarageComponent } from './components/list-garage/list-garage.component';
 import { AddEditGarageComponent } from './components/add-edit-garage/add-edit-garage.component';
@@ -40,9 +40,16 @@ import { ProfileComponent } from './principal/profile/profile.component';
 import { AlquilerComponent } from './principal/alquileres/alquileres.component';
 import { DetalleAlquilerComponent } from './principal/detalle-alquiler/detalleAlquiler.component';
 import { DetallevehiculoComponent } from './principal/detallevehiculo/detallevehiculo.component';
+import { GarageFormComponent } from './principal/misCocherasComponent/garage-form/garage-form.component';
+import { MisCocherasComponent } from './principal/mis-cocheras/mis-cocheras.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { VehiculoComponent } from './principal/vehiculo/vehiculo.component';
+import { EditUserComponent } from './principal/usuarios/edit-user/edit-user.component';
+
+
 @NgModule({
   declarations: [
-    
     AppComponent,
     NavbarComponent,
     ListVehiclesComponent,
@@ -61,9 +68,15 @@ import { DetallevehiculoComponent } from './principal/detallevehiculo/detalleveh
     ProfileComponent,
     AlquilerComponent,
     DetalleAlquilerComponent,
+    GarageFormComponent,
+    MisCocherasComponent,
+    RegisterComponent,
+    LoginComponent,
+    DetallevehiculoComponent,
+    VehiculoComponent,
+    EditUserComponent,
   ],
   imports: [
-    DetallevehiculoComponent,
     FormsModule,
     CommonModule,
     MatProgressSpinnerModule,

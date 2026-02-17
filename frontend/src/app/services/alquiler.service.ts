@@ -38,9 +38,9 @@ export class AlquilerService {
     return this.httpClient.get<Alquiler[]>(`${this.servidor}alquileres/${userId}`);
   }
 
-  obtenerGaragePorId(id: number): Observable<Garages> {
-    return this.httpClient.get<Garages>(`${this.servidor}garages/${id}`);
-  }
+  obtenerGaragePorId(id: number): Observable<{ data: Garages }> {
+  return this.httpClient.get<{ data: Garages }>(`${this.servidor}garages/${id}`);
+}
 
   verificarDisponibilidad(garageId: number, fechaAlquiler: string): Observable<boolean> {
 

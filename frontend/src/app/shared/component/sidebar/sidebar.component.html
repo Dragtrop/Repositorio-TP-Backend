@@ -2,17 +2,9 @@
   class="bg-gradient-to-br from-gray-800 to-gray-900
          fixed inset-y-0 left-0 z-50 my-4 ml-4
          h-[calc(100vh-32px)] w-72 rounded-xl
-         transition-transform duration-300
-
-         /* ----------- ESTADO INICIAL ----------- */
-         -translate-x-80        /* por defecto oculto */
-         xl:translate-x-0       /* en escritorio siempre visible */
-
-         /* cuando visible = true en móvil, anulamos el translate negativo */
-        "
+         transition-transform duration-300"
   [class.translate-x-0]="visible"
 >
-  <!-- HEADER DEL SIDEBAR -->
   <div class="relative border-b border-white/20 px-8 py-6 flex items-center justify-between">
     <a href="#/" class="flex items-center gap-4">
       <h3 class="text-white font-semibold text-base">Alquileres Rosario</h3>
@@ -29,60 +21,19 @@
     </button>
   </div>
 
-  <!-- NAVEGACIÓN -->
   <div class="m-4">
-    <ul class="flex flex-col gap-1">
-      <!-- Dashboard -->
-      <li>
-        <a routerLink="/principal/dashboard">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md"
-            class="w-full flex items-center gap-4 px-4 py-3 text-white font-bold rounded-lg hover:bg-white/10 active:bg-white/30"
-          >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M11.47 3.84..."/></svg>
-            <span>dashboard</span>
-          </button>
-        </a>
-      </li>
+ <ul class="flex flex-col gap-1">
+  <li *ngFor="let item of menuItems">
+    <a [routerLink]="item.route">
+      <button
+        routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md"
+        class="w-full flex items-center gap-4 px-4 py-3 text-white font-bold rounded-lg hover:bg-white/10 active:bg-white/30"
+      >
+        <span>{{ item.label }}</span>
+      </button>
+    </a>
+  </li>
+</ul>
 
-      <!-- Profile -->
-      <li>
-        <a routerLink="/principal/profile">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md"
-            class="w-full flex items-center gap-4 px-4 py-3 text-white font-bold rounded-lg hover:bg-white/10 active:bg-white/30"
-          >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.685 19.097..."/></svg>
-            <span>profile</span>
-          </button>
-        </a>
-      </li>
-
-      <!-- Vehículo -->
-      <li>
-        <a routerLink="/principal/vehiculo">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md"
-            class="w-full flex items-center gap-4 px-4 py-3 text-white font-bold rounded-lg hover:bg-white/10 active:bg-white/30"
-          >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M1.5 5.625..."/></svg>
-            <span>vehiculo</span>
-          </button>
-        </a>
-      </li>
-
-      <!-- Alquileres -->
-      <li>
-        <a routerLink="/principal/alquiler">
-          <button
-            routerLinkActive="bg-gradient-to-tr from-blue-600 to-blue-400 shadow-md"
-            class="w-full flex items-center gap-4 px-4 py-3 text-white font-bold rounded-lg hover:bg-white/10 active:bg-white/30"
-          >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M1.5 5.625..."/></svg>
-            <span>alquileres</span>
-          </button>
-        </a>
-      </li>
-    </ul>
   </div>
 </aside>

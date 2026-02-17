@@ -9,7 +9,7 @@ export class Garage{
         public cantLugares:number,
         public valorCocheraxH:number,
         public idservicios:number,
-        public imagen: Buffer,
         public id?: number,
+        public idDueno?: number,
     ){}
 }

@@ -28,9 +28,13 @@ export class AddEditUserComponent {
         apellido:['',Validators.required], 
         telefono:['',Validators.required], 
         mail:['',Validators.required], 
-        Rol:['',Validators.required], 
+        Rol:['',Validators.required],
+        usuario:['', Validators.required],
+        password:['', Validators.required],
+        idve:[null],
         id:['']
-      })
+      });
+
       this.id=data.id;
 
     };
@@ -52,7 +56,7 @@ export class AddEditUserComponent {
   }
 
   getUser(id:number){
-    this._userService.getuser(id).subscribe(data =>{
+    this._userService.getUser(id).subscribe((data: User) => {
       this.form.patchValue({
         nroCliente:data.nroCliente,
         nombre:data.nombre,
@@ -67,47 +71,49 @@ export class AddEditUserComponent {
   }
   addEditPersona(){
 
-    if(this.form.invalid){
-      return;
+this.loading = true;
+
+const user: User = {
+  nroCliente: this.form.value.nroCliente,
+  nombre: this.form.value.nombre,
+  apellido: this.form.value.apellido,
+  telefono: this.form.value.telefono,
+  mail: this.form.value.mail,
+  Rol: this.form.value.Rol,
+  usuario: this.form.value.usuario,
+  password: this.form.value.password,
+  idve: this.form.value.idve,
+  id: this.form.value.id,
+  activo: 1
+};
+
+if (this.id == undefined) {
+  this._userService.register(user).subscribe({
+    next: () => {
+      this.loading = false;
+      this.addcomplete('agregado');
+      this.dialogRef.close(true);
+    },
+    error: (err) => {
+      this.loading = false;
+      console.error(err);
+      this._snackBar.open('Error al agregar usuario', '', { duration: 3000 });
     }
-
-    const user: User = {
-
-      nroCliente:this.form.value.nroCliente,
-      nombre:this.form.value.nombre,
-      apellido:this.form.value.apellido,
-      telefono:this.form.value.telefono,
-      mail:this.form.value.mail,
-      Rol:this.form.value.Rol,
-      usuario:this.form.value.usuario,
-      password:this.form.value.password,
-      idve:this.form.value.idve,
-      id:this.form.value.id
-
+  });
+} else {
+  this._userService.editUser(this.id, user).subscribe({
+    next: () => {
+      this.loading = false;
+      this.addcomplete('actualizado');
+      this.dialogRef.close(true);
+    },
+    error: (err) => {
+      this.loading = false;
+      console.error(err);
+      this._snackBar.open('Error al actualizar usuario', '', { duration: 3000 });
     }
-
-    this.loading =true;
-    if(this.id == undefined){
-      setTimeout(()=>{
-        this._userService.adduser(user).subscribe(() =>{
-          this.loading =false;
-          this.addcomplete('agregado');
-        })
-  
-      },1500)
-  
-    }else{
-        
-        this._userService.edituser(this.id,user).subscribe(data => {
-        this.addcomplete('actualizado');
-        
-      })
-    
-    }
-    this.loading =false;
-    this.dialogRef.close(true);
-
-
+  });
+}
 
   }
   addcomplete(operacion:string){

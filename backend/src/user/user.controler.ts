@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 const repository = new UserRepository()
 function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
   const requiredFields = [
-      'nombre', 'apellido', 'telefono', 'mail', 'Rol', 'password', 'usuario', 'idve'
+      'nombre', 'apellido', 'telefono', 'mail', 'Rol', 'password', 'usuario'
   ];
 
   for (let field of requiredFields) {
@@ -26,7 +26,7 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
       Rol: req.body.Rol,
       password: req.body.password,
       usuario: req.body.usuario,
-      idve: req.body.idve,
+      idve: req.body.idve ?? null,
   };
 
   Object.keys(req.body.sanitizedInput).forEach(key => {
@@ -37,14 +37,9 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction) {
 
   next();
 }
-
-
-
 async function findAll(req: Request, res: Response) {
     res.json({ data: await repository.findAll() })
 }
-
-
 
 async function findOne(req: Request, res: Response) {
     const id = req.params.id
@@ -54,8 +49,6 @@ async function findOne(req: Request, res: Response) {
     }
     res.json({ data: user })
 }
-  
-
 
 async function add(req: Request, res: Response) {
     const input = req.body.sanitizedInput
@@ -78,97 +71,168 @@ async function add(req: Request, res: Response) {
   
 
 async function update(req: Request, res: Response) {
-    const user = await repository.update(req.params.id,req.body.sanitizedInput)
-  
+  try {
+
+    const user = await repository.update(
+      req.params.id,
+      req.body.sanitizedInput
+    );
+
     if (!user) {
-      return res.status(404).send({ message: 'User not found' })
+      return res.status(404).send({ message: 'User not found' });
     }
-  
-  return res.status(200).send({ message: 'User updated successfully', data: user })
+
+    return res.status(200).send({
+      message: 'User updated successfully',
+      data: user
+    });
+
+  } catch (error: any) {
+    return res.status(400).send({
+      message: error.message
+    });
+  }
 }
+
 
 
 async function remove(req: Request, res: Response) {
-    const id = req.params.id
+  const id = req.params.id
+  try {
     const user = await repository.delete({ id })
-  
     if (!user) {
-      res.status(404).send({ message: 'User not found' })
+      return res.status(404).send({ message: 'User not found' })
     } else {
-      res.status(200).send({ message: 'User deleted successfully' })
+      return res.status(200).send({ message: 'User desactivado correctamente', data: user })
     }
+  } catch (error:any) {
+    console.error("Error en remove controller:", error);
+    return res.status(500).send({ message: 'Error interno del servidor' })
+  }
+}
+
+async function activateUser(req: Request, res: Response) {
+  const id = req.params.id;
+  try {
+    const user = await repository.activate(id);
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+    return res.status(200).send({ message: 'User activado correctamente', data: user });
+  } catch (error:any) {
+    console.error("Error en activateUser controller:", error);
+    return res.status(500).send({ message: 'Error interno del servidor' });
+  }
 }
 
 
-  async function create(req: Request, res: Response) {
-    const input = req.body.sanitizedInput;
 
-    if (!input || !input.nombre || !input.apellido || !input.telefono || !input.mail || !input.Rol || !input.usuario || !input.password || !input.idve) {
-      return res.status(400).json({ message: "Faltan datos requeridos para crear el usuario" });
+async function create(req: Request, res: Response) {
+  const input = req.body.sanitizedInput;
+
+  if (
+    !input.nombre ||
+    !input.apellido ||
+    !input.telefono ||
+    !input.mail ||
+    !input.Rol ||
+    !input.usuario ||
+    !input.password
+  ) {
+    return res.status(400).json({
+      message: "Faltan datos requeridos para crear el usuario",
+    });
   }
-    const userInput = new User(
-        input.nroCliente,
-        input.nombre,
-        input.apellido,
-        input.telefono,
-        input.mail,
-        input.Rol,
-        input.password,
-        input.usuario,
-        input.idve
-    )
 
-    try {
+  const userInput = new User(
+    0,
+    input.nombre,
+    input.apellido,
+    input.telefono,
+    input.mail,
+    input.Rol,
+    input.password,
+    input.usuario,
+    null
+  );
 
-      const createdUser = await repository.create(userInput)
+  try {
+    const createdUser = await repository.create(userInput);
 
-      if (!createdUser) {
-        return res.status(500).json({ message: "No se pudo crear el usuario" })
+    res.status(201).json({
+      message: "Usuario creado exitosamente",
+      data: {
+        id: createdUser?.id,
+        nroCliente: createdUser?.nroCliente
+      }
+    });
+
+  } catch (error: any) {
+    if (error.message === "Usuario ya existe") {
+      return res.status(409).json({ message: error.message });
     }
 
-       
-        res.status(201).json({ message: "Usuario creado exitosamente", id: createdUser.id })
-
-    } catch (error) {
-        console.error("Error al crear el usuario:", error)
-    }
+    console.error(error);
+    res.status(500).json({ message: "Error interno del servidor" });
   }
-  
-    async function login(req: Request, res: Response) {
-      const {usuario,password}= req.body
-      if (!usuario || !password) {
-        return res.status(400).json({ message: "Faltan datos requeridos: usuario y contraseña." });
-      }
-    try {
-      const user = await repository.login({ usuario, password });
-
-      if (!user) {
-          return res.status(401).json({ message: "Usuario o contraseña incorrectos." });
-      }
-        const token = jwt.sign(
-          { 
-            id: user.id, 
-            usuario: user.usuario, 
-            idve: user.idve,
-            nombre: user.nombre,
-            apellido: user.apellido,
-            mail: user.mail,
-            telefono: user.telefono
-
-          },
-          "this-is-an-awesome-secret-key",
-          { expiresIn: "1h" }
-        );
-  
-
-      return res.status(200).json({ message: "Inicio de sesión exitoso", data: user,token });
-     } catch (error: any) {
-      console.error("Error al iniciar sesión:", error.message);
-      return res.status(500).json({ message: "Error interno del servidor" });
-      }     
-
-
 }
+
+  
+async function login(req: Request, res: Response) {
+  const { usuario, password } = req.body;
+
+  if (!usuario || !password) {
+    return res.status(400).json({
+      message: "Faltan datos requeridos: usuario y contraseña."
+    });
+  }
+
+  try {
+    const user = await repository.login({ usuario, password });
+
+    if (!user) {
+      return res.status(401).json({
+        message: "Usuario o contraseña incorrectos."
+      });
+    }
+
+    // 🔒 BLOQUEO POR BAJA LÓGICA
+    if (user.activo !== 1) {
+      return res.status(403).json({
+        message: "Usuario desactivado. Contacte al administrador."
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: user.id,
+        nroCliente: user.nroCliente,
+        usuario: user.usuario,
+        idve: user.idve,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        mail: user.mail,
+        telefono: user.telefono,
+        Rol: user.Rol,
+        activo: user.activo
+      },
+      "this-is-an-awesome-secret-key",
+      { expiresIn: "1h" }
+    );
+
+    return res.status(200).json({
+      message: "Inicio de sesión exitoso",
+      token
+    });
+
+  } catch (error: any) {
+    console.error("Error al iniciar sesión:", error.message);
+    return res.status(500).json({
+      message: "Error interno del servidor"
+    });
+  }
+}
+
 async function findVehiclesByUser(req: Request, res: Response) {
   const usuarioId = req.params.usuarioId;
   const vehicles = await repository.findVehiclesByUser(Number(usuarioId));
@@ -194,8 +258,10 @@ async function addVehicleToUser(req: Request, res: Response) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error al asignar el vehículo al usuario" });
-  }
+  } 
 }
 
 
-export{sanitizeUserInput,findAll,findOne,add,update,remove,create,login,findVehiclesByUser,addVehicleToUser}
+
+
+export{sanitizeUserInput,findAll,findOne,add,update,remove,create,login,findVehiclesByUser,addVehicleToUser,activateUser}

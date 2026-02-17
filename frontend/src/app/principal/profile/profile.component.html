@@ -1,12 +1,83 @@
-<div *ngIf="errorMessage" class="error-message">
-  <p>{{ errorMessage }}</p>
-</div>
+<div class="form-container" *ngIf="user">
 
-<div *ngIf="user">
-  <h3>Perfil de Usuario</h3>
-  <p><strong>Nombre:</strong> {{ user.nombre }}</p>
-  <p><strong>Apellido:</strong> {{ user.apellido }}</p>
-  <p><strong>Teléfono:</strong> {{ user.telefono }}</p>
-  <p><strong>Email:</strong> {{ user.mail }}</p>
-</div>
+  <!-- 👁 MODO VISUALIZACIÓN -->
+  <div class="form-box" *ngIf="!isEditing">
 
+    <h2>Mi Perfil</h2>
+
+    <div class="form-group">
+      <label>Nombre</label>
+      <input [value]="user.nombre" disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Apellido</label>
+      <input [value]="user.apellido" disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input [value]="user.mail" disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Teléfono</label>
+      <input [value]="user.telefono" disabled>
+    </div>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input [value]="user.usuario" disabled>
+    </div>
+
+    <div class="button-group">
+      <button class="btn-save" (click)="toggleEdit()">
+        Editar
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ✏️ MODO EDICIÓN -->
+  <div class="form-box" *ngIf="isEditing">
+
+    <h2>Editar Perfil</h2>
+
+    <div class="form-group">
+      <label>Nombre</label>
+      <input [(ngModel)]="user.nombre">
+    </div>
+
+    <div class="form-group">
+      <label>Apellido</label>
+      <input [(ngModel)]="user.apellido">
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input [(ngModel)]="user.mail">
+    </div>
+
+    <div class="form-group">
+      <label>Teléfono</label>
+      <input [(ngModel)]="user.telefono">
+    </div>
+
+    <div class="form-group">
+      <label>Usuario</label>
+      <input [(ngModel)]="user.usuario">
+    </div>
+
+    <div class="button-group">
+      <button class="btn-save" (click)="guardarCambios()">
+        Guardar
+      </button>
+
+      <button class="btn-cancel" (click)="toggleEdit()">
+        Cancelar
+      </button>
+    </div>
+
+  </div>
+
+</div>

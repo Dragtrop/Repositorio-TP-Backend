@@ -11,7 +11,8 @@ export class User{
         public Rol:string,
         public password:string,
         public usuario:string,
-        public idve:number,
+        public idve:number | null,
+        public activo: number = 1,
         public id?: number,
     ){}
 }

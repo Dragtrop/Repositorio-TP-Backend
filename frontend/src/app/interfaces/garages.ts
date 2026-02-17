@@ -4,6 +4,6 @@ export interface Garages{
     cantLugares: number,
     valorCocheraxH: number,
     idservicios:number,
-    imagen:BufferSource,
     id: number,
+    idDueno: number
 }

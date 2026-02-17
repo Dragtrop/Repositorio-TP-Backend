@@ -54,14 +54,23 @@ async function addVehicleToUser(req, res) {
     const userId = Number(req.params.userId);
     const { patente, marca, codtipv } = req.body;
     try {
+        // 🔹 1️⃣ Verificar si el usuario ya tiene vehículo
+        const user = await usersRepository.findOne({ id: userId.toString() });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        if (user.idve) {
+            return res.status(400).json({
+                message: 'User already has a vehicle'
+            });
+        }
+        // 🔹 2️⃣ Crear vehículo
         const vehicle = await repository.add({ patente, marca, codtipv });
         if (!vehicle || !vehicle.id) {
             return res.status(500).json({ message: 'Error creating vehicle' });
         }
         const vehicleId = vehicle.id;
-        if (typeof vehicleId !== 'number') {
-            return res.status(500).json({ message: 'Invalid vehicle ID' });
-        }
+        // 🔹 3️⃣ Asociar vehículo al usuario
         await usersRepository.addVehicleToUser(userId, vehicleId);
         res.status(201).json({
             message: "Vehicle added successfully",
@@ -69,7 +78,7 @@ async function addVehicleToUser(req, res) {
         });
     }
     catch (error) {
-        res.status(500).json({ message: 'Error adding vehicle to user', error: error });
+        res.status(500).json({ message: 'Error adding vehicle to user', error });
     }
 }
 async function obtenerVehiculosConGarage(req, res) {

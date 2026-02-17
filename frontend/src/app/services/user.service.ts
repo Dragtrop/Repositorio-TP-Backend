@@ -1,43 +1,58 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {map, Observable} from "rxjs";
+import { Observable, map } from 'rxjs';
 import { User } from '../interfaces/user';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private servidor :string;
-  private appiusers: string;
+  private servidor = 'http://localhost:3000/api/login';
 
+  constructor(private http: HttpClient) {}
 
-  constructor(private http :HttpClient) { 
-    this.servidor = "http://localhost:3000/api/"
-    this.appiusers = "/"
-    
-
+  register(user: User): Observable<any> {
+    return this.http.post(`${this.servidor}/register`, user);
   }
 
-  ConsultarUsuarios(): Observable<User[]>{
-    return this.http.get<{data:User[]}>(`${this.servidor}${this.appiusers}`).pipe(map(response => response.data));
-  }
-  
-  deleteuser(id:number): Observable<void>{
-    return this.http.delete<void>(`${this.servidor}${this.appiusers}${id}`);
-
+  login(usuario: string, password: string): Observable<any> {
+    return this.http.post(`${this.servidor}/login`, { usuario, password });
   }
 
-  adduser(user:User):Observable<void>{
-    return this.http.post<void>(`${this.servidor}${this.appiusers}`,user);
+  consultarUsuarios(): Observable<User[]> {
+    return this.http
+      .get<{ data: User[] }>(this.servidor)
+      .pipe(map(res => res.data));
   }
 
-  getuser(id: number): Observable<User> {
-    return this.http.get<{ data: User }>(`${this.servidor}${this.appiusers}${id}`)
-      .pipe(map(response => response.data));
+  getUser(id: number): Observable<User> {
+    return this.http
+      .get<{ data: User }>(`${this.servidor}/${id}`)
+      .pipe(map(res => res.data));
   }
-  edituser(id:number,user:User):Observable<void>{
-    return this.http.put<void>(`${this.servidor}${this.appiusers}${id}`,user);
+
+  addUser(user: User): Observable<any> {
+    return this.http.post(this.servidor, user);
+  }
+
+  editUser(id: number, user: User): Observable<any> {
+    return this.http.put(`${this.servidor}/${id}`, user);
+  }
+
+  // baja lógica (usa la ruta DELETE que ahora hace UPDATE activo = 0)
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(`${this.servidor}/${id}`);
+  }
+
+  // activar usuario (nuevo)
+  activateUser(id: number): Observable<any> {
+    return this.http.put(`${this.servidor}/admin/${id}/activar`, {});
+  }
+
+  // (opcional) desactivar por PUT (si preferís no usar DELETE)
+  desactivateUser(id: number): Observable<any> {
+    return this.http.put(`${this.servidor}/admin/${id}/desactivar`, {});
   }
 }
+

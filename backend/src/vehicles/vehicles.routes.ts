@@ -18,4 +18,5 @@ characterRouter.delete('/:id',remove)
 characterRouter.post("/:userId/vehicles", addVehicleToUser);
 
 characterRouter.get('/vehiculos/:usuarioId', obtenerVehiculosConGarage);
-characterRouter.get('vehiculos/:id',);
+characterRouter.get('vehiculos/:id',)
+;

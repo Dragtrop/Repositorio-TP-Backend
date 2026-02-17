@@ -71,17 +71,20 @@ export class VehiclesRepository implements Repository<Vehicle>{
 public async obtenerVehiculosConGarage(usuarioId: number): Promise<any> {
     try {
         const [vehiculos] = await pool.query(
-            `SELECT v.id, v.patente, v.marca, v.codtipv, g.direccion as garageDireccion
+            `SELECT v.id, v.patente, v.marca, v.codtipv
              FROM vehicles v
-             JOIN garages g ON v.garageId = g.id
-             WHERE v.usuarioId = ?`, [usuarioId]
+             JOIN users u ON u.idve = v.id
+             WHERE u.id = ?`,
+            [usuarioId]
         );
+
         return vehiculos;
     } catch (error) {
         console.error('Error al obtener los vehículos:', error);
-        throw new Error('Error al obtener los vehículos');
+        throw error;
     }
 }
+
 
 
 }

@@ -15,9 +15,10 @@ Content-Type: application/json
 
 {
 
-  "direccion":"Neochea 145",
-  "cantLugares":"4",
-  "valorCocheraxH" :"1000",
+  "direccion":"Oroño 145",
+  "cantLugares": 4,
+  "valorCocheraxH" : 1000,
+  "idservicios": 1
 
 }  
 

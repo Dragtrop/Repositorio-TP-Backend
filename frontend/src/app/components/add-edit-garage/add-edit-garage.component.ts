@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Garages } from 'src/app/interfaces/garages'; 
 import { GaragesService } from 'src/app/services/garages.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,7 +25,10 @@ export class AddEditGarageComponent {
 
 
   constructor(public dialogRef: MatDialogRef<AddEditGarageComponent>,
-    private fb:FormBuilder, private _userService:GaragesService ,private _snackBar : MatSnackBar ,
+    private fb:FormBuilder, 
+    private _userService:GaragesService,
+    private _snackBar : MatSnackBar,
+    private router: Router,
      @Inject(MAT_DIALOG_DATA) public data:any){
       this.form = this.fb.group({
         nroGarage:[''],
@@ -33,14 +37,15 @@ export class AddEditGarageComponent {
         valorCocheraxH:['',Validators.required], 
         idservicios:[''],
         imagen:[''],
-        id:['']
+        id:[''],
+        idDueno: ['', Validators.required]
       })
       this.id=data.id;
-
     };
 
 
   ngOnInit(): void{
+    this.isEdit(this.id)
     this.isEdit(this.id)
   }
 
@@ -54,13 +59,7 @@ export class AddEditGarageComponent {
   Cancelar(){
     this.dialogRef.close(false);
   }
-    /*
-      nroGarage:number,
-    direccion:string,
-    cantLugar:number,
-    valorcoch:number,
-    id: number,
-  */
+
   getGarage(id:number){
     this._userService.getgarage(id).subscribe(data =>{
       this.form.patchValue({
@@ -69,59 +68,61 @@ export class AddEditGarageComponent {
         cantLugares:data.cantLugares,
         valorCocheraxH:data.valorCocheraxH,
         idservicios:data.idservicios,
-        imagen:data.imagen,
-        id:data.id
+        id:data.id,
+        idDueno:data.idDueno
 
       })  
     })
   }
-  addEditPersona(){
+addEditPersona() {
+  if (this.form.invalid) return;
 
-    if(this.form.invalid){
-      return;
-    }
+  const idUsuario = Number(localStorage.getItem('idUsuario'));
 
-    const user: Garages = {
+  const user: Garages = {
+    nroGarage: this.form.value.nroGarage,
+    direccion: this.form.value.direccion,
+    cantLugares: this.form.value.cantLugares,
+    valorCocheraxH: this.form.value.valorCocheraxH,
+    idservicios: this.form.value.idservicios,
+    id: this.form.value.id,
+    idDueno: idUsuario
+  };
 
-      nroGarage:this.form.value.nroGarage,
-      direccion:this.form.value.direccion,
-      cantLugares:this.form.value.cantLugares,
-      valorCocheraxH:this.form.value.valorCocheraxH,
-      idservicios:this.form.value.idservicios,
-      imagen:this.form.value.imagen,
-      id:this.form.value.id
+  this.loading = true;
 
-    }
-
-    this.loading =true;
-    if(this.id == undefined){
-      setTimeout(()=>{
-        this._userService.addgarage(user).subscribe(() =>{
-          this.loading =false;
-          this.addcomplete('agregado');
-        })
-  
-      },1500)
-  
-    }else{
-        
-        this._userService.editgarage(this.id,user).subscribe(data => {
-        this.addcomplete('actualizado');
-        
-      })
-    
-    }
-    this.loading =false;
+  if (!this.id) {
+    this._userService.addgarage(user).subscribe({
+  next: () => {
+    this.loading = false;
+    this.addcomplete('agregado');
     this.dialogRef.close(true);
 
-
-
-  }
-  addcomplete(operacion:string){
-    this._snackBar.open(`User ${operacion} con exito`, "",{
-      duration:2000
+    setTimeout(() => {
+      this.router.navigate(['/principal/mis-cocheras']);
+    }, 100);
+  },
+  error: () => {
+    this.loading = false;
+    this._snackBar.open('Error al crear la cochera', '', {
+      duration: 2000
     });
   }
+});
 
+
+  } else {
+    this._userService.editgarage(this.id, user).subscribe(() => {
+      this.addcomplete('actualizado');
+      this.dialogRef.close(true);
+    });
+  }
+}
+
+addcomplete(operacion: string) {
+  this._snackBar.open(`Garage ${operacion} con éxito`, '', {
+    duration: 2000
+  });
+}
 
 }

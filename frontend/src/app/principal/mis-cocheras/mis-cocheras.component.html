@@ -1,0 +1,33 @@
+<div class="filter-container">
+  <label for="filter">Ordenar por:</label>
+  <select id="filter" class="select-filter" (change)="ordenarMisGarages($event)">
+    <option value="">Seleccionar</option>
+    <option value="valorAsc">Valor (menor a mayor)</option>
+    <option value="valorDesc">Valor (mayor a menor)</option>
+    <option value="direccionAsc">Dirección (A-Z)</option>
+    <option value="direccionDesc">Dirección (Z-A)</option>
+    <option value="cantLugaresAsc">Lugares disponibles (menor a mayor)</option>
+    <option value="cantLugaresDesc">Lugares disponibles (mayor a menor)</option>
+  </select>
+</div>
+
+<div class="garage-container" *ngIf="misGarages.length">
+  <div class="garage-box" *ngFor="let garage of misGarages">
+
+    <h3 class="garage-name">{{ garage.direccion }}</h3>
+    <p class="garage-price">{{ garage.valorCocheraxH | currency }}</p>
+
+    <p [ngClass]="{'low': garage.cantLugares < 5}" class="garage-lugares">
+      Lugares disponibles: {{ garage.cantLugares }}
+    </p>
+
+    <button class="btn-eliminar" (click)="eliminarGarage(garage.nroGarage)">
+      Eliminar
+    </button>
+
+  </div>
+</div>
+
+<div *ngIf="!misGarages.length">
+  Todavía no tenés cocheras registradas.
+</div>

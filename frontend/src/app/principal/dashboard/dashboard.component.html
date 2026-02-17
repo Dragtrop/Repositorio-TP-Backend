@@ -12,7 +12,7 @@
 </div>
 
 <div class="garage-container" *ngIf="garagesDisponibles.length"> <!--muestra el contenido solo si la longitud no es cero-->
-  <div class="garage-box" *ngFor="let garage of garagesDisponibles"> <!-- recorre cada elemento del arreglo-->
+  <div class="garage-box" *ngFor="let garage of garagesPaginaActual"> <!-- recorre cada elemento del arreglo-->
     <!-- falta la imágen -->
     <h3 class="garage-name">{{ garage.direccion }}</h3>
     <p class="garage-price">{{ garage.valorCocheraxH | currency }}</p>
@@ -25,4 +25,20 @@
 
 <div *ngIf="!garagesDisponibles.length"> <!-- se muestra si está vacío-->
   No hay garages disponibles en este momento.
+</div>
+
+<div class="paginacion" *ngIf="totalPages > 1">
+  <button
+    (click)="paginaAnterior()"
+    [disabled]="currentPage === 1">
+    ◀ Anterior
+  </button>
+
+  <span>Página {{ currentPage }} de {{ totalPages }}</span>
+
+  <button
+    (click)="paginaSiguiente()"
+    [disabled]="currentPage === totalPages">
+    Siguiente ▶
+  </button>
 </div>

@@ -51,4 +51,11 @@ export class VehicleService {
   getVehiclextv(id: number): Observable<Vehicles> {
     return this.http.get<{ data: Vehicles }>(`${this.servidor}${this.appivehicles}/vehiculos/'${id}`)
       .pipe(map(response => response.data));
-  }}
+  }
+
+  getVehicleByUser(userId: number) {
+  return this.http.get<any>(
+    `${this.servidor}${this.appivehicles}vehiculos/${userId}`
+  );
+}
+}

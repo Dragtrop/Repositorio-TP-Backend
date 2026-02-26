@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GaragesService } from '../../services/garages.service';
 import { Garages } from '../../interfaces/garages';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mis-cocheras',
@@ -10,12 +11,13 @@ import { AuthService } from '../../services/auth.service';
 })
 export class MisCocherasComponent implements OnInit {
 
-  misGarages: Garages[] = [];
+  misGarages: any[] = [];
   idDueno!: number;
 
   constructor(
     private garageService: GaragesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -27,8 +29,6 @@ export class MisCocherasComponent implements OnInit {
     }
 
     this.idDueno = currentUser.id;
-    console.log('ID DUEÑO:', this.idDueno);
-
     this.cargarMisGarages();
   }
 
@@ -36,13 +36,34 @@ export class MisCocherasComponent implements OnInit {
     this.garageService.ConsultarGaragePorDueno(this.idDueno)
       .subscribe({
         next: (data: Garages[]) => {
-          console.log('MIS COCHERAS:', data);
-          this.misGarages = data;
+          this.misGarages = data.map(g => ({
+            ...g,
+            expanded: false,
+            historial: []
+          }));
         },
         error: err => {
           console.error('Error al cargar cocheras del dueño', err);
         }
       });
+  }
+
+  toggleHistorial(garage: any) {
+
+    // Cierra todas menos la actual
+    this.misGarages.forEach(g => {
+      if (g !== garage) g.expanded = false;
+    });
+
+    garage.expanded = !garage.expanded;
+
+    // Si se abre y no tiene historial cargado
+    if (garage.expanded && garage.historial.length === 0) {
+      this.garageService.getHistorial(garage.nroGarage)
+        .subscribe(data => {
+          garage.historial = data;
+        });
+    }
   }
 
   eliminarGarage(nroGarage: number) {
@@ -54,7 +75,6 @@ export class MisCocherasComponent implements OnInit {
       );
     });
   }
-
 
   ordenarMisGarages(event: Event): void {
     const value = (event.target as HTMLSelectElement).value;
@@ -79,5 +99,9 @@ export class MisCocherasComponent implements OnInit {
         this.misGarages.sort((a, b) => b.cantLugares - a.cantLugares);
         break;
     }
+  }
+
+  editarGarage(nroGarage: number): void {
+    this.router.navigate(['/principal/editar-garage', nroGarage]);
   }
 }

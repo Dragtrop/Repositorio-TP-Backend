@@ -50,9 +50,6 @@ async function findOne(req: Request, res: Response) {
     res.json({ data: garage });
 }
 
-  
-
-
 async function add(req: Request, res: Response) {
     const input = req.body.sanitizedInput
   
@@ -126,7 +123,18 @@ async function findAllTodos(req: Request, res: Response) {
     }
 }
 
+async function getHistorial(req: Request, res: Response) {
 
+  const nroGarage = Number(req.params.nroGarage);
+
+  if (!nroGarage) {
+    return res.status(400).send({ message: "nroGarage requerido" });
+  }
+
+  const historial = await repository.getHistorialPrecios(nroGarage);
+
+  return res.json(historial);
+}
 
   
-export{sanitizeGarageInput,findAll,findOne,add,update,remove, findByOwner, removeByNro, findAllTodos}
+export{sanitizeGarageInput,findAll,findOne,add,update,remove, findByOwner, removeByNro, findAllTodos, getHistorial}

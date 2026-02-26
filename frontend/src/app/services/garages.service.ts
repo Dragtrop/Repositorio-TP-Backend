@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from "rxjs";
 import { Garages } from '../interfaces/garages';
+import { HistorialPrecio } from '../interfaces/historial-precio';
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,23 @@ ConsultarGarageTodos(): Observable<Garages[]> {
     return this.http.get<Garages[]>(`${this.servidor}${this.appiusers}todos`);
 }
 
+updateGarage(id: number, data: any) {
+  return this.http.put(
+    `http://localhost:3000/api/garages/${id}`,
+    data
+  );
+}
+
+getGarageById(id: number) {
+  return this.http.get(
+    `http://localhost:3000/api/garages/${id}`
+  );
+}
+
+getHistorial(nroGarage: number): Observable<HistorialPrecio[]> {
+  return this.http.get<HistorialPrecio[]>(
+    `${this.servidor}${this.appiusers}historial/${nroGarage}`
+  );
+}
 
 }

@@ -46,6 +46,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { VehiculoComponent } from './principal/vehiculo/vehiculo.component';
 import { EditUserComponent } from './principal/usuarios/edit-user/edit-user.component';
+import { EditarGarageComponent } from './principal/editar-garage/editar-garage.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { EditUserComponent } from './principal/usuarios/edit-user/edit-user.comp
     DetallevehiculoComponent,
     VehiculoComponent,
     EditUserComponent,
+    EditarGarageComponent,
   ],
   imports: [
     FormsModule,

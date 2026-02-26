@@ -21,9 +21,45 @@
       Lugares disponibles: {{ garage.cantLugares }}
     </p>
 
-    <button class="btn-eliminar" (click)="eliminarGarage(garage.nroGarage)">
-      Eliminar
-    </button>
+    <div class="btn-group">
+      <button class="btn-eliminar"
+        (click)="eliminarGarage(garage.nroGarage)">
+        Eliminar
+      </button>
+
+      <button class="btn-edit"
+        (click)="editarGarage(garage.nroGarage)">
+        Modificar
+      </button>
+
+      <button class="btn-history"
+        (click)="toggleHistorial(garage)">
+        {{ garage.expanded ? '▲ Ocultar historial de precios' : '▼ Ver historial de precios' }}
+      </button>
+    </div>
+
+    <!-- HISTORIAL EXPANDIBLE -->
+    <div class="historial-container" *ngIf="garage.expanded">
+
+      <h4>Historial de precios</h4>
+
+      <table *ngIf="garage.historial?.length">
+        <tr>
+          <th>Fecha</th>
+          <th>Precio</th>
+        </tr>
+
+        <tr *ngFor="let item of garage.historial">
+          <td>{{ item.precio_desde | date:'shortDate' }}</td>
+          <td>{{ item.valor | currency }}</td>
+        </tr>
+      </table>
+
+      <p *ngIf="!garage.historial?.length">
+        No hay historial disponible.
+      </p>
+
+    </div>
 
   </div>
 </div>

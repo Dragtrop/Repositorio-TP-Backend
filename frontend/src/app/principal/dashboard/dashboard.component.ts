@@ -14,8 +14,8 @@ import { Alquiler } from '../../interfaces/alquiler';
 })
 export class DashboardComponent implements OnInit {
 
-  garages: Garages[] = [];                // TODOS los garages
-  garagesDisponibles: Garages[] = [];     // Filtrados y ordenados
+  garages: Garages[] = [];
+  garagesDisponibles: Garages[] = [];
   alquileres: Alquiler[] = [];
 
   usuarioId = 0;

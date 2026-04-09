@@ -15,7 +15,6 @@ export class AlquilerService {
     this.servidor = 'http://localhost:3000/api/';
   }
 
-  // Registrar un nuevo alquiler
   registrarAlquiler(
     garageId: number, 
     usuarioId: number, 

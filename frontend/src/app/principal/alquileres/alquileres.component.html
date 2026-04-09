@@ -1,33 +1,44 @@
 <div class="garage-container" *ngIf="currentUser; else noUsuario">
-    <h2 class="section-title">Alquileres de {{ currentUser.nombre }}</h2>
-  
-    <div *ngIf="alquileres.length > 0; else noAlquileres">
-      <div *ngFor="let alquiler of alquileresPaginados" class="alquiler-card">
-        <p class="alquiler-direccion">Dirección: {{ alquiler.garageDetalles?.direccion }}</p>
-        <p class="alquiler-horas">Horas alquiladas: {{ alquiler.duracionHoras }}</p>
-        <p class="alquiler-total">Total pagado: {{ alquiler.total | currency }}</p>
-        <p class="alquiler-fecha">Fecha de alquiler: {{ alquiler.fechaAlquiler | date }}</p>
-      </div>
-    </div>
+  <h2 class="section-title">Alquileres de {{ currentUser.nombre }}</h2>
 
-    <ng-template #noAlquileres>
-      <p class="no-alquileres">No tienes alquileres actualmente.</p>
-    </ng-template>
+  <div *ngIf="alquileres.length > 0; else noAlquileres">
+    <div *ngFor="let alquiler of alquileresPaginados" class="alquiler-card">
+      <p class="alquiler-direccion">Dirección: {{ alquiler.garageDetalles?.direccion }}</p>
+      <p class="alquiler-horas">Horas alquiladas: {{ alquiler.duracionHoras }}</p>
+      <p class="alquiler-total">Total: {{ alquiler.total | currency }}</p>
+      <p class="alquiler-fecha">Fecha de alquiler: {{ alquiler.fechaAlquiler | date }}</p>
+      <p class="alquiler-estado">Estado de pago:</p>
+      <!-- Badge de estado -->
+      <span class="estado-badge" [ngClass]="'estado-' + alquiler.estadoPago">
+        {{ alquiler.estadoPago | titlecase }}
+      </span>
+
+      <!-- Botón pagar solo si está pendiente -->
+      <button
+        *ngIf="alquiler.estadoPago === 'pendiente'"
+        class="btn-pagar"
+        (click)="pagar(alquiler)"
+        [disabled]="pagando">
+        {{ pagando ? 'Procesando...' : 'Pagar' }}
+      </button>
+    </div>
   </div>
-  
-  <ng-template #noUsuario>
-    <p class="no-usuario">Por favor, inicia sesión para ver tus alquileres.</p>
+
+  <ng-template #noAlquileres>
+    <p class="no-alquileres">No tienes alquileres actualmente.</p>
   </ng-template>
-  
-  <div class="paginacion" *ngIf="totalPages > 1">
+</div>
+
+<ng-template #noUsuario>
+  <p class="no-usuario">Por favor, inicia sesión para ver tus alquileres.</p>
+</ng-template>
+
+<div class="paginacion" *ngIf="totalPages > 1">
   <button (click)="paginaAnterior()" [disabled]="currentPage === 1">
     ◀ Anterior
   </button>
-
   <span>Página {{ currentPage }} de {{ totalPages }}</span>
-
   <button (click)="paginaSiguiente()" [disabled]="currentPage === totalPages">
     Siguiente ▶
   </button>
 </div>
- 

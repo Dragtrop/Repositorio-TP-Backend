@@ -34,12 +34,11 @@ export class EditarGarageComponent implements OnInit {
   }
 
   cargarGarage(): void {
-    this.garageService.getGarageById(this.garageId)
-      .subscribe((response: any) => {
-        const garage = response.data;
-        this.garageForm.patchValue(garage);
-      });
-  }
+  this.garageService.getGarageById(this.garageId)
+    .subscribe((garage: Garages) => {
+      this.garageForm.patchValue(garage);
+    });
+}
 
   onSubmit(): void {
     if (this.garageForm.invalid) return;

@@ -9,79 +9,99 @@ import { HistorialPrecio } from '../interfaces/historial-precio';
 })
 export class GaragesService {
 
-  private servidor: string;
-  private appiusers: string;
+  private servidor = "http://localhost:3000/api/";
+  private appiusers = "garages/";
 
-  constructor(private http: HttpClient) { 
-    this.servidor = "http://localhost:3000/api/";
-    this.appiusers = "garages/";
+  constructor(private http: HttpClient) {}
+
+  ConsultarGarage(page: number = 1, limit: number = 6) {
+    return this.http.get<{ data: Garages[]; total: number }>(
+      `${this.servidor}${this.appiusers}?page=${page}&limit=${limit}`
+    );
   }
 
-ConsultarGarage(page: number = 1, limit: number = 6) {
-  return this.http.get<{ data: Garages[]; total: number }>(
-    `${this.servidor}${this.appiusers}?page=${page}&limit=${limit}`
-  );
-}
-
-  deletegarage(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.servidor}${this.appiusers}${id}`);
+  ConsultarGarageTodos(): Observable<Garages[]> {
+    return this.http.get<Garages[]>(
+      `${this.servidor}${this.appiusers}todos`
+    );
   }
 
-  addgarage(garage: Garages): Observable<void> {
-    return this.http.post<void>(`${this.servidor}${this.appiusers}`, garage);
+  getMisGarages(): Observable<{ data: Garages[] }> {
+    return this.http.get<{ data: Garages[] }>(
+      `${this.servidor}${this.appiusers}mis-garages`
+    );
+  }
+
+  addgarage(garage: Garages): Observable<any> {
+    return this.http.post(
+      `${this.servidor}${this.appiusers}`,
+      garage
+    );
   }
 
   getgarage(id: number): Observable<Garages> {
     return this.http
-      .get<{ data: Garages }>(`${this.servidor}${this.appiusers}${id}`)
+      .get<{ data: Garages }>(
+        `${this.servidor}${this.appiusers}${id}`
+      )
       .pipe(map(response => response.data));
   }
 
-  editgarage(id: number, garage: Garages): Observable<void> {
-    return this.http.put<void>(`${this.servidor}${this.appiusers}${id}`, garage);
-  }
-
-  update(id: number, cantLugares: number): Observable<void> {
-    return this.http.put<void>(
+  editgarage(id: number, garage: Garages): Observable<any> {
+    return this.http.put(
       `${this.servidor}${this.appiusers}${id}`,
-      { cantLugares }
+      garage
     );
   }
 
-  ConsultarGaragePorDueno(idDueno: number): Observable<Garages[]> {
-    return this.http
-      .get<{ data: Garages[] }>(`${this.servidor}${this.appiusers}dueno/${idDueno}`)
-      .pipe(map(response => response.data));
+  deletegarage(id: number): Observable<any> {
+    return this.http.delete(
+      `${this.servidor}${this.appiusers}${id}`
+    );
   }
 
-  deleteGarageByNro(nroGarage: number): Observable<void> {
-  return this.http.delete<void>(
-    `${this.servidor}${this.appiusers}nro/${nroGarage}`
-  );
+  deleteGarageByNro(nroGarage: number): Observable<any> {
+    return this.http.delete(
+      `${this.servidor}${this.appiusers}nro/${nroGarage}`
+    );
   }
 
-  // 🔹 NUEVO: Traer todos los garages sin paginar
-ConsultarGarageTodos(): Observable<Garages[]> {
-    return this.http.get<Garages[]>(`${this.servidor}${this.appiusers}todos`);
+  getHistorial(nroGarage: number): Observable<HistorialPrecio[]> {
+    return this.http.get<HistorialPrecio[]>(
+      `${this.servidor}${this.appiusers}historial/${nroGarage}`
+    );
+  }
+
+  ConsultarGaragePorDueno(): Observable<Garages[]> {
+  return this.http
+    .get<{ data: Garages[] }>(`${this.servidor}${this.appiusers}mis-garages`)
+    .pipe(map(response => response.data));
 }
 
-updateGarage(id: number, data: any) {
-  return this.http.put(
-    `http://localhost:3000/api/garages/${id}`,
+  update(id: number, cantLugares: number): Observable<void> {
+  return this.http.put<void>(
+    `${this.servidor}${this.appiusers}${id}`,
+    { cantLugares }
+  );
+}
+
+  getGarageById(id: number): Observable<Garages> {
+  return this.http
+    .get<{ data: Garages }>(`${this.servidor}${this.appiusers}${id}`)
+    .pipe(map(response => response.data));
+}
+
+  updateGarage(id: number, data: any): Observable<void> {
+  return this.http.put<void>(
+    `${this.servidor}${this.appiusers}${id}`,
     data
   );
 }
 
-getGarageById(id: number) {
-  return this.http.get(
-    `http://localhost:3000/api/garages/${id}`
+  alquilarGarage(idGarage: number, cantidad: number = 1) {
+  return this.http.put<{ cantLugares: number }>(
+    `${this.servidor}${this.appiusers}${idGarage}/alquilar`,
+    { cantidad }
   );
 }
-
-getHistorial(nroGarage: number): Observable<HistorialPrecio[]> {
-  return this.http.get<HistorialPrecio[]>(
-    `${this.servidor}${this.appiusers}historial/${nroGarage}`
-  );
-}
-
 }

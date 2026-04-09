@@ -30,3 +30,19 @@ export async function consultarAlquileres(req: Request, res: Response) {
   }
 }
 
+export async function liberarAlquiler(req: Request, res: Response) {
+  const alquilerId = Number(req.params.id);
+
+  if (isNaN(alquilerId)) {
+    return res.status(400).json({ error: 'ID de alquiler inválido' });
+  }
+
+  try {
+    await alquilerRepo.liberarAlquiler(alquilerId);
+    res.status(200).json({ message: 'Alquiler liberado exitosamente' });
+  } catch (error) {
+    console.error('Error al liberar alquiler:', error);
+    res.status(500).json({ error: 'Error al liberar el alquiler' });
+  }
+}
+

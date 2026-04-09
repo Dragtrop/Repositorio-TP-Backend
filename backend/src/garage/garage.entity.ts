@@ -10,5 +10,6 @@ export class Garage{
         public idservicios:number,
         public id?: number,
         public idDueno?: number,
+        public activo?: number
     ){}
 }

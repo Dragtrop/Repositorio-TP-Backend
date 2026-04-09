@@ -46,4 +46,8 @@ export class AlquilerService {
 
     return this.httpClient.get<boolean>(`${this.servidor}disponibilidad?garageId=${garageId}&fecha=${fechaAlquiler}`);
   }
+
+  liberarAlquiler(alquilerId: number): Observable<any> {
+  return this.httpClient.put(`${this.servidor}alquileres/${alquilerId}/liberar`, {});
+}
 }

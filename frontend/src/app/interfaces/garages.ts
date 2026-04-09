@@ -5,5 +5,6 @@ export interface Garages{
     valorCocheraxH: number,
     idservicios:number,
     id: number,
-    idDueno: number
+    idDueno: number,
+    activo?: number
 }

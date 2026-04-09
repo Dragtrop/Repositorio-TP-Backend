@@ -47,7 +47,9 @@ import { LoginComponent } from './components/login/login.component';
 import { VehiculoComponent } from './principal/vehiculo/vehiculo.component';
 import { EditUserComponent } from './principal/usuarios/edit-user/edit-user.component';
 import { EditarGarageComponent } from './principal/editar-garage/editar-garage.component';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './app/interceptor/auth.interceptor';
+import { ResultadoPagoComponent } from './components/pagos/resultado-pago/resultado-pago.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,7 @@ import { EditarGarageComponent } from './principal/editar-garage/editar-garage.c
     VehiculoComponent,
     EditUserComponent,
     EditarGarageComponent,
+    ResultadoPagoComponent
   ],
   imports: [
     FormsModule,
@@ -101,7 +104,13 @@ import { EditarGarageComponent } from './principal/editar-garage/editar-garage.c
     MatFormFieldModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

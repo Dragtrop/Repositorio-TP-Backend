@@ -20,6 +20,7 @@ import { GarageFormComponent } from './principal/misCocherasComponent/garage-for
 import { MisCocherasComponent } from './principal/mis-cocheras/mis-cocheras.component';
 import { EditUserComponent } from './principal/usuarios/edit-user/edit-user.component';
 import { EditarGarageComponent } from './principal/editar-garage/editar-garage.component';
+import { ResultadoPagoComponent } from './components/pagos/resultado-pago/resultado-pago.component';
 
 const routes: Routes = [
 
@@ -43,7 +44,7 @@ const routes: Routes = [
       { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
       { path: 'alquiler', component: AlquilerComponent },
       { path: 'profile', component: ProfileComponent },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '' , redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'detalle-vehiculo', component: DetallevehiculoComponent, canActivate: [AuthGuard] },
       { path: 'vehiculo', component: VehiculoComponent },
       { path: 'garage/new', component: GarageFormComponent },
@@ -51,6 +52,7 @@ const routes: Routes = [
       { path: 'editar-garage/:id', component: EditarGarageComponent },
       { path: "usuarios", component: ListUserComponent },
       { path: 'edit-user/:id', component: EditUserComponent },
+      { path: 'pagos/resultado', component: ResultadoPagoComponent },
     ]
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -63,4 +65,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-

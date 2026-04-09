@@ -1,12 +1,14 @@
 <aside
   class="bg-gradient-to-br from-gray-800 to-gray-900
-         fixed inset-y-0 left-0 z-50 my-4 ml-4
-         h-[calc(100vh-32px)] w-72 rounded-xl
-         transition-transform duration-300"
+         fixed inset-y-0 left-0 z-50
+         w-72
+         transform transition-transform duration-300
+         xl:translate-x-0"
   [class.translate-x-0]="visible"
+  [class.-translate-x-full]="!visible"
 >
   <div class="relative border-b border-white/20 px-8 py-6 flex items-center justify-between">
-    <a href="#/" class="flex items-center gap-4">
+    <a routerLink="/principal/dashboard" class="flex items-center gap-4">
       <h3 class="text-white font-semibold text-base">Alquileres Rosario</h3>
     </a>
     <button

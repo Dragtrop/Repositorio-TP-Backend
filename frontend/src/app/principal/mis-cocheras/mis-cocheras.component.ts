@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 export class MisCocherasComponent implements OnInit {
 
   misGarages: any[] = [];
-  idDueno!: number;
 
   constructor(
     private garageService: GaragesService,
@@ -28,15 +27,16 @@ export class MisCocherasComponent implements OnInit {
       return;
     }
 
-    this.idDueno = currentUser.id;
     this.cargarMisGarages();
   }
 
   cargarMisGarages(): void {
-    this.garageService.ConsultarGaragePorDueno(this.idDueno)
+    this.garageService.getMisGarages()
       .subscribe({
-        next: (data: Garages[]) => {
-          this.misGarages = data.map(g => ({
+        next: (response) => {
+          const garages = response.data;
+
+          this.misGarages = garages.map(g => ({
             ...g,
             expanded: false,
             historial: []
@@ -49,15 +49,12 @@ export class MisCocherasComponent implements OnInit {
   }
 
   toggleHistorial(garage: any) {
-
-    // Cierra todas menos la actual
     this.misGarages.forEach(g => {
       if (g !== garage) g.expanded = false;
     });
 
     garage.expanded = !garage.expanded;
 
-    // Si se abre y no tiene historial cargado
     if (garage.expanded && garage.historial.length === 0) {
       this.garageService.getHistorial(garage.nroGarage)
         .subscribe(data => {
@@ -76,31 +73,22 @@ export class MisCocherasComponent implements OnInit {
     });
   }
 
-  ordenarMisGarages(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
 
+  ordenarMisGarages(event: Event): void { 
+    const value = (event.target as HTMLSelectElement).value; 
     switch (value) {
-      case 'valorAsc':
-        this.misGarages.sort((a, b) => a.valorCocheraxH - b.valorCocheraxH);
-        break;
-      case 'valorDesc':
-        this.misGarages.sort((a, b) => b.valorCocheraxH - a.valorCocheraxH);
-        break;
-      case 'direccionAsc':
-        this.misGarages.sort((a, b) => a.direccion.localeCompare(b.direccion));
-        break;
-      case 'direccionDesc':
-        this.misGarages.sort((a, b) => b.direccion.localeCompare(a.direccion));
-        break;
-      case 'cantLugaresAsc':
-        this.misGarages.sort((a, b) => a.cantLugares - b.cantLugares);
-        break;
-      case 'cantLugaresDesc':
-        this.misGarages.sort((a, b) => b.cantLugares - a.cantLugares);
-        break;
-    }
-  }
-
+       case 'valorAsc': this.misGarages.sort((a, b) => a.valorCocheraxH - b.valorCocheraxH); 
+       break; 
+       case 'valorDesc': this.misGarages.sort((a, b) => b.valorCocheraxH - a.valorCocheraxH); 
+       break; 
+       case 'direccionAsc': this.misGarages.sort((a, b) => a.direccion.localeCompare(b.direccion)); 
+       break; 
+       case 'direccionDesc': this.misGarages.sort((a, b) => b.direccion.localeCompare(a.direccion)); 
+       break; 
+       case 'cantLugaresAsc': this.misGarages.sort((a, b) => a.cantLugares - b.cantLugares); 
+       break; 
+       case 'cantLugaresDesc': this.misGarages.sort((a, b) => b.cantLugares - a.cantLugares); 
+       break; } }
   editarGarage(nroGarage: number): void {
     this.router.navigate(['/principal/editar-garage', nroGarage]);
   }

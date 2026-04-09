@@ -1,4 +1,4 @@
-export interface Alquiler{
+export interface Alquiler {
     id: number;
     garageId: number;
     usuarioId: number;
@@ -7,4 +7,9 @@ export interface Alquiler{
     servicios: number;
     vehiculoId: number;
     total: number;
+    liberado: boolean;
+    estadoPago: 'pendiente' | 'aprobado' | 'rechazado' | 'en_proceso';
+    mpPaymentId?: string;
+    mpPreferenceId?: string;
+    fechaPago?: string;
 }

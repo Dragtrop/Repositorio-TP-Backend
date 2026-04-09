@@ -34,6 +34,9 @@ export class ListUserComponent implements OnInit {
       }
     });
   }
+  isAdmin(user: User): boolean {
+    return user.Rol === 'Admin';
+  }
 
   addedituser(id: number) {
     this.router.navigate(['/principal/edit-user', id]);

@@ -67,49 +67,50 @@ export class DetalleAlquilerComponent implements OnInit {
     }
   }
 
-  registrarAlquiler(): void {
+registrarAlquiler(): void {
 
-    if (this.garage && this.usuarioId && this.vehiculoId) {
+  if (this.garage && this.usuarioId && this.vehiculoId) {
 
-      let servicios = 1;
+    let servicios = 1;
 
-      this.alquilerService
-        .registrarAlquiler(
-          this.garage.nroGarage,
-          this.usuarioId,
-          this.duracionHoras,
-          servicios,
-          this.vehiculoId,
-          this.total
-        )
-        .subscribe({
-          next: () => {
+    this.alquilerService
+      .registrarAlquiler(
+        this.garage.nroGarage,
+        this.usuarioId,
+        this.duracionHoras,
+        servicios,
+        this.vehiculoId,
+        this.total
+      )
+      .subscribe({
+        next: () => {
 
-            const nuevaCantLugares = this.garage!.cantLugares - 1;
+          this.garagesService.alquilarGarage(this.garage!.nroGarage)
+            .subscribe({
+              next: (res) => {
+                this.garage!.cantLugares = res.cantLugares;
+                this.router.navigate(['/principal/dashboard']);
+              },
+              error: (err) =>
+                console.error('Error al actualizar la cantidad de lugares:', err)
+            });
 
-            this.garagesService.update(this.garage!.nroGarage, nuevaCantLugares)
-              .subscribe({
-                next: () => {
-                  this.garage!.cantLugares = nuevaCantLugares;
-                  this.router.navigate(['/principal/dashboard']);
-                },
-                error: (err) => console.error('Error al actualizar la cantidad de lugares:', err)
-              });
-          },
-          error: (err) => console.error('Error al registrar alquiler:', err)
-        });
-
-    } else {
-
-      console.error('Datos faltantes:', {
-        garage: this.garage,
-        usuarioId: this.usuarioId,
-        vehiculoId: this.vehiculoId
+        },
+        error: (err) =>
+          console.error('Error al registrar alquiler:', err)
       });
 
-      alert('Faltan datos necesarios para registrar el alquiler. Asegúrese de tener un vehículo asignado.');
-    }
+  } else {
+
+    console.error('Datos faltantes:', {
+      garage: this.garage,
+      usuarioId: this.usuarioId,
+      vehiculoId: this.vehiculoId
+    });
+
+    alert('Faltan datos necesarios para registrar el alquiler. Asegúrese de tener un vehículo asignado.');
   }
+}
 
   formatDuracionHoras(duracionHoras: number): string {
     const horas = Math.floor(duracionHoras);

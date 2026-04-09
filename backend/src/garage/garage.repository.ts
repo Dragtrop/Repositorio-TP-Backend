@@ -8,7 +8,7 @@ import { GarageRouter } from "./garage.routes.js";
 
 export class GarageRepository implements Repository<Garage>{
 
-    public async findAll(): Promise<Garage[] | undefined> {
+public async findAll(): Promise<Garage[] | undefined> {
   const [garages] = await pool.query<RowDataPacket[]>(`
     SELECT g.*, pg.valor AS valorCocheraxH
     FROM garages g
@@ -19,6 +19,7 @@ export class GarageRepository implements Repository<Garage>{
         FROM precio_garage p2
         WHERE p2.garage_id = g.nroGarage
       )
+    WHERE g.activo = 1
   `);
 
   return garages as Garage[];
@@ -55,7 +56,6 @@ export class GarageRepository implements Repository<Garage>{
 
     const { id, nroGarage, ...garageRow } = garageInput;
 
-    // 1️⃣ Insertar garage
     const [result] = await pool.query<ResultSetHeader>(
         "INSERT INTO garages SET ?",
         [garageRow]
@@ -69,7 +69,6 @@ export class GarageRepository implements Repository<Garage>{
         [garageInput.nroGarage, garageInput.id]
     );
 
-    // 2️⃣ Insertar precio inicial en historial
     await pool.query(
         `INSERT INTO precio_garage (garage_id, precio_desde, valor)
          VALUES (?, NOW(), ?)`,
@@ -83,7 +82,6 @@ export class GarageRepository implements Repository<Garage>{
 
   const nroGarage = Number.parseInt(id);
 
-  // 1️⃣ Obtener precio actual desde historial
   const [precioActualRows] = await pool.query<RowDataPacket[]>(`
     SELECT valor
     FROM precio_garage
@@ -96,7 +94,6 @@ export class GarageRepository implements Repository<Garage>{
     ? precioActualRows[0].valor
     : null;
 
-  // 2️⃣ Si el precio cambió → insertar nuevo historial
   if (
     garageInput.valorCocheraxH !== undefined &&
     precioActual !== null &&
@@ -109,10 +106,8 @@ export class GarageRepository implements Repository<Garage>{
     );
   }
 
-  // 3️⃣ Eliminar el precio antes de actualizar garages
   const { valorCocheraxH, ...garageData } = garageInput;
 
-  // 4️⃣ Actualizar solo datos estructurales
   await pool.query(
     'UPDATE garages SET ? WHERE nroGarage = ?',
     [garageData, nroGarage]
@@ -122,27 +117,26 @@ export class GarageRepository implements Repository<Garage>{
 }
 
 
-    public async delete(item: {id:string}):Promise<Garage | undefined>{
-        try {
-            const nroGarage = Number.parseInt(item.id)
+    public async delete(item: { id: string }): Promise<Garage | undefined> {
 
-            const garageToDelete = await this.findOne({ id: item.id })
+  const nroGarage = Number.parseInt(item.id);
 
-            await pool.query(
-                'DELETE FROM garages WHERE nroGarage = ?',
-                [nroGarage]
-            )
+  const garageToDelete = await this.findOne({ id: item.id });
 
-            return garageToDelete
-        }
-        catch(error:any){
-            throw new Error('No se pudo borrar el garage')
-        }
-    }
+  if (!garageToDelete) {
+    return undefined;
+  }
+
+  await pool.query(
+    'DELETE FROM garages WHERE nroGarage = ?',
+    [nroGarage]
+  );
+
+  return garageToDelete;
+}
 
 
-    public async findByOwner(idDueno: number): Promise<Garage[] | undefined> {
-
+public async findByOwner(idDueno: number): Promise<Garage[] | undefined> {
   const [garages] = await pool.query<RowDataPacket[]>(`
     SELECT g.*, pg.valor AS valorCocheraxH
     FROM garages g
@@ -153,27 +147,27 @@ export class GarageRepository implements Repository<Garage>{
         FROM precio_garage p2
         WHERE p2.garage_id = g.nroGarage
       )
-    WHERE g.idDueno = ?
+    WHERE g.idDueno = ? AND g.activo = 1
   `, [idDueno]);
 
   return garages as Garage[];
 }
 
-    public async deleteByNro(nroGarage: number): Promise<Garage | undefined> {
+public async deleteByNro(nroGarage: number): Promise<Garage | undefined> {
     const [garages] = await pool.query<RowDataPacket[]>(
-        'SELECT * FROM garages WHERE nroGarage = ?',
+        'SELECT * FROM garages WHERE nroGarage = ? AND activo = 1',
         [nroGarage]
     );
 
     if (garages.length === 0) return undefined;
 
     await pool.query(
-        'DELETE FROM garages WHERE nroGarage = ?',
+        'UPDATE garages SET activo = 0 WHERE nroGarage = ?', 
         [nroGarage]
     );
 
     return garages[0] as Garage;
-    }
+}
 
 public async findAllPaginated(
   limit: number,
@@ -190,11 +184,12 @@ public async findAllPaginated(
         FROM precio_garage p2
         WHERE p2.garage_id = g.nroGarage
       )
+    WHERE g.activo = 1
     LIMIT ? OFFSET ?
   `, [limit, offset]);
 
   const [[{ total }]]: any = await pool.query(
-    'SELECT COUNT(*) as total FROM garages'
+    'SELECT COUNT(*) as total FROM garages WHERE activo = 1'
   );
 
   return {
@@ -218,5 +213,31 @@ public async getHistorialPrecios(nroGarage: number) {
   return rows;
 }
 
+public async findByNroGarage(nroGarage: number): Promise<Garage | undefined> {
+    const [garages] = await pool.query<RowDataPacket[]>(`
+        SELECT g.*, pg.valor AS valorCocheraxH
+        FROM garages g
+        LEFT JOIN precio_garage pg
+            ON pg.garage_id = g.nroGarage
+            AND pg.precio_desde = (
+                SELECT MAX(p2.precio_desde)
+                FROM precio_garage p2
+                WHERE p2.garage_id = g.nroGarage
+            )
+        WHERE g.nroGarage = ?
+    `, [nroGarage]);
+
+    if (garages.length === 0) return undefined;
+    return garages[0] as Garage;
+}
+
+public async updateCantLugares(nroGarage: number, cantLugares: number): Promise<Garage | undefined> {
+    await pool.query(
+        'UPDATE garages SET cantLugares = ? WHERE nroGarage = ?',
+        [cantLugares, nroGarage]
+    );
+
+    return this.findByNroGarage(nroGarage);
+}
 
 }

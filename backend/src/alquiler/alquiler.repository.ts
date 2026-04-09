@@ -70,4 +70,40 @@ export class AlquilerRepository implements Repository<Alquiler> {
             throw new Error('No se pudo borrar el alquiler');
         }
     }
+
+    public async liberarAlquiler(alquilerId: number): Promise<void> {
+  const connection = await pool.getConnection();
+  try {
+    await connection.beginTransaction();
+
+    const [rows] = await connection.query<RowDataPacket[]>(
+      'SELECT garageId FROM alquileres WHERE id = ? AND liberado = FALSE',
+      [alquilerId]
+    );
+
+    if (rows.length === 0) {
+      await connection.release();
+      return;
+    }
+
+    const garageId = rows[0].garageId;
+
+    await connection.query(
+      'UPDATE alquileres SET liberado = TRUE WHERE id = ?',
+      [alquilerId]
+    );
+
+    await connection.query(
+      'UPDATE garages SET cantLugares = cantLugares + 1 WHERE nroGarage = ?',
+      [garageId]
+    );
+
+    await connection.commit();
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
+}
 }

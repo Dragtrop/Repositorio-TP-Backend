@@ -6,32 +6,37 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { Vehicles } from 'src/app/interfaces/vehicles';
 import { UserService } from 'src/app/services/user.service';
+
 @Component({
   selector: 'app-detallevehiculo',
   templateUrl: './detallevehiculo.component.html',
-  styleUrls: ['./detallevehiculo.component.scss'] 
+  styleUrls: ['./detallevehiculo.component.scss']
 })
 export class DetallevehiculoComponent implements OnInit {
+
   errorMessage: string | null = null;
   vehiculo: Vehicles | null = null;
-  userId: string | null = null;   
-  addVehicleForm: FormGroup =  this.fb.group({
-    patente: ['', Validators.required],
+  userId: string | null = null;
+
+  addVehicleForm: FormGroup = this.fb.group({
+    patente: ['', [
+      Validators.required,
+      Validators.pattern(/^([A-Z]{2}\d{3}[A-Z]{2}|[A-Z]{3}\d{3})$/)
+    ]],
     marca: ['', Validators.required]
-  }); 
+  });
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private vehiclesService: VehicleService,
     private authService: AuthService,
-    private userService:UserService,
-  ) { }
+    private userService: UserService,
+  ) {}
 
   ngOnInit(): void {
     this.cargaVehiculo();
-
-
   }
 
   cargaVehiculo(): void {
@@ -47,13 +52,12 @@ export class DetallevehiculoComponent implements OnInit {
             console.error('Error al cargar el vehículo:', err);
             this.errorMessage = 'No se pudo cargar la información del vehículo.';
           }
-        }); 
+        });
       } else {
-        throw new Error('vehículo no autenticado o ID de vehículo no disponible.');
+        throw new Error('Vehículo no autenticado o ID de vehículo no disponible.');
       }
     } catch (error: unknown) {
       console.error('Error al obtener el vehículo:', error);
-
       if (error instanceof Error) {
         this.errorMessage = error.message;
       } else {
@@ -61,34 +65,37 @@ export class DetallevehiculoComponent implements OnInit {
       }
     }
   }
-  onSubmit(): void {
 
-  const currentUser = this.authService.getCurrentUser();
-
-  if (!currentUser) {
-    this.errorMessage = 'Usuario no autenticado.';
-    return;
+  toUpperCase(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    input.value = input.value.toUpperCase();
+    this.addVehicleForm.get('patente')?.setValue(input.value, { emitEvent: false });
   }
 
-  const formValue = this.addVehicleForm.value;
+  onSubmit(): void {
+    const currentUser = this.authService.getCurrentUser();
 
-  this.vehiclesService
-    .addVehicleToUser(currentUser.id.toString(), formValue)
-    .subscribe({
-      next: () => {
-        console.log('Vehículo agregado correctamente');
-        this.router.navigate(['/principal/vehiculo']);
-      },
-      error: () => {
-        this.errorMessage = 'No se pudo agregar el vehículo.';
-      }
-    });
+    if (!currentUser) {
+      this.errorMessage = 'Usuario no autenticado.';
+      return;
+    }
+
+    const formValue = this.addVehicleForm.value;
+
+    this.vehiclesService
+      .addVehicleToUser(currentUser.id.toString(), formValue)
+      .subscribe({
+        next: () => {
+          console.log('Vehículo agregado correctamente');
+          this.router.navigate(['/principal/vehiculo']);
+        },
+        error: () => {
+          this.errorMessage = 'No se pudo agregar el vehículo.';
+        }
+      });
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/principal/vehiculo']);
+  }
 }
-
-cancelar(): void {
-  this.router.navigate(['/principal/vehiculo']);
-}
-
-}
-
-

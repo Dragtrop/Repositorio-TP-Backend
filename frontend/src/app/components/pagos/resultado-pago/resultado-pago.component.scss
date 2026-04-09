@@ -1,0 +1,53 @@
+.resultado-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 20px;
+}
+
+.resultado-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 12px 0 8px;
+    font-size: 1.4em;
+  }
+
+  p {
+    color: #555;
+    font-size: 0.95em;
+  }
+}
+
+.icono {
+  font-size: 3em;
+}
+
+.aprobado  { background-color: #e8f5e9; border: 2px solid #4caf50; }
+.pendiente { background-color: #fff8e1; border: 2px solid #ffc107; }
+.rechazado { background-color: #ffebee; border: 2px solid #f44336; }
+
+.btn-volver {
+  padding: 10px 24px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+}

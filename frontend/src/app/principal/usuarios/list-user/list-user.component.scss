@@ -130,3 +130,25 @@
 .paginacion span {
   font-weight: 500;
 }
+
+.admin-badge {
+  font-size: 0.7rem;
+  background-color: #6c63ff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.btn-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.admin-lock-msg {
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+}

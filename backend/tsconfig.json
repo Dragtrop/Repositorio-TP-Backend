@@ -2,23 +2,26 @@
   "compilerOptions": {
     "baseUrl": "./",
     "incremental": true,
-    "target": "es2020",
+    "target": "ES2020",
+
     "module": "NodeNext",
-    "moduleResolution": "node16",
+    "moduleResolution": "NodeNext",
+
+    "isolatedModules": true,
+
     "sourceMap": true,
     "outDir": "./dist",
+
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "alwaysStrict": true,
     "skipLibCheck": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+
+    "types": ["node", "jest"]
   },
-  "include": ["src/**/*", "**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src", "tests"],
+  "exclude": ["node_modules", "dist", "jest.config.js", "tests"]
 }

@@ -68,10 +68,11 @@ export class DashboardComponent implements OnInit {
   }
 
   obtenerGaragesDisponibles(): void {
-    const currentTime = new Date().getTime();
+  const currentTime = new Date().getTime();
 
-    this.garagesDisponibles = this.garages.filter(garage => {
-      const alquilerActivo = this.alquileres.some(alquiler => {
+  this.garages.forEach(garage => {
+    this.alquileres
+      .filter(alquiler => {
         const tiempoFin =
           new Date(alquiler.fechaAlquiler).getTime() +
           alquiler.duracionHoras * 60 * 60 * 1000;
@@ -80,18 +81,39 @@ export class DashboardComponent implements OnInit {
           alquiler.garageId === garage.nroGarage &&
           alquiler.usuarioId === this.usuarioId &&
           alquiler.vehiculoId === this.vehiculoId &&
-          currentTime < tiempoFin
+          currentTime >= tiempoFin &&
+          alquiler.liberado === false
         );
+      })
+      .forEach(alquilerExpirado => {
+        this.alquilerService.liberarAlquiler(alquilerExpirado.id).subscribe({
+          next: () => {
+            alquilerExpirado.liberado = true;
+            console.log(`Garage ${garage.nroGarage} liberado`);
+          },
+          error: (err) => console.error('Error al liberar garage:', err)
+        });
       });
+  });
 
-      return !alquilerActivo;
+  this.garagesDisponibles = this.garages.filter(garage => {
+    return !this.alquileres.some(alquiler => {
+      const tiempoFin =
+        new Date(alquiler.fechaAlquiler).getTime() +
+        alquiler.duracionHoras * 60 * 60 * 1000;
+
+      return (
+        alquiler.garageId === garage.nroGarage &&
+        alquiler.usuarioId === this.usuarioId &&
+        alquiler.vehiculoId === this.vehiculoId &&
+        currentTime < tiempoFin
+      );
     });
+  });
 
-    // Reiniciamos la página actual al filtrar
-    this.currentPage = 1;
-  }
+  this.currentPage = 1;
+}
 
-  // 🔹 Ordenamiento sobre todos los garagesDisponibles
   ordenarGarages(event: Event): void {
     const criterio = (event.target as HTMLSelectElement).value;
 
@@ -116,11 +138,9 @@ export class DashboardComponent implements OnInit {
         break;
     }
 
-    // Reiniciamos la página actual al ordenar
     this.currentPage = 1;
   }
 
-  // 🔹 Paginación en el frontend
   get garagesPaginaActual(): Garages[] {
     const start = (this.currentPage - 1) * this.limit;
     const end = start + this.limit;

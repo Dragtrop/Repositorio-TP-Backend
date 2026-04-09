@@ -1,5 +1,3 @@
-import crypto from 'node:crypto'
-
 export interface Alquiler {
     id: number;
     garageId: number;
@@ -8,5 +6,10 @@ export interface Alquiler {
     duracionHoras: number;
     servicios: number;
     vehiculoId: number;
-    total:number;
+    total: number;
+    liberado: boolean;
+    estadoPago: 'pendiente' | 'aprobado' | 'rechazado' | 'en_proceso';
+    mpPaymentId?: string;
+    mpPreferenceId?: string;
+    fechaPago?: string;
 }

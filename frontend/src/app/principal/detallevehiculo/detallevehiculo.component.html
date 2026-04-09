@@ -12,12 +12,18 @@
         <input
           type="text"
           formControlName="patente"
-          placeholder="Ingrese la patente"
+          placeholder="Ej: ABC123 o AB123CD"
+          (input)="toUpperCase($event)"
         />
 
-        <small *ngIf="addVehicleForm.get('patente')?.invalid && addVehicleForm.get('patente')?.touched"
+        <small *ngIf="addVehicleForm.get('patente')?.hasError('required') && addVehicleForm.get('patente')?.touched"
                style="color:red;">
-          Patente es requerida.
+          La patente es requerida.
+        </small>
+
+        <small *ngIf="addVehicleForm.get('patente')?.hasError('pattern') && addVehicleForm.get('patente')?.touched"
+               style="color:red;">
+          Formato inválido. Usá AAA000 (viejo) o AA000AA (nuevo), sin espacios.
         </small>
       </div>
 

@@ -26,30 +26,55 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  private updateTitle(url: string): void {
-    // Tomamos el último segmento no vacío de la ruta
-    const segment = url.split('/').filter(seg => seg).pop() || '';
-    switch (segment.toLowerCase()) {
-      case 'dashboard':
-        this.sectionTitle = 'DASHBOARD';
-        break;
-      case 'profile':
-        this.sectionTitle = 'PROFILE';
-        break;
-      case 'alquiler':
-      case 'alquileres':
-        this.sectionTitle = 'ALQUILERES';
-        break;
-      case 'vehiculo':
-      case 'vehiculos':
-        this.sectionTitle = 'VEHÍCULOS';
-        break;
-      default:
-        // Si no coincide, lo ponemos en mayúsculas o dejamos por defecto
-        this.sectionTitle = segment ? segment.toUpperCase() : 'DASHBOARD';
-        break;
-    }
+private updateTitle(url: string): void {
+
+  if (url.includes('detalle-alquiler')) {
+    this.sectionTitle = 'DETALLE ALQUILER';
+    return;
   }
+  if (url.includes('edit-user')) {
+    this.sectionTitle = 'EDITAR USUARIO';
+    return;
+  }
+  if (url.includes('edit-vehicle')) {
+    this.sectionTitle = 'EDITAR VEHÍCULO';
+    return;
+  }
+  if (url.includes('edit-garage')) {
+    this.sectionTitle = 'EDITAR GARAGE';
+    return;
+  }
+  if (url.includes('edit-service')) {
+    this.sectionTitle = 'EDITAR SERVICIO';
+    return;
+  }
+
+  // Para rutas simples sin parámetros
+  const segment = url.split('/').filter(seg => seg).pop()?.split('?')[0] || '';
+
+  switch (segment.toLowerCase()) {
+    case 'dashboard':
+      this.sectionTitle = 'DASHBOARD';
+      break;
+    case 'profile':
+      this.sectionTitle = 'PROFILE';
+      break;
+    case 'alquiler':
+    case 'alquileres':
+      this.sectionTitle = 'ALQUILERES';
+      break;
+    case 'vehiculo':
+    case 'vehiculos':
+      this.sectionTitle = 'VEHÍCULOS';
+      break;
+    case 'list-user':
+      this.sectionTitle = 'USUARIOS';
+      break;
+    default:
+      this.sectionTitle = segment ? segment.toUpperCase() : 'DASHBOARD';
+      break;
+  }
+}
 
   logout(): void {
     this.authService.logout();

@@ -1,0 +1,14 @@
+import 'dotenv/config';
+import { app } from './app.js';
+
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000/");
+});
+
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled Rejection:", reason);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+});

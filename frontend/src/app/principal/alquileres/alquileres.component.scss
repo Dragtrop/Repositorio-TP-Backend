@@ -80,3 +80,40 @@
   font-weight: 500;
 }
 
+.estado-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: bold;
+  margin: 8px 0;
+  color: white;
+}
+
+.estado-pendiente  { background-color: #ff9800; }
+.estado-en_proceso { background-color: #ffc107; color: #333; }
+.estado-rechazado  { background-color: #f44336; }
+.estado-aprobado   { background-color: #4caf50; }
+
+.btn-pagar {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background-color: #009ee3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-pagar:hover {
+  background-color: #007bbd;
+}
+
+.btn-pagar:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

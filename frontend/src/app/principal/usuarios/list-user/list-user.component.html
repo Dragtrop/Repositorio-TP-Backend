@@ -4,34 +4,35 @@
 
     <h3 class="user-name">
       {{ user.nombre }} {{ user.apellido }}
+
+      <span class="admin-badge" *ngIf="isAdmin(user)">Admin</span>
     </h3>
 
     <p class="user-mail">{{ user.mail }}</p>
 
-    <p class="user-role">
-      Rol: {{ user.Rol }}
-    </p>
+    <p class="user-role">Rol: {{ user.Rol }}</p>
 
-    <p class="user-status"
-       [ngClass]="{ 'inactive': user.activo === 0 }">
+    <p class="user-status" [ngClass]="{ 'inactive': user.activo === 0 }">
       Estado: {{ user.activo === 1 ? 'Activo' : 'Inactivo' }}
     </p>
 
     <div class="button-group">
 
       <button class="btn-edit"
+              [disabled]="isAdmin(user)"
+              [class.btn-disabled]="isAdmin(user)"
               (click)="addedituser(user.id)">
         Editar
       </button>
 
       <button class="btn-delete"
-              *ngIf="user.activo === 1"
+              *ngIf="user.activo === 1 && !isAdmin(user)"
               (click)="deleteuser(user.id)">
         Desactivar
       </button>
 
       <button class="btn-activate"
-              *ngIf="user.activo === 0"
+              *ngIf="user.activo === 0 && !isAdmin(user)"
               (click)="activateUser(user.id)">
         Activar
       </button>

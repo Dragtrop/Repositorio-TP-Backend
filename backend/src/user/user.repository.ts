@@ -121,7 +121,6 @@ public async login(userInput: { usuario: string; password: string }): Promise<Us
                 'UPDATE users SET activo = 0 WHERE id = ?',
                 [userId]
             );
-            // devolver el usuario antiguo (antes de la baja) para el controlador
             return userToDelete;
         } catch (error:any) {
             console.error("Error real al desactivar usuario:", error);

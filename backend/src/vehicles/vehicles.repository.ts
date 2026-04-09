@@ -62,10 +62,6 @@ export class VehiclesRepository implements Repository<Vehicle>{
         }
     
         return vehicle;
-
-
-
-    
 }
 
 public async obtenerVehiculosConGarage(usuarioId: number): Promise<any> {
@@ -84,7 +80,4 @@ public async obtenerVehiculosConGarage(usuarioId: number): Promise<any> {
         throw error;
     }
 }
-
-
-
 }

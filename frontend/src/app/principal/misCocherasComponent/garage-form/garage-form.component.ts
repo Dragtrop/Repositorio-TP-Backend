@@ -27,34 +27,35 @@ export class GarageFormComponent {
   }
 
   onSubmit() {
-    if (this.garageForm.invalid) {
-      this.garageForm.markAllAsTouched();
-      return;
-    }
-
-    const user = this.authService.getCurrentUser();
-
-    if (!user) {
-      alert("Error: no se pudo obtener el usuario logueado.");
-      return;
-    }
-
-    const nuevoGarage = {
-      ...this.garageForm.value,
-      idDueno: user.id
-    };
-
-    this.garageService.addgarage(nuevoGarage).subscribe({
-      next: () => {
-        alert("Garage creado exitosamente");
-        this.router.navigate(['/principal/mis-cocheras']);
-      },
-      error: (err) => {
-        console.error(err);
-        alert("Error al cargar el garage");
-      }
-    });
+  if (this.garageForm.invalid) {
+    this.garageForm.markAllAsTouched();
+    return;
   }
+
+  const user = this.authService.getCurrentUser();
+
+  if (!user) {
+    alert("Error: no se pudo obtener el usuario logueado.");
+    return;
+  }
+
+  const nuevoGarage = {
+    ...this.garageForm.value,
+    idDueno: user.id,
+    activo: 1
+  };
+
+  this.garageService.addgarage(nuevoGarage).subscribe({
+    next: () => {
+      alert("Garage creado exitosamente");
+      this.router.navigate(['/principal/mis-cocheras']);
+    },
+    error: (err) => {
+      console.error(err);
+      alert("Error al cargar el garage");
+    }
+  });
+}
 
 }
 

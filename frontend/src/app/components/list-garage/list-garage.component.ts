@@ -70,7 +70,7 @@ export class ListGarageComponent implements OnInit, AfterViewInit {
 
     // Si es el dueño → trae solo sus cocheras
     if (this.modoMisCocheras && this.idDueno > 0) {
-      this.garagesService.ConsultarGaragePorDueno(this.idDueno).subscribe(
+      this.garagesService.ConsultarGaragePorDueno().subscribe(
         garages => {
           this.loading = false;
           this.dataSource.data = garages;

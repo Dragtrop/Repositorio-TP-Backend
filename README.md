@@ -4,7 +4,7 @@ This is a full-stack web application that allows users to **browse available gar
 
 ---
 
-## **⚠ Project Status: Work in Progress**
+## ** Project Status: Work in Progress**
 
 This project is currently under development and is not yet complete. Some features may be incomplete or subject to change. Contributions and feedback are welcome as we continue building this application!
 

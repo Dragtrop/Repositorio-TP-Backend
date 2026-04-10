@@ -31,6 +31,11 @@ CREATE TABLE `alquileres` (
   `vehiculoId` int NOT NULL,
   `fechaAlquiler` timestamp NOT NULL,
   `total` int NOT NULL,
+  `estadoPago` enum('pendiente','aprobado','rechazado','en_proceso') DEFAULT 'pendiente',
+  `mpPaymentId` varchar(100) DEFAULT NULL,
+  `mpPreferenceId` varchar(100) DEFAULT NULL,
+  `fechaPago` datetime DEFAULT NULL,
+  `liberado` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `garageId_idx` (`garageId`),
   KEY `usuarioId_idx` (`usuarioId`),
@@ -38,8 +43,9 @@ CREATE TABLE `alquileres` (
   CONSTRAINT `garageId` FOREIGN KEY (`garageId`) REFERENCES `garages` (`nroGarage`) ON UPDATE CASCADE,
   CONSTRAINT `usuarioId` FOREIGN KEY (`usuarioId`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `vehiculoId` FOREIGN KEY (`vehiculoId`) REFERENCES `vehicles` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 --
 -- Table structure for table `garages`
@@ -56,13 +62,15 @@ CREATE TABLE `garages` (
   `id` int DEFAULT NULL,
   `idservicios` int DEFAULT NULL,
   `idDueno` int DEFAULT NULL,
+  `activo` int DEFAULT '1',
   PRIMARY KEY (`nroGarage`),
   KEY `idServicio_idx` (`idservicios`),
   KEY `idDueño_idx` (`idDueno`),
   CONSTRAINT `idDueno` FOREIGN KEY (`idDueno`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `idServicio` FOREIGN KEY (`idservicios`) REFERENCES `services` (`nroServicio`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 --
 -- Table structure for table `precio_garage`

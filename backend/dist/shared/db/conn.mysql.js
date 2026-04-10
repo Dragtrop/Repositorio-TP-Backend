@@ -6,6 +6,7 @@ export const pool = mysql.createPool({
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || 'mysqltrabajo',
     database: process.env.DB_NAME || 'cocheras',
+    port: Number(process.env.DB_PORT) || 3306,
     waitForConnections: true,
     connectionLimit: 10,
     maxIdle: 10,
@@ -13,5 +14,6 @@ export const pool = mysql.createPool({
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0,
+    ssl: process.env.DB_HOST === 'localhost' ? undefined : { rejectUnauthorized: false }
 });
 //# sourceMappingURL=conn.mysql.js.map

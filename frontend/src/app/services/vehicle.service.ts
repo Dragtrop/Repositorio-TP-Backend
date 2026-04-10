@@ -2,21 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {map, Observable} from "rxjs";
 import { Vehicles } from '../interfaces/vehicles';
-
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
 
-  private servidor :string;
+  private servidor: string;
   private appivehicles: string;
 
-
-  constructor(private http :HttpClient) { 
-    this.servidor = "http://localhost:3000/api/"
-    this.appivehicles = "vehicles/"
-
+  constructor(private http: HttpClient) { 
+    this.servidor = environment.apiUrl + '/api/';
+    this.appivehicles = "vehicles/";
   }
 
   ConsultarVehiculos(): Observable<Vehicles[]>{

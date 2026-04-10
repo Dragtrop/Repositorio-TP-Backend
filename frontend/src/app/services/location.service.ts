@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Location } from '../interfaces/location';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,9 @@ export class LocationService {
   private apiLocations: string;
 
   constructor(private http: HttpClient) {
-    this.servidor = "http://localhost:3000/api/";
+    this.servidor = environment.apiUrl + '/api/';
     this.apiLocations = "locations/";
   }
-
   consultarLocations(): Observable<Location[]> {
     return this.http.get<{ data: Location[] }>(`${this.servidor}${this.apiLocations}`).pipe(map(response => response.data));
   }

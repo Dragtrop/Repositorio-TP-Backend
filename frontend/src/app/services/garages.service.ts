@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from "rxjs";
 import { Garages } from '../interfaces/garages';
 import { HistorialPrecio } from '../interfaces/historial-precio';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GaragesService {
 
-  private servidor = "http://localhost:3000/api/";
+  private servidor = environment.apiUrl + '/api/';
   private appiusers = "garages/";
 
   constructor(private http: HttpClient) {}

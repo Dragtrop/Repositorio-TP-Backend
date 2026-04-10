@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Alquiler } from '../interfaces/alquiler';
 import { Garages } from '../interfaces/garages';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AlquilerService {
   private servidor: string;
 
   constructor(private httpClient: HttpClient) {
-    this.servidor = 'http://localhost:3000/api/';
+    this.servidor = environment.apiUrl + '/api/';
   }
 
   registrarAlquiler(

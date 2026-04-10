@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from "rxjs";
 import { VehicleType } from '../interfaces/vehicleType';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,9 @@ export class VehicleTypeService {
   private apiVehicleTypes: string;
 
   constructor(private http: HttpClient) {
-    this.servidor = "http://localhost:3000/api/";
+    this.servidor = environment.apiUrl + '/api/';
     this.apiVehicleTypes = "vehicleTypes/"; 
   }
-
   ConsultarVehicleTypes(): Observable<VehicleType[]> {
     return this.http.get<{ data: VehicleType[] }>(`${this.servidor}${this.apiVehicleTypes}`)
       .pipe(map(response => response.data));

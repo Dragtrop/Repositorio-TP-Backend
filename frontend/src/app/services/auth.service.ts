@@ -5,25 +5,25 @@ import { User } from '../interfaces/user';
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode'
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  private servidor :string;
-  private tokenkey:string;
+  private servidor: string;
+  private tokenkey: string;
   
 
-  constructor(private httpClient:HttpClient,private router:Router){ 
-    this.servidor = "http://localhost:3000/api/login/login"
-    this.tokenkey = "authtoken"
-
+  constructor(private httpClient: HttpClient, private router: Router){ 
+    this.servidor = environment.apiUrl + '/api/login/login';
+    this.tokenkey = "authtoken";
   }
 
-  login(usuario:string,password:string): Observable<any>{
-    return this.httpClient.post<any>(this.servidor,{usuario,password}).pipe(
-      tap (response =>{
+  login(usuario: string, password: string): Observable<any>{
+    return this.httpClient.post<any>(this.servidor, {usuario, password}).pipe(
+      tap(response => {
         if(response.token){
           this.setToken(response.token);
           console.log(response.token);
@@ -33,11 +33,11 @@ export class AuthService {
   }
 
   register(userData: any): Observable<any> {
-  return this.httpClient.post<any>(
-    "http://localhost:3000/api/login/register",
-    userData
-  );
-}
+    return this.httpClient.post<any>(
+      environment.apiUrl + '/api/login/register',
+      userData
+    );
+  }
   private setToken(token:string):void{
     localStorage.setItem(this.tokenkey,token);
   }

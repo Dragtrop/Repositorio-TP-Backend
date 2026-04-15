@@ -1,22 +1,74 @@
 import { Router } from "express";
-import { sanitizeVehicleInput,findAll,findOne,add,update,remove,addVehicleToUser,obtenerVehiculosConGarage,} from "./vehicles.controler.js";
+import {
+  sanitizeVehicleInput,
+  findAll,
+  findOne,
+  add,
+  update,
+  remove,
+  addVehicleToUser,
+  obtenerVehiculosConGarage,
+} from "./vehicles.controler.js";
+import { authMiddleware, roleMiddleware } from "../middlewares/auth.middleware.js";
 
-export const characterRouter = Router()
+export const characterRouter = Router();
 
-characterRouter.get('/',findAll)
 
-characterRouter.get('/:id',findOne)
+characterRouter.get(
+    "/", 
+    authMiddleware, 
+    roleMiddleware(["Admin"]), 
+    findAll
+);
 
-characterRouter.post('/',sanitizeVehicleInput,add)
+characterRouter.post(
+  "/",
+  sanitizeVehicleInput,
+  authMiddleware,
+  roleMiddleware(["Admin"]),
+  add
+);
 
-characterRouter.put('/:id',sanitizeVehicleInput,update)
+characterRouter.delete(
+  "/:id",
+  authMiddleware,
+  roleMiddleware(["Admin"]),
+  remove
+);
 
-characterRouter.patch('/:id',sanitizeVehicleInput,update)
+characterRouter.get(
+  "/:id",
+  authMiddleware,
+  roleMiddleware(["Cliente", "Dueño", "Admin"]),
+  findOne
+);
 
-characterRouter.delete('/:id',remove)
+characterRouter.put(
+  "/:id",
+  sanitizeVehicleInput,
+  authMiddleware,
+  roleMiddleware(["Cliente", "Dueño", "Admin"]),
+  update
+);
 
-characterRouter.post("/:userId/vehicles", addVehicleToUser);
+characterRouter.patch(
+  "/:id",
+  sanitizeVehicleInput,
+  authMiddleware,
+  roleMiddleware(["Cliente", "Dueño", "Admin"]),
+  update
+);
 
-characterRouter.get('/vehiculos/:usuarioId', obtenerVehiculosConGarage);
-characterRouter.get('vehiculos/:id',)
-;
+characterRouter.post(
+  "/:userId/vehicles",
+  authMiddleware,
+  roleMiddleware(["Cliente", "Dueño", "Admin"]),
+  addVehicleToUser
+);
+
+characterRouter.get(
+  "/vehiculos/:usuarioId",
+  authMiddleware,
+  roleMiddleware(["Cliente", "Dueño", "Admin"]),
+  obtenerVehiculosConGarage
+);

@@ -41,17 +41,14 @@ export class UserService {
     return this.http.put(`${this.servidor}/${id}`, user);
   }
 
-  // baja lógica (usa la ruta DELETE que ahora hace UPDATE activo = 0)
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.servidor}/${id}`);
   }
 
-  // activar usuario (nuevo)
   activateUser(id: number): Observable<any> {
     return this.http.put(`${this.servidor}/admin/${id}/activar`, {});
   }
 
-  // (opcional) desactivar por PUT (si preferís no usar DELETE)
   desactivateUser(id: number): Observable<any> {
     return this.http.put(`${this.servidor}/admin/${id}/desactivar`, {});
   }

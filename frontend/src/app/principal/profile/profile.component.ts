@@ -45,7 +45,6 @@ export class ProfileComponent implements OnInit {
   toggleEdit(): void {
     this.isEditing = !this.isEditing;
 
-    // 🔥 Si cancela, simplemente recargamos desde backend
     if (!this.isEditing) {
       this.loadUserProfile();
     }
@@ -59,7 +58,7 @@ export class ProfileComponent implements OnInit {
       next: () => {
         alert('Perfil actualizado correctamente');
         this.isEditing = false;
-        this.loadUserProfile(); // 🔥 recarga limpia
+        this.loadUserProfile();
       },
       error: (err) => {
         alert(err.error.message);

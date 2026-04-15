@@ -177,7 +177,6 @@ async function create(req: Request, res: Response) {
   }
 }
 
-  
 async function login(req: Request, res: Response) {
   const { usuario, password } = req.body;
 
@@ -196,7 +195,6 @@ async function login(req: Request, res: Response) {
       });
     }
 
-    // 🔒 BLOQUEO POR BAJA LÓGICA
     if (user.activo !== 1) {
       return res.status(403).json({
         message: "Usuario desactivado. Contacte al administrador."

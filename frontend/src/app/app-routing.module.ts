@@ -24,40 +24,34 @@ import { ResultadoPagoComponent } from './components/pagos/resultado-pago/result
 
 const routes: Routes = [
 
-  { path: "vehiculos", component: ListVehiclesComponent },
-  { path: "tipovehiculos", component: ListVehicleTypesComponent },
-  { path: "localizaciones", component: ListLocationsComponent },  
-  { path: "usuarios", component: ListUserComponent },
-  { path: 'edit-user/:id', component: EditUserComponent },
-  { path: "garages", component: ListGarageComponent },
-  { path: "servicios", component: ListServicesComponent },
-  { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
+  { path: "login", component: LoginComponent, canActivate: [AuthenticatedGuard] },
+  { path: "register", component: RegisterComponent, canActivate: [AuthenticatedGuard] },
 
   { 
     path: 'principal',
     loadComponent: () =>
       import('./shared/component/layout/layout.component')
         .then(m => m.LayoutComponent),
+    canActivate: [AuthGuard],
     children: [
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard',component: DashboardComponent },
       { path: 'alquiler', component: AlquilerComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: '' , redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'detalle-vehiculo', component: DetallevehiculoComponent, canActivate: [AuthGuard] },
+      { path: 'detalle-alquiler/:id', component: DetalleAlquilerComponent },
+      { path: 'detalle-vehiculo', component: DetallevehiculoComponent },
       { path: 'vehiculo', component: VehiculoComponent },
+      { path: 'profile', component: ProfileComponent },
       { path: 'garage/new', component: GarageFormComponent },
       { path: 'mis-cocheras', component: MisCocherasComponent },
       { path: 'editar-garage/:id', component: EditarGarageComponent },
-      { path: "usuarios", component: ListUserComponent },
+      { path: 'usuarios', component: ListUserComponent },
       { path: 'edit-user/:id', component: EditUserComponent },
       { path: 'pagos/resultado', component: ResultadoPagoComponent },
     ]
   },
+
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' }
-
 ];
 
 @NgModule({

@@ -12,15 +12,12 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent {
-  /** Estado del sidebar en móvil */
   sidebarVisible = false;
 
-  /** Alterna la visibilidad del sidebar */
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
   }
 
-  /** Cierra el sidebar */
   closeSidebar() {
     this.sidebarVisible = false;
   }

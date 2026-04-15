@@ -115,7 +115,7 @@ CREATE TABLE `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `apellido` varchar(45) NOT NULL,
-  `telefono` int NOT NULL,
+  `telefono` bigint NOT NULL,
   `mail` varchar(45) NOT NULL,
   `Rol` varchar(45) NOT NULL,
   `password` varchar(255) DEFAULT NULL,

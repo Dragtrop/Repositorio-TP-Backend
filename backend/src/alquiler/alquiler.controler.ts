@@ -4,13 +4,29 @@ import { Request, Response } from 'express';
 const alquilerRepo = new AlquilerRepository();
 
 export async function registrarAlquiler(req: Request, res: Response) {
-  const { garageId, usuarioId, duracionHoras, servicios, vehiculoId ,total} = req.body;
-  
+  const { garageId, usuarioId, duracionHoras, servicios, vehiculoId, total } = req.body;
+
   try {
-    await alquilerRepo.registrarAlquiler(garageId, usuarioId, duracionHoras, servicios, vehiculoId,total);
+
+    const garage = await alquilerRepo.getGarageById(garageId);
+
+    if (!garage) {
+      return res.status(404).json({ message: 'Garage no encontrado' });
+    }
+
+    if (garage.activo === 0) {
+      return res.status(400).json({ message: 'El garage no está disponible para alquilar' });
+    }
+
+    if (garage.cantLugares <= 0) {
+      return res.status(400).json({ message: 'No hay lugares disponibles en este garage' });
+    }
+
+    await alquilerRepo.registrarAlquiler(garageId, usuarioId, duracionHoras, servicios, vehiculoId, total);
     res.status(200).json({ message: 'Alquiler registrado exitosamente' });
+
   } catch (error) {
-    console.error('Error al registrar el alquiler:', error); 
+    console.error('Error al registrar el alquiler:', error);
     res.status(500).json({ error: 'Error al registrar el alquiler' });
   }
 }

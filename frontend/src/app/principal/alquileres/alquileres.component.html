@@ -1,5 +1,5 @@
 <div class="garage-container" *ngIf="currentUser; else noUsuario">
-  <h2 class="section-title">Alquileres de {{ currentUser.nombre }}</h2>
+  <h2 class="section-title">Alquileres de {{ userData?.nombre }}</h2>
 
   <div *ngIf="alquileres.length > 0; else noAlquileres">
     <div *ngFor="let alquiler of alquileresPaginados" class="alquiler-card">
@@ -13,7 +13,6 @@
         {{ alquiler.estadoPago | titlecase }}
       </span>
 
-      <!-- Botón pagar solo si está pendiente -->
       <button
         *ngIf="alquiler.estadoPago === 'pendiente'"
         class="btn-pagar"

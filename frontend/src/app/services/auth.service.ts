@@ -21,47 +21,47 @@ export class AuthService {
     this.tokenkey = "authtoken";
   }
 
-  login(usuario: string, password: string): Observable<any>{
-    return this.httpClient.post<any>(this.servidor, {usuario, password}).pipe(
-      tap(response => {
-        if(response.token){
-          this.setToken(response.token);
-          console.log(response.token);
-        }
-      })
-    )
-  }
+login(usuario: string, password: string): Observable<any>{
+  return this.httpClient.post<any>(this.servidor, {usuario, password}).pipe(
+    tap(response => {
+      if(response.token){
+        this.setToken(response.token);
+        console.log(response.token);
+      }
+    })
+  )
+}
 
-  register(userData: any): Observable<any> {
-    return this.httpClient.post<any>(
-      environment.apiUrl + '/api/login/register',
-      userData
-    );
-  }
-  private setToken(token:string):void{
-    localStorage.setItem(this.tokenkey,token);
-  }
+register(userData: any): Observable<any> {
+  return this.httpClient.post<any>(
+    environment.apiUrl + '/api/login/register',
+    userData
+  );
+}
+private setToken(token:string):void{
+  localStorage.setItem(this.tokenkey,token);
+}
 
-  private getToken():string | null{
-    return localStorage.getItem(this.tokenkey);
-  }
+private getToken():string | null{
+  return localStorage.getItem(this.tokenkey);
+}
 
-  isAuthenticated(): boolean{
-    const token  = this.getToken();
-    if(!token){
-      return false;
-    }
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    const exp = payload.exp * 1000;
-    return Date.now() < exp;
-
+isAuthenticated(): boolean{
+  const token  = this.getToken();
+  if(!token){
+    return false;
   }
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  const exp = payload.exp * 1000;
+  return Date.now() < exp;
 
-  logout(): void{
-  console.log("Logout ejecutado");
-  localStorage.removeItem(this.tokenkey);
-  this.router.navigate(['/login'])
-  }
+}
+
+logout(): void{
+console.log("Logout ejecutado");
+localStorage.removeItem(this.tokenkey);
+this.router.navigate(['/login'])
+}
 
 getCurrentUser(): User | null {
   const token = this.getToken();

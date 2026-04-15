@@ -5,6 +5,7 @@ import { PagoService } from '../../services/pago.service';
 import { Alquiler } from '../../interfaces/alquiler';
 import { User } from '../../interfaces/user';
 import { Garages } from '../../interfaces/garages';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-alquileres',
@@ -13,27 +14,34 @@ import { Garages } from '../../interfaces/garages';
 })
 export class AlquilerComponent implements OnInit {
 
-  alquileres: (Alquiler & { garageDetalles?: Garages })[] = [];
-  alquileresPaginados: (Alquiler & { garageDetalles?: Garages })[] = [];
-  currentUser: User | null = null;
-  pagando = false;
+alquileres: (Alquiler & { garageDetalles?: Garages })[] = [];
+alquileresPaginados: (Alquiler & { garageDetalles?: Garages })[] = [];
+currentUser: any = null;
+userData: User | null = null;
+pagando = false;
 
-  currentPage = 1;
-  limit = 2;
-  totalPages = 0;
+currentPage = 1;
+limit = 2;
+totalPages = 0;
 
-  constructor(
-    private alquilerService: AlquilerService,
-    private authService: AuthService,
-    private pagoService: PagoService
-  ) {}
+constructor(
+  private alquilerService: AlquilerService,
+  private authService: AuthService,
+  private pagoService: PagoService,
+  private userService: UserService
+) {}
 
-  ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
-    if (this.currentUser) {
-      this.obtenerAlquileres(this.currentUser.id);
-    }
+ngOnInit(): void {
+  this.currentUser = this.authService.getCurrentUser();
+  if (this.currentUser) {
+    this.obtenerAlquileres(this.currentUser.id);
+
+    this.userService.getUser(this.currentUser.id).subscribe({
+      next: (data: User) => this.userData = data,
+      error: () => console.error('Error al cargar usuario')
+    });
   }
+}
 
   obtenerAlquileres(userId: number): void {
     this.alquilerService.obtenerAlquileresPorUsuario(userId)

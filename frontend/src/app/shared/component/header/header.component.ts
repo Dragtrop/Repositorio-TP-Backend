@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit {
     // Establecer título inicial según la URL actual
     this.updateTitle(this.router.url);
 
-    // Suscribirse a cambios de ruta
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.updateTitle(event.urlAfterRedirects);
@@ -49,7 +48,6 @@ private updateTitle(url: string): void {
     return;
   }
 
-  // Para rutas simples sin parámetros
   const segment = url.split('/').filter(seg => seg).pop()?.split('?')[0] || '';
 
   switch (segment.toLowerCase()) {

@@ -1,3 +1,5 @@
+//envío automático del token en cada petición al backend, si es que el token existe en el localStorage.
+
 import { Injectable } from '@angular/core';
 import {
   HttpEvent,

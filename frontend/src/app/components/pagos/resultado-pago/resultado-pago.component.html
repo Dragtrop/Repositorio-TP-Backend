@@ -1,19 +1,16 @@
 <div class="resultado-container">
 
   <div *ngIf="estado === 'success'" class="resultado-card aprobado">
-    <span class="icono">✅</span>
     <h2>¡Pago aprobado!</h2>
     <p>Tu alquiler fue pagado correctamente.</p>
   </div>
 
   <div *ngIf="estado === 'pending'" class="resultado-card pendiente">
-    <span class="icono">⏳</span>
     <h2>Pago pendiente</h2>
     <p>Tu pago está siendo procesado. Te avisaremos cuando se confirme.</p>
   </div>
 
   <div *ngIf="estado === 'failure'" class="resultado-card rechazado">
-    <span class="icono">❌</span>
     <h2>Pago rechazado</h2>
     <p>Hubo un problema con tu pago. Podés intentarlo de nuevo.</p>
   </div>

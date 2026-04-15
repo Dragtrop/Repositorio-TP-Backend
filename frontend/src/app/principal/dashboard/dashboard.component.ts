@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  obtenerGaragesDisponibles(): void {
+obtenerGaragesDisponibles(): void {
   const currentTime = new Date().getTime();
 
   this.garages.forEach(garage => {
@@ -75,21 +75,20 @@ export class DashboardComponent implements OnInit {
       .filter(alquiler => {
         const tiempoFin =
           new Date(alquiler.fechaAlquiler).getTime() +
-          alquiler.duracionHoras * 60 * 60 * 1000;
+          Number(alquiler.duracionHoras) * 60 * 60 * 1000;
 
         return (
           alquiler.garageId === garage.nroGarage &&
           alquiler.usuarioId === this.usuarioId &&
           alquiler.vehiculoId === this.vehiculoId &&
           currentTime >= tiempoFin &&
-          alquiler.liberado === false
+          !alquiler.liberado
         );
       })
       .forEach(alquilerExpirado => {
         this.alquilerService.liberarAlquiler(alquilerExpirado.id).subscribe({
           next: () => {
             alquilerExpirado.liberado = true;
-            console.log(`Garage ${garage.nroGarage} liberado`);
           },
           error: (err) => console.error('Error al liberar garage:', err)
         });
@@ -100,7 +99,7 @@ export class DashboardComponent implements OnInit {
     return !this.alquileres.some(alquiler => {
       const tiempoFin =
         new Date(alquiler.fechaAlquiler).getTime() +
-        alquiler.duracionHoras * 60 * 60 * 1000;
+        Number(alquiler.duracionHoras) * 60 * 60 * 1000;
 
       return (
         alquiler.garageId === garage.nroGarage &&

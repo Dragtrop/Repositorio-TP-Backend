@@ -28,38 +28,43 @@ export class DetalleAlquilerComponent implements OnInit {
     private vehicleService: VehicleService
   ) {}
 
-  ngOnInit(): void {
+ngOnInit(): void {
+  const nroGarage = this.route.snapshot.paramMap.get('id');
 
-    const nroGarage = this.route.snapshot.paramMap.get('id');
+  if (nroGarage) {
+    this.garagesService.getgarage(+nroGarage).subscribe({
+      next: (garage) => {
 
-    if (nroGarage) {
-      this.garagesService.getgarage(+nroGarage).subscribe({
-        next: (garage) => {
-          this.garage = garage;
-          this.calcularTotal();
-        },
-        error: (err) => console.error('Error al cargar el garage:', err)
-      });
-    }
+        if (garage.activo === 0) {
+          alert('Este garage no está disponible.');
+          this.router.navigate(['/login']);
+          return;
+        }
 
-    const currentUser = this.authService.getCurrentUser();
-
-    if (currentUser) {
-      this.usuarioId = currentUser.id;
-
-      this.vehicleService.getVehicleByUser(this.usuarioId).subscribe({
-        next: (vehiculos) => {
-          if (vehiculos && vehiculos.length > 0) {
-            this.vehiculoId = vehiculos[0].id;
-            console.log("Vehículo cargado correctamente:", this.vehiculoId);
-          } else {
-            console.warn("El usuario no tiene vehículo asignado.");
-          }
-        },
-        error: (err) => console.error("Error cargando vehículo:", err)
-      });
-    }
+        this.garage = garage;
+        this.calcularTotal();
+      },
+      error: (err) => console.error('Error al cargar el garage:', err)
+    });
   }
+
+  const currentUser = this.authService.getCurrentUser();
+
+  if (currentUser) {
+    this.usuarioId = currentUser.id;
+
+    this.vehicleService.getVehicleByUser(this.usuarioId).subscribe({
+      next: (vehiculos) => {
+        if (vehiculos && vehiculos.length > 0) {
+          this.vehiculoId = vehiculos[0].id;
+        } else {
+          console.warn("El usuario no tiene vehículo asignado.");
+        }
+      },
+      error: (err) => console.error("Error cargando vehículo:", err)
+    });
+  }
+}
 
   calcularTotal(): void {
     if (this.garage) {
@@ -96,8 +101,11 @@ registrarAlquiler(): void {
             });
 
         },
-        error: (err) =>
-          console.error('Error al registrar alquiler:', err)
+        error: (err) => {
+          const mensaje = err.error?.message || 'Error al registrar el alquiler';
+          alert(mensaje);
+          this.router.navigate(['/principal/dashboard']);
+        }
       });
 
   } else {

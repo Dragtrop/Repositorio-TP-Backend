@@ -19,10 +19,10 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  login(): void {
-    this.authService.login(this.usuario, this.password).subscribe({
-      next: () => this.router.navigate(['/principal/dashboard']),
-      error: (err) => console.error('Login failed', err)
-    });
-  }
+login(): void {
+  this.authService.login(this.usuario, this.password).subscribe({
+    next: () => this.router.navigate(['/principal/dashboard']),
+    error: (err) => console.error('Login failed', err)
+  });
+}
 }
